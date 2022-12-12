@@ -1,0 +1,31 @@
+header a {
+    color: var(--color-4);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.products {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.product{
+    border: 1px var(--color-1) solid;
+    margin: 1rem;
+    border-radius: 0.2rem;
+}
+
+.product img{
+    width: 100%;
+    max-width: 400px;
+}
+
+.product-info {
+    padding: 1rem;
+}
+
+main{
+    padding: 1rem;
+}

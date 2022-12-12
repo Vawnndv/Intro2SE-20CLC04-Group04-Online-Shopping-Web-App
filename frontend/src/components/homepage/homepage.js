@@ -1,4 +1,5 @@
 import './homepage.css'
+import '../stylesheet/style.css'
 import data from '../../data.js'
 
 var Homepage = () => {
@@ -8,11 +9,20 @@ var Homepage = () => {
             <div className="products">
             {
                 data.products.map((product) => (
-                <div className="product" key={product.slug}>
-                <img src={product.image} alt={product.name} />
-                <p>{product.name}</p>
-                <p>{product.price}</p>
-                </div>))
+                    <div className="product" key={product.slug}>
+                        <a href={`/product/${product.slug}`}>
+                            <img src={product.image} alt={product.name} />
+                        </a>
+                        
+                        <a href={`/product/${product.slug}`}>
+                            <div className="product-info">
+                                <p>{product.name}</p>
+                                <p>{product.price}đ</p>
+                            </div>
+                        </a>
+                        
+                    </div>
+                ))
             }
             </div>
         </main>
