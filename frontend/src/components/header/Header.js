@@ -1,4 +1,4 @@
-import "./stylesheet/Header.css";
+import "./Header.css";
 
 var Header = () => {
     return (
