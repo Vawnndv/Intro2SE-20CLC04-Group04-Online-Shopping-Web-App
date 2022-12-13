@@ -2,15 +2,40 @@ import './homepage.css'
 import '../stylesheet/style.css'
 import data from '../../data.js'
 import {Link} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useEffect, useReducer, useState} from "react";
 import axios from "axios";
 
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'FETCH_REQUEST':
+            return {...state, loading: true};
+        case 'FETCH_SUCCESS':
+            return {...state, products: action.payload, loading: false};
+        case 'FETCH_FAIL':
+            return {...state, loading:false, error: action.payload};
+        default:
+            return state;
+    }
+};
+
 let Homepage = () => {
-    const [products, setProduct] = useState([]);
+    //const [products, setProduct] = useState([]);
+    const [{loading, error, products}, dispatch] = useReducer(reducer, {
+        loading: true,
+        error: '',
+        products: [],
+    });
     useEffect(() => {
         const fetchData = async () => {
-            const result = await axios.get('/api/products');
-            setProduct(result.data);
+            dispatch({ type: 'FETCH_REQUEST'});
+            try {
+                const result = await axios.get('/api/products');
+                dispatch({type: 'FETCH_SUCCESS', payload: result.data});
+            } catch (err) {
+                dispatch({type: 'FETCH_FAIL', payload: err.message});
+            };
+
+            // setProduct(result.data);
         };
         fetchData();
     }, []);
@@ -31,7 +56,6 @@ let Homepage = () => {
                                     <p>{product.price}đ</p>
                                 </div>
                             </Link>
-
                         </div>
                     ))
                 }
