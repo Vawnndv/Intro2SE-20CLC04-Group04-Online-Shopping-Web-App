@@ -4,6 +4,7 @@ import data from '../../data.js'
 import {Link} from "react-router-dom";
 import {useEffect, useReducer, useState} from "react";
 import axios from "axios";
+import logger from 'use-reducer-logger';
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -20,7 +21,7 @@ const reducer = (state, action) => {
 
 let Homepage = () => {
     //const [products, setProduct] = useState([]);
-    const [{loading, error, products}, dispatch] = useReducer(reducer, {
+    const [{loading, error, products}, dispatch] = useReducer(logger(reducer), {
         loading: true,
         error: '',
         products: [],
@@ -43,7 +44,11 @@ let Homepage = () => {
         <div className="Homepage-main">
             <h1>Các sản phẩm nổi bật</h1>
             <div className="products">
-                {
+                {   loading ? (
+                        <div>Loading...</div>
+                    ) : error ? (
+                        <div>{error}</div>
+                    ) : (
                     products.map((product) => (
                         <div className="product" key={product.slug}>
                             <Link to={`/product/${product.slug}`}>
@@ -57,7 +62,8 @@ let Homepage = () => {
                                 </div>
                             </Link>
                         </div>
-                    ))
+
+                    )))
                 }
             </div>
         </div>
