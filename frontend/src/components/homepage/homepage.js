@@ -1,6 +1,7 @@
 import './homepage.css'
 import '../stylesheet/style.css'
 import data from '../../data.js'
+import {Link} from "react-router-dom";
 
 var Homepage = () => {
     return (
@@ -10,16 +11,16 @@ var Homepage = () => {
             {
                 data.products.map((product) => (
                     <div className="product" key={product.slug}>
-                        <a href={`/product/${product.slug}`}>
+                        <Link to={`/product/${product.slug}`}>
                             <img src={product.image} alt={product.name} />
-                        </a>
+                        </Link>
                         
-                        <a href={`/product/${product.slug}`}>
+                        <Link to={`/product/${product.slug}`}>
                             <div className="product-info">
                                 <p>{product.name}</p>
                                 <p>{product.price}đ</p>
                             </div>
-                        </a>
+                        </Link>
                         
                     </div>
                 ))
