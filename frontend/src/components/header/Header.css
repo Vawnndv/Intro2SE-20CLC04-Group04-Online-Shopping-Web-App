@@ -5,21 +5,23 @@
     --color--quartenary: #f0f4f8;
 }
 
-body {
-    background-color:#eee;
-    font-family: "Poppins", sans-serif;
-    font-weight: 300;
+header {
+    box-shadow: 0 2px 2px 0px #888;
 }
 
-header {
-    padding-bottom: 10px;
-    background: rgb(17,45,78);
-    background: linear-gradient(180deg, rgba(17,45,78,1) 0%, rgba(63,114,175,1) 100%);
+.navbar-container {
+    height: 40px;
+    background: var(--color--primary);
+}
+
+.hero-container {
+    height: 80px;
+    background: white;
 }
 
 .nav-link {
     text-decoration: none;
-    color: var(--color--quartenary);
+    color: white !important;
 }
 
 .nav-link:hover {
@@ -34,7 +36,8 @@ header {
 }
 
 .logo {
-    color: var(--color--quartenary);
+    color: var(--color--primary);
+    font-weight: bold;
 }
 
 .search {
@@ -42,8 +45,8 @@ header {
 }
 
 .search input {
-    height: 60px;
-    text-indent: 25px;
+    height: 40px;
+    text-indent: 10px;
 }
 
 .search input:focus{
@@ -59,20 +62,20 @@ header {
 
 .search button{
     position: absolute;
-    top: 5px;
-    right: 5px;
-    height: 50px;
-    width: 110px;
-    background: var(--color--secondary)
+    top: 2px;
+    right: 2px;
+    height: 36px;
+    width: 100px;
+    background: var(--color--primary);
 }
 
 #cart-icon {
     margin-right: 20px;
-    color: var(--color--quartenary);
+    color: var(--color--primary);
     font-size: 2rem;
 }
 
 #cart-info {
-    color: var(--color--quartenary);
+    color: #404040;
     font-size: 0.8rem;
 }
