@@ -1,9 +1,9 @@
 import './App.css';
+import './components/fontawesome/FontAwesome.js';
 import Header from './components/header/Header.js';
 import Homepage from './components/homepage/homepage';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import ProductScreen from "./components/homepage/ProductScreen";
-import './components/FontAwesome.js';
 
 function App() {
   return (
