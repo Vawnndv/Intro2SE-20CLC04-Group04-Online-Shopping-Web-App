@@ -11,7 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "use-reducer-logger": "^1.0.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"

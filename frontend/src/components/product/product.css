@@ -1,0 +1,24 @@
+.product-info{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.product-name a{
+    text-align: center;
+    text-overflow: ellipsis;
+
+    width: 100%;
+
+    text-decoration: none;
+}
+
+.product-info-bottom-left{
+    display: block;
+    text-align: left;
+}
+
+.product-info-bottom{
+    display: flex;
+    justify-content: space-between;
+}
