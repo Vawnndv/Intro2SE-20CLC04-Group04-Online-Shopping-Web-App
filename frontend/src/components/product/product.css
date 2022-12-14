@@ -1,16 +1,20 @@
 .product-info{
     display: flex;
     flex-direction: column;
-
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.product-name a{
-    text-align: center;
-    text-overflow: ellipsis;
+.product-name p{
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+}
 
-    width: 100%;
-
-    text-decoration: none;
+.product-name{
+    font-weight: bold;
+    font-size: 20px;
+    color: #000;
 }
 
 .product-info-bottom-left{
@@ -21,4 +25,10 @@
 .product-info-bottom{
     display: flex;
     justify-content: space-between;
+}
+
+.product-info-price{
+    font-size: 25px;
+    font-weight: bold;
+    color: var(--color-1)
 }

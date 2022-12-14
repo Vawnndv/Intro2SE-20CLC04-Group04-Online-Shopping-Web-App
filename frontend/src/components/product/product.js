@@ -10,16 +10,16 @@ function Product(props) {
                 <img src={product.image} alt={product.name}/>
             </Link>
 
-            <Link to={`/product/${product.slug}`}>
+            <Link to={`/product/${product.slug}`} style={{ textDecoration: 'none' }}>
                 <div className="product-info">
                     <p className="product-name">{product.name}</p>
                     
                     <div className="product-info-bottom">
                         <div className="product-info-bottom-left">
-                            <p>Còn {product.quanity} sản phẩm</p>
-                            <p>{formatPrice(product.price)}</p>
+                            <p style={{fontSize: '20px'}}>Còn {product.quanity} sản phẩm</p>
+                            <p className="product-info-price">{formatPrice(product.price)}</p>
+                            <Rating rating={product.rating} numReviews={product.reviews}/>
                         </div>
-                        <Rating rating={product.rating} numreviews={product.numreviews}/>
                     </div>
                 </div>
             </Link>

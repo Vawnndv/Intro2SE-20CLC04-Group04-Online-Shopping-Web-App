@@ -1,0 +1,17 @@
+.rating span i{
+    color: #ffc000;
+}
+
+.rating {
+    font-weight: bold;
+    color: var(--color-2);
+}
+
+.rating{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color: var(--color-2);
+
+    font-size: 20px;
+}
