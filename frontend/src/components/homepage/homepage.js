@@ -11,6 +11,7 @@ import logger from 'use-reducer-logger';
 
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import {Helmet} from "react-helmet-async";
 
 
 const reducer = (state, action) => {
@@ -49,6 +50,9 @@ let Homepage = () => {
     }, []);
     return (
         <div className="Homepage-main">
+            <Helmet>
+                <title>HKVTV</title>
+            </Helmet>
             <h1>Các sản phẩm nổi bật</h1>
             <div className="products">
                 {   loading ? (
