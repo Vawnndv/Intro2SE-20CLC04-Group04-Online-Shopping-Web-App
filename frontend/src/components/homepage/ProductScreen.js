@@ -62,6 +62,7 @@ function ProductScreen (){
                             <Helmet>
                                 <title>{product.name}</title>
                             </Helmet>
+                            <h1>{product.name}</h1>
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <Rating rating={product.rating} numReviews={product.reviews}></Rating>
