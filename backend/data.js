@@ -27,7 +27,7 @@ const data = {
                         + "- Khối lượng: 1.6kg\""],
             image: '/images/laptop_1.jpg',
             price: 14690000,
-            quanity: 10,
+            quanity: 0,
             brand: 'MSI',
             rating: 4.1,
             reviews: 38,
