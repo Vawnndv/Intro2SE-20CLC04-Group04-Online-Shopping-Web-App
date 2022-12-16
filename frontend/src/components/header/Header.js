@@ -1,7 +1,14 @@
 import "./Header.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Badge from "react-bootstrap/Badge";
+import {Nav} from "react-bootstrap";
+import {Link} from "react-router-dom";
+import {useContext} from "react";
+import {Store} from "../../Store";
 
 var Header = () => {
+    const {state} = useContext(Store);
+    const {cart} = state;
     return (
         <header>
             <div className="navbar-container container-fluid">
@@ -36,11 +43,27 @@ var Header = () => {
                             </div>
                         </div>
                         <div className="col-2 d-flex justify-content-end align-items-center">
-                            <FontAwesomeIcon icon="fa-solid fa-cart-shopping" id="cart-icon"/>
-                            <div className="d-flex flex-column align-items-start" id="cart-info">
-                                <span>Your shopping cart</span>
-                                <span>(0) product</span>
-                            </div>
+                            <Nav className="">
+                                <Link to="/cart" className="nav-link">
+                                    <FontAwesomeIcon icon="fa-solid fa-cart-shopping" id="cart-icon"/>
+                                </Link>
+                                <div className="d-flex flex-column align-items-start" id="cart-info">
+                                    <span>Your shopping cart</span>
+                                    <span>
+                                        {cart.cartItems.length === 0 && (
+                                            <Badge>
+                                                0
+                                            </Badge>
+                                        )}
+                                        {cart.cartItems.length > 0 && (
+                                            <Badge pill >
+                                                {cart.cartItems.length}
+                                            </Badge>
+                                        )}
+                                        products
+                                    </span>
+                                </div>
+                            </Nav>
                         </div>
                     </div>
                 </div>
