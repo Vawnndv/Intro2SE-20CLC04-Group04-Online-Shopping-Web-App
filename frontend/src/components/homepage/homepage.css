@@ -12,7 +12,7 @@ header a {
 }
 
 .product{
-    border: 1px var(--color-1) solid;
+    border: 3px rgba(0, 0, 0, 0.05) solid;
     margin: 1rem;
     border-radius: 0.2rem;
 }
@@ -28,4 +28,58 @@ header a {
 
 .Homepage-main{
     padding: 1rem;
+}
+
+/* .buffer{
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.product-thumbnail{
+    position: relative;
+}
+
+.product-thumbnail:hover img{
+    opacity: 0.3;
+}
+
+.product-thumbnail:hover div {
+    opacity: 1;
+    font-size: 20px;
+    color: var(--color-1);
+    font-weight: bold;
+} */
+
+.product:hover .details{
+    opacity: 0.1;
+    border: 2px solid black;
+}
+
+.product:hover .hover-text{
+    opacity: 2;
+    font-size: 30px;
+    color: var(--color-1);
+    font-weight: bold;
+}
+
+
+.product{
+    position: relative;
+}
+
+.product .hover-text {
+    transition: .2s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
 }
