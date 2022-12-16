@@ -51,16 +51,16 @@ var Header = () => {
                                     <span>Your shopping cart</span>
                                     <span>
                                         {cart.cartItems.length === 0 && (
-                                            <Badge>
+                                            <Badge pill>
                                                 0
                                             </Badge>
                                         )}
                                         {cart.cartItems.length > 0 && (
-                                            <Badge pill >
-                                                {cart.cartItems.length}
+                                            <Badge pill>
+                                                {cart.cartItems.reduce((a,c) => a + c.quantity, 0)}
                                             </Badge>
                                         )}
-                                        products
+                                        &nbsp; products
                                     </span>
                                 </div>
                             </Nav>
