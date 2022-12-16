@@ -1,6 +1,7 @@
 import {Link} from "react-router-dom";
 import './product.css'
 import Rating from "../rating/rating";
+import {formatPrice} from '../../utils'
 
 function Product(props) {
     const {product} = props;
@@ -20,7 +21,7 @@ function Product(props) {
                         <div className="product-info-bottom">
                             <div className="product-info-bottom-left">
                                 <p style={{fontSize: '20px'}}>Còn {product.quanity} sản phẩm</p>
-                                <p className="product-info-price">{formatPrice(product.price)}đ</p>
+                                <p className="product-info-price">{formatPrice(product.price)}</p>
                                 <Rating rating={product.rating} numReviews={product.reviews}/>
                             </div>
                         </div>
@@ -30,10 +31,5 @@ function Product(props) {
         </div>
     )
 };
-
-function formatPrice(price){
-    price = price.toLocaleString('it-IT');
-    return price;
-}
 
 export default Product;

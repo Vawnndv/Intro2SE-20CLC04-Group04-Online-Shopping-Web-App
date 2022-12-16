@@ -12,12 +12,12 @@ function App() {
         <div className="App">
           <Header/>
           <main>
-              {/* <Container className="mt-3"> */}
+              <Container className="mt-3">
                   <Routes>
                       <Route path="/product/:slug" element={<ProductScreen />} />
                       <Route path="/" element={<Homepage />} />
                   </Routes>
-              {/* </Container> */}
+              </Container>
           </main>
         </div>
     </BrowserRouter>

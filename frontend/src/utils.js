@@ -3,3 +3,8 @@ export const getError = (error) => {
         ? error.response.data.message
         : error.message;
 };
+
+export function formatPrice(price){
+    price = price.toLocaleString('it-IT');
+    return price + 'đ';
+}
