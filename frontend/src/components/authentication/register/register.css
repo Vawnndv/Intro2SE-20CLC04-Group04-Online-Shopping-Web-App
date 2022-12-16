@@ -1,0 +1,32 @@
+.small-container {
+    display: flex;
+    justify-content: center;
+}
+
+
+.register-container {
+    border: 1px solid black;
+    width: 500px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+
+    border-radius: 1rem;
+    background-color: white;
+}
+
+.signin-res {
+    color: #000;
+}
+
+.register-res {
+    color: var(--color-2);
+    text-decoration: underline;
+}
+
+.submit-button{
+    display: flex;
+    justify-content: center;
+}
