@@ -20,9 +20,6 @@ const app = express();
 app.use('/api/seed', seedRouter);
 app.use('/api/products', ProductRoutes);
 
-
-
-
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`Server at http://localhost:${port}`)
