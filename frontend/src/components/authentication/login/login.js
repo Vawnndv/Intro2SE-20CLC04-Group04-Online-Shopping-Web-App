@@ -3,9 +3,11 @@ import {useLocation} from "react-router-dom";
 import './login.css'
 import { Form } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import '../../fontawesome/FontAwesome'
 import { Link } from "react-router-dom";
+import Axios from 'axios'
+import {Store} from '../../../Store';
 
 function Login() {
     const {search} = useLocation()
@@ -14,7 +16,8 @@ function Login() {
     
     const [passwordType, setPasswordType] = useState("password");
     const [passwordInput, setPasswordInput] = useState("");
-    const handlePasswordChange =(evnt)=>{
+    
+    const handlePasswordChange = (evnt)=>{
         setPasswordInput(evnt.target.value);
     }
 
@@ -25,6 +28,28 @@ function Login() {
        return;
       }
       setPasswordType("password")
+    }
+
+    const {state, dispatch: ctxDispatch} = useContext(Store);
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    
+    const submitHandler = async(e) => {
+        e.preventDefault();
+        try {
+            const {data} = await Axios.post('/api/users/login', {
+                email,
+                password,
+            });
+            
+            ctxDispatch({type: 'USER_SIGIN', payload: data})
+            // if(data === 'invalid'){
+            //     alert("Email hoặc mật khẩu không đúng")
+            // }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -42,10 +67,10 @@ function Login() {
                     </div>
                 </div>
 
-                <Form>
+                <Form onSubmit={submitHandler}>
                     <Form.Group className="mb-3 email" controlId="email">
                         <div><Form.Label>Địa chỉ Email</Form.Label></div>
-                        <Form.Control size="sm" className="input-email" type="text" required placeholder="Nhập email"/>
+                        <Form.Control size="sm" className="input-email" type="text" onChange={(e) => setEmail(e.target.value)} required placeholder="Nhập email"/>
                     </Form.Group>
 
                     <Form.Group className="mb-3 password" controlId="password">
@@ -54,7 +79,7 @@ function Login() {
                         <div className="password-section">
                             <Form.Control size="sm" className="input-password" 
                                 type={passwordType} required placeholder="Nhập mật khẩu" 
-                                onChange={handlePasswordChange} value={passwordInput}></Form.Control>
+                                onChange={(e) => {handlePasswordChange(e); setPassword(e.target.value)}} value={passwordInput}></Form.Control>
 
                             <div>
                                 <button type="button" className="btn-outline-primary" onClick={togglePassword}>

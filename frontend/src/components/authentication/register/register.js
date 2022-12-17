@@ -15,6 +15,10 @@ export default function Register () {
 
     const [passwordType, setPasswordType] = useState("password");
     const [passwordInput, setPasswordInput] = useState("");
+
+    const [repasswordType, setrePasswordType] = useState("password");
+    const [repasswordInput, setrePasswordInput] = useState("");
+
     const handlePasswordChange =(evnt)=>{
         setPasswordInput(evnt.target.value);
     }
@@ -26,6 +30,19 @@ export default function Register () {
        return;
       }
       setPasswordType("password")
+    }
+
+    const handlerePasswordChange =(evnt)=>{
+        setrePasswordInput(evnt.target.value);
+    }
+
+    const togglerePassword =()=>{
+      if(repasswordType==="password")
+      {
+       setrePasswordType("text")
+       return;
+      }
+      setrePasswordType("password")
     }
 
     return(
@@ -80,6 +97,21 @@ export default function Register () {
                             <div>
                                 <button type='button' className="btn-outline-primary" onClick={togglePassword}>
                                     { passwordType==="password"? <i className="fas fa-eye"></i> :<i className="fas fa-eye-slash"></i> }</button>
+                            </div>
+                        </div>
+                    </Form.Group>
+
+                    <Form.Group className="mb-3 password" controlId="repassword">
+                        <div><Form.Label>Xác nhận mật khẩu</Form.Label></div>
+                        
+                        <div className="password-section">
+                            <Form.Control size="sm" className="input-password" 
+                                type={repasswordType} required placeholder="Nhập lại mật khẩu" 
+                                onChange={handlerePasswordChange} value={repasswordInput}></Form.Control>
+
+                            <div>
+                                <button type="button" className="btn-outline-primary" onClick={togglerePassword}>
+                                    { repasswordType==="password"? <i className="fas fa-eye"></i> :<i className="fas fa-eye-slash"></i> }</button>
                             </div>
                         </div>
                     </Form.Group>
