@@ -20,7 +20,7 @@ export default  function CartScreen() {
 
     const updateCartHandler = async (item, quantity) => {
         const {data} = await axios.get(`/api/products/${item._id}`);
-        if(data.quanity < quantity) {
+        if(data.quantity < quantity) {
             window.alert('Sorry. Product is out of stock');
             return;
         }
@@ -114,7 +114,7 @@ export default  function CartScreen() {
                                             onClick={checkoutHandler}
                                             disabled={cartItems.length === 0}
                                         >
-                                         Proceed to Checkout
+                                        Proceed to Checkout
                                         </Button>
                                     </div>
                                 </ListGroup.Item>

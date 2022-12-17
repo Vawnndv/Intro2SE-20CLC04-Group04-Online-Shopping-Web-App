@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import {useContext} from "react";
 import {Store} from "../../Store";
 
-var Header = () => {
+export default function Header() {
     const {state} = useContext(Store);
     const {cart} = state;
     return (
@@ -70,5 +70,4 @@ var Header = () => {
             </div>
         </header>
     );
-};
-export default Header;
+}

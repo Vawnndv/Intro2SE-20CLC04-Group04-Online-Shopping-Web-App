@@ -59,7 +59,7 @@ function ProductScreen (){
         const existItem = cart.cartItems.find( (x) => x._id === product._id);
         const quantity = existItem ? existItem.quantity + 1 : 1;
         const {data} = await axios.get(`/api/products/${product._id}`);
-        if(data.quanity < quantity) {
+        if(data.quantity < quantity) {
             window.alert('Sorry. Product is out of stock');
             return;
         }
@@ -111,7 +111,7 @@ function ProductScreen (){
                                     <Row>
                                         <Col>Status:</Col>
                                         <Col>
-                                            {product.quanity > 0 ? (
+                                            {product.quantity > 0 ? (
                                                 <Badge bg="success">In Stock</Badge>
                                             ) : (
                                                 <Badge bg="danger">Unvailable</Badge>
@@ -120,7 +120,7 @@ function ProductScreen (){
                                     </Row>
                                 </ListGroup.Item>
 
-                                {product.quanity > 0 && (
+                                {product.quantity > 0 && (
                                     <ListGroup.Item>
                                         <div className="d-grid">
                                             <Button onClick={addToCartHandler} variant="primary">Add to Cart</Button>
