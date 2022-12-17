@@ -1,7 +1,7 @@
 const data = {
     products: [
         {
-            _id: '1',
+            // _id: '1',
             name: 'Bàn phím cơ Newmen GM368 Mix Led',
             category: 'keyboard',
             slug: 'newmen-gm368-mix-led',
@@ -16,7 +16,7 @@ const data = {
         },
 
         {
-            _id: '2',
+            // _id: '2',
             name: 'Laptop MSI Modern 15 A11M',
             category: 'laptop',
             slug: 'msi-modern-15-a11m',
@@ -35,7 +35,7 @@ const data = {
             reviews: 38,
         },
         {
-            _id: '3',
+            // _id: '3',
             name: 'Tai nghe HyperX Cloud Earbuds',
             category: 'earphone',
             slug: 'hyperx-cloud-earbuds',
@@ -48,7 +48,7 @@ const data = {
             reviews: 5,
         },
         {
-            _id: '4',
+            // _id: '4',
             name: 'Smart Tivi Samsung UHD 4K 65 inch UA65AU7002KXXV',
             category: 'tivi',
             slug: 'samsung-smartTV-UHD4K-65inch-UA65AU7002KXXV',
