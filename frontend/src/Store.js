@@ -33,6 +33,9 @@ function reducer(state, action) {
             return {...state, cart: {...state.cart, cartItems}};
 
         }
+        case 'USER_LOGIN' : {
+            return {...state, userInfo: action.payload};
+        }
         default:
             return state;
     }

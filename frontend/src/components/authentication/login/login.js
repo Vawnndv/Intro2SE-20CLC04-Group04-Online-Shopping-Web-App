@@ -1,5 +1,5 @@
 import {Button, Container} from "react-bootstrap";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import './login.css'
 import { Form } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
@@ -10,6 +10,7 @@ import Axios from 'axios'
 import {Store} from '../../../Store';
 
 function Login() {
+    const navigate = useNavigate();
     const {search} = useLocation()
     const redirectInUrl = new URLSearchParams(search).get('redirect');
     const redirect = redirectInUrl ? redirectInUrl : '/';
@@ -43,12 +44,12 @@ function Login() {
                 password,
             });
             
-            ctxDispatch({type: 'USER_SIGIN', payload: data})
-            // if(data === 'invalid'){
-            //     alert("Email hoặc mật khẩu không đúng")
-            // }
+            ctxDispatch({type: 'USER_LOGIN', payload: data})
+            localStorage.setItem('userInfo', JSON.stringify(data));
+            navigate(redirect || '/')
+          
         } catch (error) {
-            console.log(error);
+            alert('Email hoặc mật khẩu không đúng');
         }
     }
 

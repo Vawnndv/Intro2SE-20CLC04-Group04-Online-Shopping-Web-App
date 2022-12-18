@@ -8,7 +8,9 @@ import {Store} from "../../Store";
 
 export default function Header() {
     const {state} = useContext(Store);
-    const {cart} = state;
+    const {cart, userInfo} = state;
+
+    console.log(userInfo);
     return (
         <header>
             <div className="navbar-container container-fluid">
@@ -16,14 +18,22 @@ export default function Header() {
                     <nav className="navbar navbar-expand p-0">
                         <div className="navbar-nav ms-auto d-flex align-items-center">
                             <a href="/" className="nav-item nav-link ms-5">About us</a>
-                            <div className="nav-item dropdown ms-5">
-                                <a href="/" className="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">User</a>
-                                <div className="dropdown-menu dropdown-menu-end">
-                                    <a href="/" className="dropdown-item">My account</a>
-                                    <a href="/" className="dropdown-item">My orders</a>
-                                    <a href="/" className="dropdown-item">Sign out</a>
+                            
+                            {/* user exist ? */}
+                            {(userInfo) ? (
+                                <div className="nav-item dropdown ms-5" title={userInfo.name}>
+                                    <a href="/" className="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{userInfo.name}</a>
+                                    
+                                    <div className="dropdown-menu dropdown-menu-end">
+                                        <a href="/" className="dropdown-item">Tài khoản</a>
+                                        <a href="/" className="dropdown-item">Đơn hàng</a>
+                                        <a href="/" className="dropdown-item">Đăng xuất</a>
+                                    </div>
                                 </div>
-                            </div>
+                            ) : (
+                                <Link to="/login" className="nav-login" style={{textDecoration: 'none'}}>Đăng nhập</Link>
+                            )}
+                            
                         </div>
                     </nav>
                 </div>
