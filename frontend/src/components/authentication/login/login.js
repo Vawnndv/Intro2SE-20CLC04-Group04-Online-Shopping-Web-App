@@ -3,11 +3,12 @@ import {useLocation, useNavigate} from "react-router-dom";
 import './login.css'
 import { Form } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import '../../fontawesome/FontAwesome'
 import { Link } from "react-router-dom";
 import Axios from 'axios'
 import {Store} from '../../../Store';
+import { getError } from "../../../utils";
 
 function Login() {
     const navigate = useNavigate();
@@ -32,6 +33,7 @@ function Login() {
     }
 
     const {state, dispatch: ctxDispatch} = useContext(Store);
+    const {userInfo} = state;
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -49,9 +51,15 @@ function Login() {
             navigate(redirect || '/')
           
         } catch (error) {
-            alert('Email hoặc mật khẩu không đúng');
+            alert(getError(error));
         }
     }
+
+    useEffect(() => {
+        if(userInfo){
+            navigate(redirect);
+        }
+    }, [navigate, redirect, userInfo]);
 
     return (
         <Container className="small-container">

@@ -7,10 +7,14 @@ import {useContext} from "react";
 import {Store} from "../../Store";
 
 export default function Header() {
-    const {state} = useContext(Store);
+    const {state, dispatch: ctxDispatch} = useContext(Store);
     const {cart, userInfo} = state;
 
-    console.log(userInfo);
+    const logoutHandler = () => {
+        ctxDispatch({type: 'USER_LOGOUT'});
+        localStorage.removeItem('userInfo');
+    }
+
     return (
         <header>
             <div className="navbar-container container-fluid">
@@ -25,9 +29,9 @@ export default function Header() {
                                     <a href="/" className="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{userInfo.name}</a>
                                     
                                     <div className="dropdown-menu dropdown-menu-end">
-                                        <a href="/" className="dropdown-item">Tài khoản</a>
-                                        <a href="/" className="dropdown-item">Đơn hàng</a>
-                                        <a href="/" className="dropdown-item">Đăng xuất</a>
+                                        <Link to="/profile" className="dropdown-item">Tài khoản</Link>
+                                        <Link to="/order" className="dropdown-item">Đơn hàng</Link>
+                                        <Link to="#signout" onClick={logoutHandler} className="dropdown-item">Đăng xuất</Link>
                                     </div>
                                 </div>
                             ) : (
