@@ -13,7 +13,7 @@
     color: #3F72Af;
 } */
 
-.checkout-steps > div {
+.checkout-steps>div {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,11 +32,25 @@
     font-weight: bold;
 }
 
-.checkout-steps > div.active {
+.checkout-steps>div.active {
     color: #3F72Af;
 }
 
-.checkout-steps > div.active span {
+.checkout-steps>div.active span {
     background-color: #3F72Af;
     color: #f6f6f6;
 }
+
+/* a {
+    text-decoration: none !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    justify-content: space-between;
+    color: black;
+}
+
+a:hover {
+    color: black;
+} */

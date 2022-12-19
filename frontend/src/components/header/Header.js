@@ -15,6 +15,7 @@ export default function Header() {
         localStorage.removeItem('userInfo');
         localStorage.removeItem('cartItems');
         localStorage.removeItem('shippingAddress');
+        localStorage.removeItem('paymentMethod');
     }
 
     return (

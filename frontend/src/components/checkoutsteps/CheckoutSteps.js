@@ -19,7 +19,7 @@ export default function CheckoutSteps(props) {
                 <span>3</span>
             </Col>
             <Col className={props.step4 ? "active" : ""}>
-                Hoàn tất
+                Xác nhận
                 <span>4</span>
             </Col>
         </Row>
