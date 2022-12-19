@@ -1,0 +1,13 @@
+h1 {
+    width: 100%;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 500px;
+}
+
+.submit-button {
+    width: 150px;
+    /* background-image: linear-gradient(to bottom right, blue, #112D4E); */
+}
