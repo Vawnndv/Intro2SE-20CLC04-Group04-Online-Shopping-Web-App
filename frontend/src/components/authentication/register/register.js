@@ -59,11 +59,23 @@ export default function Register () {
 
     const submitHandler = async(e) => {
         e.preventDefault();
+        if(password !== reenterPassword){
+            alert('Mật khẩu không trùng khớp')
+            return;
+        }
         try {
             const {data} = await Axios.post('/api/users/register', {
                 email,
                 password,
+                name,
+                address,
+                phone,
+                dob
             });
+
+            ctxDispatch({type: 'USER_LOGIN', payload: data})
+            localStorage.setItem('userInfo', JSON.stringify(data));
+            navigate(redirect || '/')
         } catch (error) {
             
         }
@@ -84,30 +96,35 @@ export default function Register () {
                     </div>
                 </div>
 
-                <Form>
+                <Form onSubmit={submitHandler}>
                     <Form.Group className="mb-3 email" controlId="name">
                         <div><Form.Label>Họ tên</Form.Label></div>
-                        <Form.Control size="sm" className="input-name" type="text" required placeholder="Nhập email" style={{width: '300px'}}/>
+                        <Form.Control size="sm" className="input-name" 
+                        type="text" required placeholder="Nhập email" onChange={(e) => setName(e.target.value)} style={{width: '300px'}}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3 dob" controlId="dob">
                         <div><Form.Label>Ngày sinh</Form.Label></div>
-                        <Form.Control size="sm" className="input-dob" type="date" required placeholder="Nhập ngày sinh"/>
+                        <Form.Control size="sm" className="input-dob" 
+                        type="date" onChange={(e) => setDOB(e.target.value)} required placeholder="Nhập ngày sinh"/>
                     </Form.Group>
 
                     <Form.Group className="mb-3 address" controlId="address">
                         <div><Form.Label>Địa chỉ</Form.Label></div>
-                        <Form.Control size="sm" className="input-address" type="text" required placeholder="Nhập địa chỉ"/>
+                        <Form.Control size="sm" className="input-address" 
+                        type="text" onChange={(e) => setAddress(e.target.value)} required placeholder="Nhập địa chỉ"/>
                     </Form.Group>
 
                     <Form.Group className="mb-3 email" controlId="phone">
                         <div><Form.Label>Số điện thoại</Form.Label></div>
-                        <Form.Control size="sm" className="input-phone" type="text" required placeholder="Nhập số điện thoại" maxLength='10'/>
+                        <Form.Control size="sm" className="input-phone" 
+                        type="text" onChange={(e) => setPhone(e.target.value)} required placeholder="Nhập số điện thoại" maxLength='10'/>
                     </Form.Group>
 
                     <Form.Group className="mb-3 email" controlId="email">
                         <div><Form.Label>Địa chỉ Email</Form.Label></div>
-                        <Form.Control size="sm" className="input-email" type="email" required placeholder="Nhập email"/>
+                        <Form.Control size="sm" className="input-email" 
+                        type="email" onChange={(e) => setEmail(e.target.value)} required placeholder="Nhập email"/>
                     </Form.Group>
 
                     <Form.Group className="mb-3 password" controlId="password">
@@ -116,7 +133,7 @@ export default function Register () {
                         <div className="password-section">
                             <Form.Control size="sm" className="input-password" 
                                 type={passwordType} required placeholder="Nhập mật khẩu" 
-                                onChange={handlePasswordChange} value={passwordInput}></Form.Control>
+                                onChange={(e) => {handlePasswordChange(e); setPassword(e.target.value)}} value={passwordInput}></Form.Control>
 
                             <div>
                                 <button type='button' className="btn-outline-primary" onClick={togglePassword}>
@@ -131,7 +148,7 @@ export default function Register () {
                         <div className="password-section">
                             <Form.Control size="sm" className="input-password" 
                                 type={repasswordType} required placeholder="Nhập lại mật khẩu" 
-                                onChange={handlerePasswordChange} value={repasswordInput}></Form.Control>
+                                onChange={(e) => {handlerePasswordChange(e); setReenterPassword(e.target.value)}} value={repasswordInput}></Form.Control>
 
                             <div>
                                 <button type="button" className="btn-outline-primary" onClick={togglerePassword}>
