@@ -23,8 +23,9 @@ userRouter.post(
                     token: generateToken(user)
                 });
             }
+            else res.status(401).send({message: 'Mật khẩu không đúng'});
         }
-        else res.status(401).send({message: 'Email hoặc mật khẩu không đúng'});
+        else res.status(401).send({message: 'Email chưa đăng ký'});
     })
 );
 

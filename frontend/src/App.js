@@ -16,11 +16,11 @@ function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart, userInfo } = state;
 
-  const signoutHandler = () => {
-    ctxDispatch({ type: 'USER_LOGOUT' });
-    localStorage.removeItem('userInfo');
-    localStorage.removeItem('shippingAddress');
-  }
+  // const signoutHandler = () => {
+  //   ctxDispatch({ type: 'USER_LOGOUT' });
+  //   localStorage.removeItem('userInfo');
+  //   localStorage.removeItem('shippingAddress');
+  // }
   return (
     <BrowserRouter>
       <div className="App">

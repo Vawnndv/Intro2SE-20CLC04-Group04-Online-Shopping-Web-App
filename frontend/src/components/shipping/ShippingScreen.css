@@ -1,5 +1,6 @@
 h1 {
     width: 100%;
+    color: #112D4E;
 }
 
 .form-container {
@@ -9,5 +10,11 @@ h1 {
 
 .submit-button {
     width: 150px;
+    font-size: 1.3rem !important;
     /* background-image: linear-gradient(to bottom right, blue, #112D4E); */
+}
+
+label {
+    font-size: 1.2rem;
+    color: #112D4E;
 }

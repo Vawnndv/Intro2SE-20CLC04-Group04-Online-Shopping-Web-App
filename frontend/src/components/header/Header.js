@@ -13,6 +13,8 @@ export default function Header() {
     const logoutHandler = () => {
         ctxDispatch({type: 'USER_LOGOUT'});
         localStorage.removeItem('userInfo');
+        localStorage.removeItem('cartItems');
+        localStorage.removeItem('shippingAddress');
     }
 
     return (
