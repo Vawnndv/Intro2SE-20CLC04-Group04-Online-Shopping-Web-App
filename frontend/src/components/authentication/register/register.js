@@ -1,14 +1,16 @@
 import './register.css'
 import {Button, Container} from "react-bootstrap";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import { Form } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import '../../fontawesome/FontAwesome'
 import { Link } from "react-router-dom";
-
+import { Store } from '../../../Store';
+import Axios from 'axios'
 
 export default function Register () {
+    const navigate = useNavigate();
     const {search} = useLocation()
     const redirectInUrl = new URLSearchParams(search).get('redirect');
     const redirect = redirectInUrl ? redirectInUrl : '/';
@@ -45,6 +47,28 @@ export default function Register () {
       setrePasswordType("password")
     }
 
+    const [name, setName] = useState('');
+    const [dob, setDOB] = useState('');
+    const [address, setAddress] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [reenterPassword, setReenterPassword] = useState('');
+
+    const {state, dispatch: ctxDispatch} = useContext(Store);
+
+    const submitHandler = async(e) => {
+        e.preventDefault();
+        try {
+            const {data} = await Axios.post('/api/users/register', {
+                email,
+                password,
+            });
+        } catch (error) {
+            
+        }
+    }
+
     return(
         <div>
             <Container className="small-container">
@@ -66,19 +90,19 @@ export default function Register () {
                         <Form.Control size="sm" className="input-name" type="text" required placeholder="Nhập email" style={{width: '300px'}}/>
                     </Form.Group>
 
-                    <Form.Group className="mb-3 email" controlId="dob">
+                    <Form.Group className="mb-3 dob" controlId="dob">
                         <div><Form.Label>Ngày sinh</Form.Label></div>
-                        <Form.Control size="sm" className="input-dob" type="date" required placeholder="Nhập email"/>
+                        <Form.Control size="sm" className="input-dob" type="date" required placeholder="Nhập ngày sinh"/>
                     </Form.Group>
 
-                    <Form.Group className="mb-3 email" controlId="address">
+                    <Form.Group className="mb-3 address" controlId="address">
                         <div><Form.Label>Địa chỉ</Form.Label></div>
                         <Form.Control size="sm" className="input-address" type="text" required placeholder="Nhập địa chỉ"/>
                     </Form.Group>
 
                     <Form.Group className="mb-3 email" controlId="phone">
                         <div><Form.Label>Số điện thoại</Form.Label></div>
-                        <Form.Control size="sm" className="input-phone" type="text" required placeholder="Nhập email" maxLength='10'/>
+                        <Form.Control size="sm" className="input-phone" type="text" required placeholder="Nhập số điện thoại" maxLength='10'/>
                     </Form.Group>
 
                     <Form.Group className="mb-3 email" controlId="email">

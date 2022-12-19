@@ -17,6 +17,9 @@ userRouter.post(
                     name: user.name,
                     email: user.email,
                     isAdmin: user.isAdmin,
+                    address: user.address,
+                    phone: user.phone,
+                    dob: user.dob,
                     token: generateToken(user)
                 });
             }
@@ -25,4 +28,29 @@ userRouter.post(
     })
 );
 
+
+userRouter.post(
+    '/register',
+    expressAsyncHandler(async(req, res) => {
+        const newUser = new User({
+            name: req.body.name,
+            email: req.body.email,
+            password: bcrypt.hashSync(req.body.password),
+            address: req.body.address,
+            phone: req.body.phone,
+            dob: req.body.dob
+        });
+        const user = await newUser.save();
+        res.send({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin,
+            address: user.address,
+            phone: user.phone,
+            dob: user.dob,
+            token: generateToken(user)
+        });
+    })
+);
 export default userRouter;

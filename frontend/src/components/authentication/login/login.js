@@ -46,6 +46,7 @@ function Login() {
                 password,
             });
             
+            console.log(data);
             ctxDispatch({type: 'USER_LOGIN', payload: data})
             localStorage.setItem('userInfo', JSON.stringify(data));
             navigate(redirect || '/')
