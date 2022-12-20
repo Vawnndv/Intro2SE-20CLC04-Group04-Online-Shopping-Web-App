@@ -1,29 +1,77 @@
-import react, { useContext, useEffect, useState } from 'react';
+import react, { useContext, useEffect, useReducer, useState } from 'react';
 import CheckoutSteps from '../checkoutsteps/CheckoutSteps';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import { Store } from '../../../Store';
 import { Row, Col, Card, ListGroup, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { formatPrice } from '../../../utils';
+import { formatPrice, getError } from '../../../utils';
+// import { toast } from 'react-toastify';
 import './PlaceOrderScreen.css';
+import Axios from 'axios';
+import LoadingBox from '../../loadingbox/LoadingBox.js';
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case "CREATE_REQUEST":
+            return { ...state, loading: true };
+        case "CREATE_SUCCESS":
+            return { ...state, loading: false };
+        case "CREATE_FAIL":
+            return { ...state, loading: false };
+        default:
+            return state;
+    }
+};
 
 export default function () {
     const navigate = useNavigate();
+
+    const [{ loading }, dispatch] = useReducer(reducer, {
+        loading: false
+    });
+
     const { state, dispatch: ctxDispatch } = useContext(Store);
     const {
         userInfo,
         cart
     } = state;
 
-    cart.itemPrice = cart.cartItems.reduce((accum, item) => {
+    cart.itemsPrice = cart.cartItems.reduce((accum, item) => {
         return accum + item.quantity * item.price;
     }, 0);
     cart.voucherSales = 0;
-    cart.totalPrice = cart.itemPrice - cart.voucherSales;
+    cart.totalPrice = cart.itemsPrice - cart.voucherSales;
 
-    const placOrderHandler = async  () => {
-        return;
+    const placOrderHandler = async () => {
+        try {
+            dispatch({ type: "CREATE_REQUEST" });
+            const { data } = await Axios.post(
+                '/api/orders',
+                {
+                    orderItems: cart.cartItems,
+                    shippingAddress: cart.shippingAddress,
+                    paymentInfo: cart.paymentInfo,
+                    itemsPrice: cart.itemsPrice,
+                    voucherSales: cart.voucherSales,
+                    totalPrice: cart.totalPrice
+                },
+                {
+                    headers: {
+                        authorization: `Bearer ${userInfo.token}`,
+                    }
+                }
+            );
+            ctxDispatch({ type: "CART_CLEAR" });
+            dispatch({ type: "CREATE_SUCCESS" });
+
+            localStorage.removeItem('cartItems');
+            navigate(`/order/${data.order._id}`);
+        } catch (error) {
+            dispatch({ type: "CREATE_FAIL" });
+            // toast.error(getError(err));
+            alert(error);
+        }
     };
 
     useEffect(() => {
@@ -116,7 +164,7 @@ export default function () {
                                                 <span>Hóa đơn gốc:</span>
                                             </Col>
                                             <Col>
-                                                <span>{formatPrice(cart.itemPrice)}</span>
+                                                <span>{formatPrice(cart.itemsPrice)}</span>
                                             </Col>
                                         </Row>
                                     </ListGroup.Item>
@@ -150,6 +198,7 @@ export default function () {
                                                 Đặt hàng
                                             </Button>
                                         </div>
+                                        {loading && <LoadingBox></LoadingBox>}
                                     </ListGroup.Item>
                                 </ListGroup>
                             </Card.Body>
