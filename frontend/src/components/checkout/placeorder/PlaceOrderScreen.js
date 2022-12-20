@@ -27,12 +27,12 @@ export default function () {
     };
 
     useEffect(() => {
-        if (!cart.shippingAddress) {
+        if (!cart.shippingAddress.address) {
             navigate('/shipping');
         }
-        if (!cart.paymentInfo) {
-            navigate('/payment');
-        }
+        // if (!cart.paymentInfo) {
+        //     navigate('/payment');
+        // }
         if (!userInfo) {
             navigate('/');
         }

@@ -25,7 +25,9 @@
 .checkout-steps span {
     background-color: #a0a0a0;
     border-radius: 50%;
-    display: block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 2rem;
     height: 2rem;
     color: black;

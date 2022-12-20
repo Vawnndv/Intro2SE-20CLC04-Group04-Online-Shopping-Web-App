@@ -14,6 +14,7 @@ export default function ShippingScreen() {
     const { state, dispatch: ctxDispatch } = useContext(Store);
     const {
         userInfo,
+        cart,
         cart: { shippingAddress }
     } = state;
 
@@ -22,10 +23,13 @@ export default function ShippingScreen() {
     const [address, setAddress] = useState(shippingAddress.address || '');
 
     useEffect(() => {
+        if (cart.cartItems.length === 0) {
+            navigate('/');
+        }
         if (!userInfo) {
             navigate('/login?redirect=/shipping');
         }
-    }, [userInfo, navigate]);
+    }, [userInfo, cart, navigate]);
 
     const submitHandler = (e) => {
         e.preventDefault();

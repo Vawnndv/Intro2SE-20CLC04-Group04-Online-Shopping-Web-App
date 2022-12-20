@@ -21,7 +21,7 @@ export default function PaymentInfoScreen() {
     const [voucher, setVoucher] = useState(paymentInfo.voucher || 'none');
 
     useEffect(() => {
-        if (!shippingAddress) {
+        if (!shippingAddress.address) {
             navigate('/shipping');
         }
         if (!userInfo) {
