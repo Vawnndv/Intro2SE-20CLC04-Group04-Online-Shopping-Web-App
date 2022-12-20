@@ -11,7 +11,7 @@ export default function CheckoutSteps(props) {
                 <span>1</span>
             </Col>
             <Col className={props.step2 ? "active" : ""}>
-                Thông tin liên lạc
+                Thông tin khách hàng
                 <span>2</span>
             </Col>
             <Col className={props.step3 ? "active" : ""}>

@@ -8,10 +8,11 @@ import { Container } from "react-bootstrap";
 import Login from './components/authentication/login/login';
 import Register from './components/authentication/register/register';
 import CartScreen from "./components/homepage/CartScreen";
-import ShippingScreen from './components/shipping/ShippingScreen';
 import { useContext } from 'react';
 import { Store } from './Store';
-import PaymentInfoScreen from './components/paymentinfo/PaymentInfoScreen';
+import ShippingScreen from './components/checkout/shipping/ShippingScreen';
+import PaymentInfoScreen from './components/checkout/paymentinfo/PaymentInfoScreen';
+import PlaceOrderScreen from './components/checkout/placeorder/PlaceOrderScreen';
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -36,6 +37,7 @@ function App() {
               <Route path="/cart" element={<CartScreen />} />
               <Route path="/shipping" element={<ShippingScreen />} />
               <Route path="/payment" element={<PaymentInfoScreen />} />
+              <Route path="/placeorder" element={<PlaceOrderScreen />} />
             </Routes>
           </Container>
         </main>

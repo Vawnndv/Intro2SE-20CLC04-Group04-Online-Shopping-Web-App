@@ -1,0 +1,46 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+}
+
+h1 {
+    width: 100%;
+    color: #112D4E;
+}
+
+.card-title {
+    color: #112D4E;
+    font-size: 20px !important;
+}
+
+.grid-container > span {
+    color: #112D4E;
+    font-size: 15px;
+}
+
+.col a {
+    color: #112D4E;
+    text-decoration: none;
+}
+
+.col span {
+    color: #112D4E;
+    font-size: 15px;
+}
+
+.cart .col:not(:first-child) {
+    display: flex !important; 
+    align-items: center;
+}
+
+.cart .col:last-child {
+    justify-content: flex-end;
+}
+
+.cart .col:nth-last-child(2) {
+    justify-content: center;
+}
+
+.card:not(:last-child) {
+    background-color: #d9d9d9;
+}

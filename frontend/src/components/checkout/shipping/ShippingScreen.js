@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
-import { Store } from '../../Store';
+import { Store } from '../../../Store';
 import './ShippingScreen.css';
 import CheckoutSteps from '../checkoutsteps/CheckoutSteps';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -59,8 +59,8 @@ export default function ShippingScreen() {
             <Form onSubmit={submitHandler} className="form-container d-flex flex-column">
                 <Form.Group className="mb-4" controlId="fullName">
                     <Form.Label>
+                        <FontAwesomeIcon className='me-3' icon={faUserPen} />
                         Họ và tên
-                        <FontAwesomeIcon className='ms-3' icon={faUserPen} />
                     </Form.Label>
                     <Form.Control
                         value={fullName}
@@ -70,8 +70,8 @@ export default function ShippingScreen() {
                 </Form.Group>
                 <Form.Group className="mb-4" controlId="phone">
                     <Form.Label>
+                        <FontAwesomeIcon className='me-3' icon={faPhone} />
                         Số điện thoại
-                        <FontAwesomeIcon className='ms-3' icon={faPhone} />
                     </Form.Label>
                     <Form.Control
                         value={phone}
@@ -81,8 +81,8 @@ export default function ShippingScreen() {
                 </Form.Group>
                 <Form.Group className="mb-4" controlId="address">
                     <Form.Label>
+                        <FontAwesomeIcon className='me-3' icon={faAddressBook} />
                         Địa chỉ
-                        <FontAwesomeIcon className='ms-3' icon={faAddressBook} />
                     </Form.Label>
                     <Form.Control
                         value={address}
