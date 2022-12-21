@@ -1,10 +1,9 @@
 import react, { useContext, useEffect, useState } from 'react';
-import CheckoutSteps from '../checkoutsteps/CheckoutSteps';
+import CheckoutSteps from './checkoutsteps/CheckoutSteps';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
-import { Store } from '../../../Store';
-import './PaymentInfoScreen.css';
+import { Store } from '../../Store';
 import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoneyCheckDollar, faTicket } from '@fortawesome/free-solid-svg-icons';
@@ -54,23 +53,27 @@ export default function PaymentInfoScreen() {
         </Helmet>
         <CheckoutSteps step1 step2 step3></CheckoutSteps>
         <div className="container d-flex flex-column align-items-center">
-            <h1 className="my-4 text-center">Thông tin thanh toán </h1>
-            <Form onSubmit={submitHandler} className="form-container d-flex flex-column">
+            <h1 className="my-4 text-center cko-h1">Thông tin thanh toán </h1>
+            <Form onSubmit={submitHandler} className="cko-form-container d-flex flex-column">
                 <Form.Group className="mb-4" controlId="paymentMethod">
-                    <Form.Label>
+                    <Form.Label className="cko-label">
                         <FontAwesomeIcon className='me-3' icon={faMoneyCheckDollar} />
                         Chọn hình thức thanh toán
                     </Form.Label>
-                    <Form.Select onChange={(e) => setPaymentMethod(e.target.value)}>
+                    <Form.Select
+                        className="cko-select"
+                        defaultValue={paymentMethod}
+                        onChange={(e) => setPaymentMethod(e.target.value)}>
                         <option value="cash">Tiền mặt</option>
                     </Form.Select>
                 </Form.Group>
                 <Form.Group className="mb-4" controlId="paymentMethod">
-                    <Form.Label>
+                    <Form.Label className="cko-label">
                         <FontAwesomeIcon className='me-3' icon={faTicket} />
                         Chọn voucher
                     </Form.Label>
                     <Form.Select
+                        className="cko-select"
                         defaultValue={voucher}
                         onChange={(e) => setVoucher(e.target.value)}>
                         <option value="voucher1">Voucher1</option>
@@ -79,7 +82,7 @@ export default function PaymentInfoScreen() {
                     </Form.Select>
                 </Form.Group>
                 <div className="mb-3 align-self-center">
-                    <Button className="submit-button d-flex" variant="primary" type="Submit">
+                    <Button className="cko-submit-btn d-flex" variant="primary" type="Submit">
                         Tiếp tục
                     </Button>
                 </div>

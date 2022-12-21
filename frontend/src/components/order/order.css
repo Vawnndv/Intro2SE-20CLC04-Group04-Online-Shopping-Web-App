@@ -1,0 +1,22 @@
+.ord-h1 {
+    width: 100%;
+    color: #112D4E;
+}
+
+.ord-card--darker {
+    background-color: #d9d9d9 !important;
+}
+
+.ord-card-title {
+    color: #112D4E;
+    font-size: 20px !important;
+}
+
+.ord-links {
+    color: #112D4E;
+    text-decoration: none;
+}
+
+.ord-links:hover {
+    text-decoration: none;
+}

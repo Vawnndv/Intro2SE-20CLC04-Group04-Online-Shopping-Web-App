@@ -1,0 +1,23 @@
+.cko-h1 {
+    width: 100%;
+    color: #112D4E;
+}
+
+.cko-label {
+    font-size: 1.2rem;
+    color: #112D4E;
+}
+
+.cko-form-container {
+    width: 100%;
+    max-width: 500px;
+}
+
+.cko-submit-btn {
+    font-size: 1.3rem !important;
+}
+
+.cko-select {
+    height: 40px;
+}
+

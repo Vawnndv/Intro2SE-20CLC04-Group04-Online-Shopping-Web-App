@@ -3,9 +3,8 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
-import { Store } from '../../../Store';
-import './ShippingScreen.css';
-import CheckoutSteps from '../checkoutsteps/CheckoutSteps';
+import { Store } from '../../Store';
+import CheckoutSteps from './checkoutsteps/CheckoutSteps';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPen, faPhone, faAddressBook } from '@fortawesome/free-solid-svg-icons';
 
@@ -58,11 +57,11 @@ export default function ShippingScreen() {
         </Helmet>
         <CheckoutSteps step1 step2 ></CheckoutSteps>
         <div className="container d-flex flex-column align-items-center">
-            <h1 className="my-4 text-center">Thông tin và địa chỉ liên lạc </h1>
+            <h1 className="my-4 text-center cko-h1">Thông tin và địa chỉ liên lạc </h1>
 
-            <Form onSubmit={submitHandler} className="form-container d-flex flex-column">
+            <Form onSubmit={submitHandler} className="cko-form-container d-flex flex-column">
                 <Form.Group className="mb-4" controlId="fullName">
-                    <Form.Label>
+                    <Form.Label className="cko-label">
                         <FontAwesomeIcon className='me-3' icon={faUserPen} />
                         Họ và tên
                     </Form.Label>
@@ -73,7 +72,7 @@ export default function ShippingScreen() {
                     />
                 </Form.Group>
                 <Form.Group className="mb-4" controlId="phone">
-                    <Form.Label>
+                    <Form.Label className="cko-label">
                         <FontAwesomeIcon className='me-3' icon={faPhone} />
                         Số điện thoại
                     </Form.Label>
@@ -84,7 +83,7 @@ export default function ShippingScreen() {
                     />
                 </Form.Group>
                 <Form.Group className="mb-4" controlId="address">
-                    <Form.Label>
+                    <Form.Label className="cko-label">
                         <FontAwesomeIcon className='me-3' icon={faAddressBook} />
                         Địa chỉ
                     </Form.Label>
@@ -95,7 +94,7 @@ export default function ShippingScreen() {
                     />
                 </Form.Group>
                 <div className="mb-3 align-self-center">
-                    <Button className="submit-button d-flex" variant="primary" type="Submit">
+                    <Button className="cko-submit-btn d-flex" variant="primary" type="Submit">
                         Tiếp tục
                     </Button>
                 </div>

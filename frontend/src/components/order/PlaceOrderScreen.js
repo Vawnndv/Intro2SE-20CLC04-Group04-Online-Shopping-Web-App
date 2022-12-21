@@ -1,15 +1,15 @@
 import react, { useContext, useEffect, useReducer, useState } from 'react';
-import CheckoutSteps from '../checkoutsteps/CheckoutSteps';
+import CheckoutSteps from '../checkout/checkoutsteps/CheckoutSteps';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
-import { Store } from '../../../Store';
+import { Store } from '../../Store';
 import { Row, Col, Card, ListGroup, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { formatPrice, getError } from '../../../utils';
+import { formatPrice, getError } from '../../utils';
 // import { toast } from 'react-toastify';
-import './PlaceOrderScreen.css';
+import './order.css';
 import Axios from 'axios';
-import LoadingBox from '../../loadingbox/LoadingBox.js';
+import LoadingBox from '../loadingbox/LoadingBox.js';
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -93,43 +93,53 @@ export default function () {
             </Helmet>
             <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
             <div className="container">
-                <h1 className="my-4 text-center">Xác nhận đơn hàng</h1>
+                <h1 className="my-4 text-center ord_h1">Xác nhận đơn hàng</h1>
                 <Row>
                     <Col sm={12} md={9} lg={8}>
-                        <Card className="p-3 mb-3 border-dark">
+                        <Card className="p-3 mb-3 border-dark ord-card--darker">
                             <Card.Body>
                                 <div className="d-flex justify-content-between align-items-center mb-2">
-                                    <Card.Title>Thông tin khách hàng</Card.Title>
+                                    <Card.Title className="ord-card-title">Thông tin khách hàng</Card.Title>
                                     <Link className="btn btn-primary" to="/shipping">Chỉnh sửa</Link>
                                 </div>
-                                <Card.Text className="grid-container">
-                                    <span>Họ tên:</span>
-                                    <span>{cart.shippingAddress.fullName}</span>
-                                    <span>Số điện thoại:</span>
-                                    <span>{cart.shippingAddress.phone}</span>
-                                    <span>Địa chỉ:</span>
-                                    <span>{cart.shippingAddress.address}</span>
+                                <Card.Text as="div">
+                                    <Row className="my-2">
+                                        <Col xs={2}>Họ tên:</Col>
+                                        <Col xs={10}>{cart.shippingAddress.fullName}</Col>
+                                    </Row>
+                                    <Row className="my-2">
+                                        <Col xs={2}>Số điện thoại:</Col>
+                                        <Col xs={10}>{cart.shippingAddress.phone}</Col>
+                                    </Row>
+                                    <Row className="my-2">
+                                        <Col xs={2}>Địa chỉ:</Col>
+                                        <Col xs={10}>{cart.shippingAddress.address}</Col>
+                                    </Row>
+                                </Card.Text>
+                            </Card.Body>
+                        </Card>
+                        <Card className="p-3 mb-3 border-dark ord-card--darker">
+                            <Card.Body>
+                                <div className="d-flex justify-content-between align-items-center mb-2">
+                                    <Card.Title className="ord-card-title">Thanh toán</Card.Title>
+                                    <Link className="btn btn-primary" to="/payment">Chỉnh sửa</Link>
+                                </div>
+                                <Card.Text as="div">
+                                    <Row className="my-2">
+                                        <Col xs={2}>Hình thức:</Col>
+                                        <Col xs={10}>{cart.paymentInfo.paymentMethod}</Col>
+                                    </Row>
+                                    <Row className="my-2">
+                                        <Col xs={2}>Voucher:</Col>
+                                        <Col xs={10}>{cart.paymentInfo.voucher}</Col>
+                                    </Row>
                                 </Card.Text>
                             </Card.Body>
                         </Card>
                         <Card className="p-3 mb-3 border-dark">
                             <Card.Body>
                                 <div className="d-flex justify-content-between align-items-center mb-2">
-                                    <Card.Title>Thanh toán</Card.Title>
-                                    <Link className="btn btn-primary" to="/payment">Chỉnh sửa</Link>
-                                </div>
-                                <Card.Text className="grid-container">
-                                    <span>Hình thức:</span>
-                                    <span>{cart.paymentInfo.paymentMethod}</span>
-                                    <span>Voucher:</span>
-                                    <span>{cart.paymentInfo.voucher}</span>
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                        <Card className="p-3 mb-3 border-dark">
-                            <Card.Body className="cart">
-                                <div className="d-flex justify-content-between align-items-center mb-2">
-                                    <Card.Title>Sản phẩm thanh toán</Card.Title>
+                                    <Card.Title className="ord-card-title">Sản phẩm thanh toán</Card.Title>
                                     <Link className="btn btn-primary" to="/cart">Chỉnh sửa</Link>
                                 </div>
                                 <div>
@@ -137,22 +147,22 @@ export default function () {
                                         <ListGroup.Item>
                                             <Row>
                                                 <Col></Col>
-                                                <Col>Sản phẩm</Col>
-                                                <Col>Số lượng</Col>
-                                                <Col>Giá tổng</Col>
+                                                <Col className="text-center">Sản phẩm</Col>
+                                                <Col className="text-center">Số lượng</Col>
+                                                <Col className="text-end">Giá tổng</Col>
                                             </Row>
                                         </ListGroup.Item>
                                         {cart.cartItems.map((item) => (
                                             <ListGroup.Item key={item._id}>
                                                 <Row className="my-2">
-                                                    <Col>
+                                                    <Col className="d-flex align-items-center">
                                                         <img src={item.image} alt={item.name} className="img-fluid rounded img-thumbnail" />
                                                     </Col>
-                                                    <Col>
-                                                        <Link to={`/product/${item.slug}`}>{item.name}</Link>
+                                                    <Col className="d-flex  align-items-center">
+                                                        <Link className="ord-links" to={`/product/${item.slug}`}>{item.name}</Link>
                                                     </Col>
-                                                    <Col><span>{item.quantity}</span></Col>
-                                                    <Col><span>{formatPrice(item.price)}</span></Col>
+                                                    <Col className="d-flex justify-content-center align-items-center">{item.quantity}</Col>
+                                                    <Col className="d-flex justify-content-end align-items-center">{formatPrice(item.price)}</Col>
                                                 </Row>
                                             </ListGroup.Item>
                                         ))}
@@ -164,7 +174,7 @@ export default function () {
                     <Col sm={12} md={3} lg={4}>
                         <Card className="p-3 border-dark">
                             <Card.Body>
-                                <Card.Title>Tổng kết</Card.Title>
+                                <Card.Title className="ord-card-title">Tổng kết</Card.Title>
                                 <ListGroup variant="flush">
                                     <ListGroup.Item>
                                         <Row>

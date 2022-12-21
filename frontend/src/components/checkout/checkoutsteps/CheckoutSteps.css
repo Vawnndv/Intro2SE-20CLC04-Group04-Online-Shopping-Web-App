@@ -3,16 +3,6 @@
     text-align: center;
 }
 
-/* .checkout-steps > div {
-    border-bottom: 0.3rem solid #a0a0a0;
-    color: #a0a0a0;
-}
-
-.checkout-steps > div.active {
-    border-bottom: 0.3rem solid #3F72Af;
-    color: #3F72Af;
-} */
-
 .checkout-steps>div {
     display: flex;
     flex-direction: column;
@@ -42,17 +32,3 @@
     background-color: #3F72Af;
     color: #f6f6f6;
 }
-
-/* a {
-    text-decoration: none !important;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    justify-content: space-between;
-    color: black;
-}
-
-a:hover {
-    color: black;
-} */

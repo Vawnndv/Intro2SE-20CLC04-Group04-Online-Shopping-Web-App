@@ -11,11 +11,11 @@ import ProfileScreen from './components/profile/ProfileScreen';
 import CartScreen from "./components/homepage/CartScreen";
 import { useContext } from 'react';
 import { Store } from './Store';
-import ShippingScreen from './components/checkout/shipping/ShippingScreen';
-import PaymentInfoScreen from './components/checkout/paymentinfo/PaymentInfoScreen';
-import PlaceOrderScreen from './components/checkout/placeorder/PlaceOrderScreen';
+import ShippingScreen from './components/checkout/ShippingScreen';
+import PaymentInfoScreen from './components/checkout/PaymentInfoScreen';
+import PlaceOrderScreen from './components/order/PlaceOrderScreen';
 import OrderHistoryScreen from './components/orderhistory/OrderHistoryScreen';
-import OrderScreen from './components/order/orderscreen/OrderScreen';
+import OrderScreen from './components/order/OrderScreen';
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
