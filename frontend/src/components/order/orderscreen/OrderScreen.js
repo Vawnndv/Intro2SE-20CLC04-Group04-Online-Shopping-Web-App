@@ -1,136 +1,123 @@
-import react, { useContext, useEffect, useReducer, useState } from 'react';
-import CheckoutSteps from '../checkoutsteps/CheckoutSteps';
-import { Helmet } from 'react-helmet-async';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect, useReducer } from 'react';
+import LoadingBox from '../../loadingbox/LoadingBox';
+import MessageBox from '../../messagebox/MessageBox';
 import { Store } from '../../../Store';
-import { Row, Col, Card, ListGroup, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 import { formatPrice, getError } from '../../../utils';
-// import { toast } from 'react-toastify';
-import './PlaceOrderScreen.css';
-import Axios from 'axios';
-import LoadingBox from '../../loadingbox/LoadingBox.js';
+import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
+import { Row, Col, Card, ListGroup } from 'react-bootstrap';
+import './OrderScreen.css';
 
-const reducer = (state, action) => {
+function reducer(state, action) {
     switch (action.type) {
-        case "CREATE_REQUEST":
-            return { ...state, loading: true };
-        case "CREATE_SUCCESS":
-            return { ...state, loading: false };
-        case "CREATE_FAIL":
-            return { ...state, loading: false };
+        case 'FETCH_REQUEST':
+            return { ...state, loading: true, error: '' };
+        case 'FETCH_SUCCESS':
+            return { ...state, order: action.payload, loading: false, error: '' };
+        case 'FETCH_FAIL':
+            return { ...state, loading: false, error: action.payload };
         default:
             return state;
     }
-};
+}
 
-export default function () {
+export default function OrderScreen() {
+    const { state } = useContext(Store);
+    const { userInfo } = state;
+
+    const params = useParams();
+    const { id: orderId } = params;
     const navigate = useNavigate();
 
-    const [{ loading }, dispatch] = useReducer(reducer, {
-        loading: false
+    const [{ loading, error, order }, dispatch] = useReducer(reducer, {
+        loading: true,
+        order: {},
+        error: ""
     });
 
-    const { state, dispatch: ctxDispatch } = useContext(Store);
-    const {
-        userInfo,
-        cart
-    } = state;
-
-    cart.itemsPrice = cart.cartItems.reduce((accum, item) => {
-        return accum + item.quantity * item.price;
-    }, 0);
-    cart.voucherSales = 0;
-    cart.totalPrice = cart.itemsPrice - cart.voucherSales;
-
-    const placOrderHandler = async () => {
-        try {
-            dispatch({ type: "CREATE_REQUEST" });
-            const { data } = await Axios.post(
-                '/api/orders',
-                {
-                    orderItems: cart.cartItems,
-                    shippingAddress: cart.shippingAddress,
-                    paymentInfo: cart.paymentInfo,
-                    itemsPrice: cart.itemsPrice,
-                    voucherSales: cart.voucherSales,
-                    totalPrice: cart.totalPrice
-                },
-                {
-                    headers: {
-                        authorization: `Bearer ${userInfo.token}`,
-                    }
-                }
-            );
-            ctxDispatch({ type: "CART_CLEAR" });
-            dispatch({ type: "CREATE_SUCCESS" });
-
-            localStorage.removeItem('cartItems');
-            navigate(`/order/${data.order._id}`);
-        } catch (error) {
-            dispatch({ type: "CREATE_FAIL" });
-            // toast.error(getError(err));
-            alert(error);
-        }
-    };
-
     useEffect(() => {
-        if (!cart.shippingAddress.address) {
-            navigate('/shipping');
+        const fetchOrder = async () => {
+            dispatch({ type: 'FETCH_REQUEST' });
+            try {
+                const { data } = await axios.get(`/api/orders/${orderId}`, {
+                    headers: { authorization: `Bearer ${userInfo.token}` }
+                });
+                dispatch({ type: 'FETCH_SUCCESS', payload: data });
+            } catch (error) {
+                dispatch({ type: 'FETCH_FAIL', payload: getError(error) });
+            }
         }
-        // if (!cart.paymentInfo) {
-        //     navigate('/payment');
-        // }
         if (!userInfo) {
-            navigate('/');
+            return navigate('/login');
         }
-    }, [cart, userInfo, navigate]);
 
-    return (
+        if (!order._id || (order.id && order.id != orderId)) {
+            fetchOrder();
+        }
+    }, [order, userInfo, orderId, navigate]);
+
+
+    return loading ? (
+        <LoadingBox></LoadingBox>
+    ) : error ? (
+        <MessageBox variant="danger">{error}</MessageBox>
+    ) : (
         <div>
             <Helmet>
-                <title>Payment Info</title>
+                <title>Order {orderId}</title>
             </Helmet>
-            <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
             <div className="container">
-                <h1 className="my-4 text-center">Xác nhận đơn hàng</h1>
+                <h1 className="my-4 text-center">Đơn hàng {orderId}</h1>
                 <Row>
                     <Col sm={12} md={9} lg={8}>
                         <Card className="p-3 mb-3 border-dark">
                             <Card.Body>
-                                <div className="d-flex justify-content-between align-items-center mb-2">
+                                <div className="d-flex align-items-center mb-2">
                                     <Card.Title>Thông tin khách hàng</Card.Title>
-                                    <Link className="btn btn-primary" to="/shipping">Chỉnh sửa</Link>
                                 </div>
                                 <Card.Text className="grid-container">
                                     <span>Họ tên:</span>
-                                    <span>{cart.shippingAddress.fullName}</span>
+                                    <span>{order.shippingAddress.fullName}</span>
                                     <span>Số điện thoại:</span>
-                                    <span>{cart.shippingAddress.phone}</span>
+                                    <span>{order.shippingAddress.phone}</span>
                                     <span>Địa chỉ:</span>
-                                    <span>{cart.shippingAddress.address}</span>
+                                    <span>{order.shippingAddress.address}</span>
                                 </Card.Text>
+                                {order.isDelivered ? (
+                                    <MessageBox variant='success'>
+                                        Đã giao hàng lúc {order.deliveredAt}
+                                    </MessageBox>
+                                ) : (
+                                    <MessageBox variant='danger'>Chưa giao hàng</MessageBox>
+                                )}
                             </Card.Body>
                         </Card>
                         <Card className="p-3 mb-3 border-dark">
                             <Card.Body>
-                                <div className="d-flex justify-content-between align-items-center mb-2">
+                                <div className="d-flex align-items-center mb-2">
                                     <Card.Title>Thanh toán</Card.Title>
-                                    <Link className="btn btn-primary" to="/payment">Chỉnh sửa</Link>
                                 </div>
                                 <Card.Text className="grid-container">
                                     <span>Hình thức:</span>
-                                    <span>{cart.paymentInfo.paymentMethod}</span>
+                                    <span>{order.paymentInfo.paymentMethod}</span>
                                     <span>Voucher:</span>
-                                    <span>{cart.paymentInfo.voucher}</span>
+                                    <span>{order.paymentInfo.voucher}</span>
                                 </Card.Text>
+                                {order.isPaid ? (
+                                    <MessageBox variant='success'>
+                                        Đã thanh toán lúc {order.deliveredAt}
+                                    </MessageBox>
+                                ) : (
+                                    <MessageBox variant='danger'>Chưa thanh toán</MessageBox>
+                                )}
                             </Card.Body>
                         </Card>
                         <Card className="p-3 mb-3 border-dark">
-                            <Card.Body className="cart">
-                                <div className="d-flex justify-content-between align-items-center mb-2">
+                            <Card.Body className="order">
+                                <div className="d-flex align-items-center mb-2">
                                     <Card.Title>Sản phẩm thanh toán</Card.Title>
-                                    <Link className="btn btn-primary" to="/cart">Chỉnh sửa</Link>
                                 </div>
                                 <div>
                                     <ListGroup variant="flush">
@@ -142,7 +129,7 @@ export default function () {
                                                 <Col>Giá tổng</Col>
                                             </Row>
                                         </ListGroup.Item>
-                                        {cart.cartItems.map((item) => (
+                                        {order.orderItems.map((item) => (
                                             <ListGroup.Item key={item._id}>
                                                 <Row className="my-2">
                                                     <Col>
@@ -172,7 +159,7 @@ export default function () {
                                                 <span>Hóa đơn gốc:</span>
                                             </Col>
                                             <Col>
-                                                <span>{formatPrice(cart.itemsPrice)}</span>
+                                                <span>{formatPrice(order.itemsPrice)}</span>
                                             </Col>
                                         </Row>
                                     </ListGroup.Item>
@@ -182,7 +169,7 @@ export default function () {
                                                 <span>Giá giảm:</span>
                                             </Col>
                                             <Col>
-                                                <span>{formatPrice(cart.voucherSales)}</span>
+                                                <span>{formatPrice(order.voucherSales)}</span>
                                             </Col>
                                         </Row>
                                     </ListGroup.Item>
@@ -192,21 +179,9 @@ export default function () {
                                                 <span>Tổng hóa đơn:</span>
                                             </Col>
                                             <Col>
-                                                <span>{formatPrice(cart.totalPrice)}</span>
+                                                <span>{formatPrice(order.totalPrice)}</span>
                                             </Col>
                                         </Row>
-                                    </ListGroup.Item>
-                                    <ListGroup.Item>
-                                        <div className="d-grid mt-4">
-                                            <Button
-                                                type="button"
-                                                variant="primary"
-                                                onClick={placOrderHandler}
-                                                disabled={cart.cartItems.length === 0}>
-                                                Đặt hàng
-                                            </Button>
-                                        </div>
-                                        {loading && <LoadingBox></LoadingBox>}
                                     </ListGroup.Item>
                                 </ListGroup>
                             </Card.Body>

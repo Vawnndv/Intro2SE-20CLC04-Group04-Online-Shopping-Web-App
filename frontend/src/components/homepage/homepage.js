@@ -16,7 +16,6 @@ import LoadingBox from "../loadingbox/LoadingBox";
 import MessageBox from "../messagebox/MessageBox";
 import {getError} from "../../utils";
 
-
 const reducer = (state, action) => {
     switch (action.type) {
         case 'FETCH_REQUEST':
