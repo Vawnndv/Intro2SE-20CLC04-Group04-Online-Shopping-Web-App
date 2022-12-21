@@ -1,6 +1,5 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useContext, useEffect, useReducer} from "react";
-import logger from "use-reducer-logger";
 import axios from "axios";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";

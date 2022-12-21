@@ -5,6 +5,7 @@ import {Nav} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import {useContext} from "react";
 import {Store} from "../../Store";
+import { LinkContainer } from "react-router-bootstrap";
 
 export default function Header() {
     const {state, dispatch: ctxDispatch} = useContext(Store);
@@ -33,7 +34,7 @@ export default function Header() {
                                     
                                     <div className="dropdown-menu dropdown-menu-end">
                                         <Link to="/profile" className="dropdown-item">Tài khoản</Link>
-                                        <Link to="/order" className="dropdown-item">Đơn hàng</Link>
+                                        <Link to="/orderhistory" className="dropdown-item">Đơn hàng</Link>
                                         <Link to="#signout" onClick={logoutHandler} className="dropdown-item">Đăng xuất</Link>
                                     </div>
                                 </div>
@@ -49,7 +50,9 @@ export default function Header() {
                 <div className="container">
                     <div className="row d-flex justify-content-center align-items-center">
                         <div className="col-2 d-flex justify-content-center align-items-center">
-                            <h1 className="logo">HKVTV</h1>
+                            <LinkContainer to="/">
+                                <h1 className="logo">HKVTV</h1>
+                            </LinkContainer>
                         </div>
                         <div className="col-8">
                             <div className="search">
