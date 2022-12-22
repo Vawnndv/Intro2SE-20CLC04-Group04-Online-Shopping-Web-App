@@ -71,7 +71,7 @@ export default function Register () {
 
             // ctxDispatch({type: 'USER_LOGIN', payload: data})
             // localStorage.setItem('userInfo', JSON.stringify(data));
-            navigate(redirect || '/')
+            navigate(redirect || '/login')
         }catch(error){
         }
     }
@@ -87,7 +87,7 @@ export default function Register () {
           // send verification mail.
             userCredential.user.sendEmailVerification();
             auth.signOut();
-            alert("Email sent");
+            alert("Đã gửi email xác nhận đăng ký vào hòm thư của bạn");
             
            
             dataHandler(e);

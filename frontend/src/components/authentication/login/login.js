@@ -20,6 +20,7 @@ function Login() {
     const [passwordType, setPasswordType] = useState("password");
     const [passwordInput, setPasswordInput] = useState("");
     let isVerified = false;
+   
     const handlePasswordChange = (evnt)=>{
         setPasswordInput(evnt.target.value);
     }
@@ -52,9 +53,9 @@ function Login() {
             ctxDispatch({type: 'USER_LOGIN', payload: data})
             localStorage.setItem('userInfo', JSON.stringify(data));
             navigate(redirect || '/')
-          
+            
         } catch (error) {
-            alert(getError(error));
+            
         }
     }
 
@@ -66,12 +67,21 @@ function Login() {
             const temp = auth.currentUser.emailVerified
             isVerified = temp;
 
-            if(temp)
+            if(isVerified)
                 loginHandler(e);
             else
                 alert("Email chưa xác nhận");
         })
-        .catch(alert);
+        .catch(mess => {
+            if(mess.code === "auth/too-many-requests")
+                alert("Tài khoản tạm thời bị khóa vì nhập sai mật khẩu nhiều lần")
+            else if(mess.code === "auth/wrong-password")
+                alert("Sai mật khẩu, vui lòng kiểm tra lại")
+            else if(mess.code === "auth/user-not-found")
+                alert("Không tìm thấy tài khoản trong hệ thống, vui lòng kiểm tra lại, có thể tài khoản chưa đăng ký")
+        })
+
+        
     }
 
     useEffect(() => {

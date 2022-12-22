@@ -11,8 +11,8 @@ userRouter.post(
     expressAsyncHandler(async (req, res) => {
         const user = await User.findOne({ email: req.body.email });
         if (user) {
-            // if(req.body.isVerified === true)
-            // {
+            if(req.body.isVerified === true)
+            {
                 if (bcrypt.compareSync(req.body.password, user.password)) {
                     // if(toString(req.body.isVerified) === 'true')
                     // if(req.body.isVerified == true)
@@ -31,11 +31,11 @@ userRouter.post(
                         token: generateToken(user)
                     });
                 }
-                else res.status(401).send({message: 'Mật khẩu không đúng'});
-            // }
+                // else res.status(401).send({message: 'Mật khẩu không đúng'});
+            }
             // else res.status(401).send({message: 'Email chưa xác nhận232'});
         }
-        else res.status(401).send({message: 'Email chưa đăng ký'});
+        // else res.status(401).send({message: 'Email chưa đăng ký'});
     })
 );
 
