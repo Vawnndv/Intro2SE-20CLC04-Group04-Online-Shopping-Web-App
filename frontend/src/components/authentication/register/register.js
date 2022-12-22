@@ -8,6 +8,7 @@ import '../../fontawesome/FontAwesome'
 import { Link } from "react-router-dom";
 import { Store } from '../../../Store';
 import Axios from 'axios'
+import auth from '../../../firebase';
 
 export default function Register () {
     const navigate = useNavigate();
@@ -57,13 +58,8 @@ export default function Register () {
 
     const {state, dispatch: ctxDispatch} = useContext(Store);
 
-    const submitHandler = async(e) => {
-        e.preventDefault();
-        if(password !== reenterPassword){
-            alert('Mật khẩu không trùng khớp')
-            return;
-        }
-        try {
+    const dataHandler = async(e) => {
+        try{
             const {data} = await Axios.post('/api/users/register', {
                 email,
                 password,
@@ -73,12 +69,30 @@ export default function Register () {
                 dob
             });
 
-            ctxDispatch({type: 'USER_LOGIN', payload: data})
-            localStorage.setItem('userInfo', JSON.stringify(data));
+            // ctxDispatch({type: 'USER_LOGIN', payload: data})
+            // localStorage.setItem('userInfo', JSON.stringify(data));
             navigate(redirect || '/')
-        } catch (error) {
-            
+        }catch(error){
         }
+    }
+    const submitHandler = async(e) => {
+        e.preventDefault();
+        if(password !== reenterPassword){
+            alert('Mật khẩu không trùng khớp')
+            return;
+        }
+
+        auth.createUserWithEmailAndPassword(email , password)
+        .then((userCredential)=>{
+          // send verification mail.
+            userCredential.user.sendEmailVerification();
+            auth.signOut();
+            alert("Email sent");
+            
+           
+            dataHandler(e);
+        })
+        .catch(alert);
     }
 
     return(

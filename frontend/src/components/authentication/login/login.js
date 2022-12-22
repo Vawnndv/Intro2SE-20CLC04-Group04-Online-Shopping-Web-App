@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import Axios from 'axios'
 import {Store} from '../../../Store';
 import { getError } from "../../../utils";
+import auth from '../../../firebase';
 
 function Login() {
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ function Login() {
     
     const [passwordType, setPasswordType] = useState("password");
     const [passwordInput, setPasswordInput] = useState("");
-    
+    let isVerified = false;
     const handlePasswordChange = (evnt)=>{
         setPasswordInput(evnt.target.value);
     }
@@ -37,16 +38,17 @@ function Login() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    
-    const submitHandler = async(e) => {
-        e.preventDefault();
+
+    const loginHandler = async(e) => {
         try {
             const {data} = await Axios.post('/api/users/login', {
                 email,
                 password,
+                isVerified,
             });
             
-            console.log(data);
+            console.log(isVerified)
+            // console.log(data);
             ctxDispatch({type: 'USER_LOGIN', payload: data})
             localStorage.setItem('userInfo', JSON.stringify(data));
             navigate(redirect || '/')
@@ -54,6 +56,22 @@ function Login() {
         } catch (error) {
             alert(getError(error));
         }
+    }
+
+    const submitHandler = async(e) => {
+        e.preventDefault();
+       
+        auth.signInWithEmailAndPassword(email , password)
+        .then((userCredential)=>{
+            const temp = auth.currentUser.emailVerified
+            isVerified = temp;
+
+            if(temp)
+                loginHandler(e);
+            else
+                alert("Email chưa xác nhận");
+        })
+        .catch(alert);
     }
 
     useEffect(() => {

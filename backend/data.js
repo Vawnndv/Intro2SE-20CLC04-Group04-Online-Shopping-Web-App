@@ -10,6 +10,7 @@ const data = {
             email: 'admin@gmail.com',
             password: bcrypt.hashSync('123456'),
             isAdmin: true,
+            isVerified: true,
         },
         {
             name: 'Người dùng 1',
@@ -19,6 +20,7 @@ const data = {
             email: 'user1@example.com',
             password: bcrypt.hashSync('123456'),
             isAdmin: false,
+            isVerified: true,
         },
     ],
     products: [
