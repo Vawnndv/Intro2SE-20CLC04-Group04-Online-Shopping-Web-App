@@ -66,11 +66,13 @@ function Login() {
         .then((userCredential)=>{
             const temp = auth.currentUser.emailVerified
             isVerified = temp;
-
+            
             if(isVerified)
                 loginHandler(e);
-            else
-                alert("Email chưa xác nhận");
+            else{
+                alert("Email chưa xác nhận, đã gửi lại mail xác nhận mới đến hòm thư của bạn");
+                userCredential.user.sendEmailVerification();
+            }
         })
         .catch(mess => {
             if(mess.code === "auth/too-many-requests")
