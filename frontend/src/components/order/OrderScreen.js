@@ -52,7 +52,7 @@ export default function OrderScreen() {
             return navigate('/login');
         }
 
-        if (!order._id || (order.id && order.id != orderId)) {
+        if (!order._id || (order.id && order.id !== orderId)) {
             fetchOrder();
         }
     }, [order, userInfo, orderId, navigate]);
