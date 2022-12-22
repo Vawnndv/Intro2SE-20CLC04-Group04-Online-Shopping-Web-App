@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 import {useContext} from "react";
 import {Store} from "../../Store";
 import { LinkContainer } from "react-router-bootstrap";
+import SearchBox from "../searchbox/SearchBox";
 
 export default function Header() {
     const {state, dispatch: ctxDispatch} = useContext(Store);
@@ -55,12 +56,10 @@ export default function Header() {
                             </LinkContainer>
                         </div>
                         <div className="col-8">
-                            <div className="search">
-                                <input type="text" className="form-control" placeholder="Search product" />
-                                <button className="btn btn-primary">
-                                    <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" />
-                                </button>
-                            </div>
+                            {/* <Route
+                                render={(history) => <SearchBox history={history}></SearchBox> >
+                            </Route> */}
+                            <SearchBox />
                         </div>
                         <div className="col-2 d-flex justify-content-end align-items-center">
                             <Nav className="">

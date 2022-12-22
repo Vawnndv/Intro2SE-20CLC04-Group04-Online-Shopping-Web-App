@@ -16,6 +16,12 @@ import PaymentInfoScreen from './components/checkout/PaymentInfoScreen';
 import PlaceOrderScreen from './components/order/PlaceOrderScreen';
 import OrderHistoryScreen from './components/orderhistory/OrderHistoryScreen';
 import OrderScreen from './components/order/OrderScreen';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { getError } from './utils';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import SearchScreen from './components/searchscreen/SearchScreen';
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -26,6 +32,21 @@ function App() {
   //   localStorage.removeItem('userInfo');
   //   localStorage.removeItem('shippingAddress');
   // }
+
+  // const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const { data } = await axios.get(`/api/products/categories`);
+        setCategories(data);
+      } catch (err) {
+        toast.error(getError(err));
+      }
+    }
+  })
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -38,6 +59,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/profile" element={<ProfileScreen />} />
+              <Route path="/search" element={<SearchScreen />} />
               <Route path="/cart" element={<CartScreen />} />
               <Route path="/shipping" element={<ShippingScreen />} />
               <Route path="/payment" element={<PaymentInfoScreen />} />

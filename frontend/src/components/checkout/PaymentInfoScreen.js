@@ -1,4 +1,4 @@
-import react, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import CheckoutSteps from './checkoutsteps/CheckoutSteps';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';

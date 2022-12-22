@@ -40,35 +40,6 @@ header {
     font-weight: bold;
 }
 
-.search {
-    position: relative;
-}
-
-.search input {
-    height: 40px;
-    text-indent: 10px;
-}
-
-.search input:focus{
-    box-shadow: none;
-    border: 2px solid var(--color--secondary);
-}
-
-.search .fa-search{
-    position: absolute;
-    top: 20px;
-    left: 16
-}
-
-.search button{
-    position: absolute;
-    top: 2px;
-    right: 2px;
-    height: 36px;
-    width: 100px;
-    background: var(--color--primary);
-}
-
 #cart-icon {
     margin-right: 20px;
     color: var(--color--primary);

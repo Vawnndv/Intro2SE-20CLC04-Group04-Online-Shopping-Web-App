@@ -1,11 +1,11 @@
-import react, { useContext, useEffect, useReducer, useState } from 'react';
+import { useContext, useEffect, useReducer} from 'react';
 import CheckoutSteps from '../checkout/checkoutsteps/CheckoutSteps';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import { Store } from '../../Store';
 import { Row, Col, Card, ListGroup, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { formatPrice, getError } from '../../utils';
+import { formatPrice} from '../../utils';
 // import { toast } from 'react-toastify';
 import './order.css';
 import Axios from 'axios';
@@ -24,7 +24,7 @@ const reducer = (state, action) => {
     }
 };
 
-export default function () {
+export default function PlaceOrderScreen() {
     const navigate = useNavigate();
 
     const [{ loading }, dispatch] = useReducer(reducer, {

@@ -1,0 +1,21 @@
+{
+  "name": "hkvtv",
+  "version": "1.0.0",
+  "description": "Web bán thiết bị điện tử",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd backend && npm install && cd ../frontend && npm install && npm run build",
+    "start": "nodemon backend/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vawnndv/Intro2SE-20CLC04-Group04.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vawnndv/Intro2SE-20CLC04-Group04/issues"
+  },
+  "homepage": "https://github.com/Vawnndv/Intro2SE-20CLC04-Group04#readme"
+}
