@@ -22,6 +22,7 @@ import { getError } from './utils';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import SearchScreen from './components/searchscreen/SearchScreen';
+import ProtectedRoute from "./components/protectedroute/ProtectedRoute";
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -58,14 +59,14 @@ function App() {
               <Route path="/" element={<Homepage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/profile" element={<ProfileScreen />} />
+              <Route path="/profile" element={<ProtectedRoute><ProfileScreen /></ProtectedRoute>} />
               <Route path="/search" element={<SearchScreen />} />
               <Route path="/cart" element={<CartScreen />} />
               <Route path="/shipping" element={<ShippingScreen />} />
               <Route path="/payment" element={<PaymentInfoScreen />} />
               <Route path="/placeorder" element={<PlaceOrderScreen />} />
-              <Route path="/order/:id" element={<OrderScreen />} />
-              <Route path="/orderhistory" element={<OrderHistoryScreen />} />
+              <Route path="/order/:id" element={<ProtectedRoute><OrderScreen /></ProtectedRoute>} />
+              <Route path="/orderhistory" element={<ProtectedRoute><OrderHistoryScreen /></ProtectedRoute>} />
             </Routes>
           </Container>
         </main>
