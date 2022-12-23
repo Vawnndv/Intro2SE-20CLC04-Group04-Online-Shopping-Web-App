@@ -1,7 +1,7 @@
 import "./Header.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Badge from "react-bootstrap/Badge";
-import {Nav} from "react-bootstrap";
+import {Nav, NavDropdown} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import {useContext} from "react";
 import {Store} from "../../Store";
@@ -41,6 +41,22 @@ export default function Header() {
                                 </div>
                             ) : (
                                 <Link to="/login" className="nav-login" style={{textDecoration: 'none'}}>Đăng nhập</Link>
+                            )}
+                            {userInfo && userInfo.isAdmin && (
+                                <NavDropdown title="Admin" id="admin-nav-dropdown">
+                                    <LinkContainer to="/dashbroad">
+                                        <NavDropdown.Item>Dashbroad</NavDropdown.Item>
+                                    </LinkContainer>
+                                    <LinkContainer to="/productlist">
+                                        <NavDropdown.Item>Products</NavDropdown.Item>
+                                    </LinkContainer>
+                                    <LinkContainer to="/orderlist">
+                                        <NavDropdown.Item>Orders</NavDropdown.Item>
+                                    </LinkContainer>
+                                    <LinkContainer to="/userlist">
+                                        <NavDropdown.Item>Users</NavDropdown.Item>
+                                    </LinkContainer>
+                                </NavDropdown>
                             )}
                             
                         </div>
