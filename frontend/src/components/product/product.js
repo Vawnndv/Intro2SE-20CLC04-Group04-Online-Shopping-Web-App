@@ -20,7 +20,7 @@ function Product(props) {
                         
                         <div className="product-info-bottom">
                             <div className="product-info-bottom-left">
-                                <p style={{fontSize: '20px'}}>Còn {product.quanity} sản phẩm</p>
+                                <p style={{fontSize: '20px'}}>Còn {product.quantity} sản phẩm</p>
                                 <p className="product-info-price">{formatPrice(product.price)}</p>
                                 <Rating rating={product.rating} numReviews={product.reviews}/>
                             </div>

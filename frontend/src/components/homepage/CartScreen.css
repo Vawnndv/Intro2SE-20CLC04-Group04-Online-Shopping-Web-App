@@ -1,3 +1,128 @@
 .img-thumbnail {
     height: 80px !important;
 }
+
+:root {
+    --color--primary: #112D4e;
+    --color--secondary: #3f72af;
+    --color--tertiary: #dbe2ef;
+    --color--quartenary: #f0f4f8;
+    --font--primary: #000;
+}
+
+.cart-title {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: var(--color--primary);
+}
+
+.control-bar {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    background: white;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.topbar {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.voucher-bar {
+    margin-top: 28px !important;
+    border-bottom: 1px dashed #ccc;
+}
+
+.bottombar {
+    margin-top: 0;
+    margin-bottom: 40px;
+    height: 80px;
+}
+
+.cb {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cb > input[type="checkbox"] {
+    margin: auto;
+    width: 16px;
+    height: 16px;
+}
+
+.control-bar > .col {
+    display: flex;
+    align-items: center;
+}
+
+.control-bar span {
+    color: var(--font--primary);
+    font-weight: 500;
+}
+
+.list-wrapper {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.item {
+    height: 120px;
+    background: white;
+    border-bottom: 1px solid #ccc;
+}
+
+.item-name {
+    margin-left: 10px;
+    text-decoration: none;
+    color: var(--font--primary);
+    font-weight: 500;
+}
+
+.quantity-control {
+    width: 140px;
+    border: 1px solid #ccc;
+}
+
+.quantity-control > span {
+    width: 80px;
+    text-align: center;
+}
+
+.quantity-btn, .quantity-btn:hover {
+    padding: 0 auto;
+    background: white !important;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    color: var(--font--primary);
+}
+
+.item-action:hover {
+    cursor: pointer;
+    color: var(--color--secondary);
+    font-weight: 600;
+}
+
+.voucher-title {
+    color: var(--color--primary) !important;
+    font-size: 1.2rem;
+}
+
+.voucher-action {
+    color: var(--color--primary) !important;
+    font-size: 0.9rem;
+}
+
+.total-bill {
+    margin-left: 10px;
+    color: var(--color--secondary) !important;
+}
+
+.checkout-btn {
+    width: 140px;
+    border: none;
+    border-radius: 5px;
+    background: var(--color--secondary) !important;
+    color: white;
+    font-weight: 400;
+}
