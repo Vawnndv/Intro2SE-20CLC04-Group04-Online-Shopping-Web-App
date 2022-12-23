@@ -22,6 +22,7 @@ import { getError } from './utils';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import SearchScreen from './components/searchscreen/SearchScreen';
+import Forget from './components/authentication/login/forget';
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -56,6 +57,7 @@ function App() {
             <Routes>
               <Route path="/product/:slug" element={<ProductScreen />} />
               <Route path="/" element={<Homepage />} />
+              <Route path="/forget" element={<Forget />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/profile" element={<ProfileScreen />} />

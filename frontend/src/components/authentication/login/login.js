@@ -131,9 +131,9 @@ function Login() {
                     <div className="mb-3 submit-button"><Button type="submit">Đăng nhập</Button></div>
                 </Form>
 
-                <span className="forget-password-container">
-                    <button className="forget-btn bg-secondary">Quên mật khẩu</button>
-                </span>
+                <Link className="forget-password-container" to={`/forget`}>
+                    <button className="forget-btn bg-secondary" >Quên mật khẩu</button>
+                </Link>
             </div>
         </Container>
     )

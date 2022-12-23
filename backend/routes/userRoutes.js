@@ -13,7 +13,7 @@ userRouter.post(
         if (user) {
             if(req.body.isVerified === true)
             {
-                if (bcrypt.compareSync(req.body.password, user.password)) {
+                // if (bcrypt.compareSync(req.body.password, user.password)) {
                     // if(toString(req.body.isVerified) === 'true')
                     // if(req.body.isVerified == true)
                     user.isVerified = req.body.isVerified;
@@ -30,7 +30,7 @@ userRouter.post(
                         isVerified: user.isVerified,
                         token: generateToken(user)
                     });
-                }
+                // }
                 // else res.status(401).send({message: 'Mật khẩu không đúng'});
             }
             // else res.status(401).send({message: 'Email chưa xác nhận232'});
@@ -97,5 +97,38 @@ userRouter.put(
         }
     })
 )
+
+userRouter.post(
+    '/forget',
+    expressAsyncHandler(async (req, res) => {
+        const user = await User.findOne({ email: req.body.email });
+        if (user) {
+            if(req.body.isVerified === true)
+            {
+                // if (bcrypt.compareSync(req.body.password, user.password)) {
+                //     // if(toString(req.body.isVerified) === 'true')
+                //     // if(req.body.isVerified == true)
+                //     user.isVerified = req.body.isVerified;
+                //     user.save();
+                    
+                //     res.send({
+                //         _id: user._id,
+                //         name: user.name,
+                //         email: user.email,
+                //         isAdmin: user.isAdmin,
+                //         address: user.address,
+                //         phone: user.phone,
+                //         dob: user.dob,
+                //         isVerified: user.isVerified,
+                //         token: generateToken(user)
+                //     });
+                // }
+                // else res.status(401).send({message: 'Mật khẩu không đúng'});
+            }
+            // else res.status(401).send({message: 'Email chưa xác nhận232'});
+        }
+        // else res.status(401).send({message: 'Email chưa đăng ký'});
+    })
+);
 
 export default userRouter;
