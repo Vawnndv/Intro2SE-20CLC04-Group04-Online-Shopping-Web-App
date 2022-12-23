@@ -23,6 +23,9 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import SearchScreen from './components/searchscreen/SearchScreen';
 import Forget from './components/authentication/login/forget';
+import ProtectedRoute from "./components/protectedroute/ProtectedRoute";
+import DashbroadScreen from "./components/dashbroad/DashbroadScreen";
+import AdminRoute from "./components/adminroute/AdminRoute";
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -60,14 +63,16 @@ function App() {
               <Route path="/forget" element={<Forget />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/profile" element={<ProfileScreen />} />
+              <Route path="/profile" element={<ProtectedRoute><ProfileScreen /></ProtectedRoute>} />
               <Route path="/search" element={<SearchScreen />} />
               <Route path="/cart" element={<CartScreen />} />
               <Route path="/shipping" element={<ShippingScreen />} />
               <Route path="/payment" element={<PaymentInfoScreen />} />
               <Route path="/placeorder" element={<PlaceOrderScreen />} />
-              <Route path="/order/:id" element={<OrderScreen />} />
-              <Route path="/orderhistory" element={<OrderHistoryScreen />} />
+              <Route path="/order/:id" element={<ProtectedRoute><OrderScreen /></ProtectedRoute>} />
+              <Route path="/orderhistory" element={<ProtectedRoute><OrderHistoryScreen /></ProtectedRoute>} />
+              {/* Admin Routes */}
+              <Route path="/admin/dashbroad" element={<AdminRoute><DashbroadScreen /></AdminRoute>} />
             </Routes>
           </Container>
         </main>
