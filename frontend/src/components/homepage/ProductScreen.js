@@ -1,5 +1,6 @@
-import {useNavigate, useParams} from "react-router-dom";
-import {useContext, useEffect, useReducer} from "react";
+import './ProductScreen.css';
+import {Link, useNavigate, useParams} from "react-router-dom";
+import {useContext, useEffect, useReducer, useState} from "react";
 import axios from "axios";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -24,6 +25,12 @@ const reducer = (state, action) => {
             return {...state, product: action.payload, loading: false};
         case 'FETCH_FAIL':
             return {...state, loading:false, error: action.payload};
+        case 'FETCH_REVIEW_CREATE_REQUEST':
+            return {...state, loadingReviewCreate: true};
+        case 'FETCH_REVIEW_CREATE_SUCCESS':
+            return {...state, loadingReviewCreate: false, successReviewCreate:true,review: action.payload};
+        case 'FETCH_REVIEW_CREATE_FAIL':
+            return {...state, loadingReviewCreate: false, errorReviewCreate: action.payload};
         default:
             return state;
     }
@@ -34,11 +41,21 @@ function ProductScreen (){
     const params = useParams();
     const  {slug} = params;
 
-    const [{loading, error, product}, dispatch] = useReducer(reducer, {
+    const [{loading, error, product, loadingReviewCreate, errorReviewCreate, successReviewCreate, review}, dispatch] = useReducer(reducer, {
         loading: true,
         error: '',
         product: [],
+        loadingReviewCreate: false,
+        errorReviewCreate: '',
+        successReviewCreate: false,
+        review: []
     });
+
+    console.log({loading, error, product, loadingReviewCreate, errorReviewCreate, successReviewCreate, review})
+
+    const [rating, setRating] = useState(0);
+    const [comment, setComment] = useState('');
+
     useEffect(() => {
         const fetchData = async () => {
             dispatch({ type: 'FETCH_REQUEST'});
@@ -50,10 +67,19 @@ function ProductScreen (){
             };
         };
         fetchData();
-    }, [slug]);
+        if(successReviewCreate) {
+            window.alert('Review Submitted Successfully');
+            setRating('');
+            setComment('');
+            return;
+        }
+
+    }, [slug, successReviewCreate]);
 
     const {state, dispatch: ctxDispatch} = useContext(Store);
     const {cart} = state;
+    const { userInfo } = state;
+
     const addToCartHandler = async () => {
         const existItem = cart.cartItems.find( (x) => x._id === product._id);
         const quantity = existItem ? existItem.quantity + 1 : 1;
@@ -68,6 +94,37 @@ function ProductScreen (){
         });
         navigate('/cart');
     }
+
+    const createReview = async (productId, review) => {
+        dispatch({ type: 'FETCH_REVIEW_CREATE_REQUEST'});
+        try {
+            const data = await axios.post(`/api/products/slug/${product._id}/reviews`,
+                review,
+                {
+                    headers: { authorization: `Bearer ${userInfo.token}`},
+                });
+            dispatch({type: 'FETCH_REVIEW_CREATE_SUCCESS', payload: data.review});
+        }  catch (error) {
+            const message =
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message;
+            dispatch({ type: 'FETCH_REVIEW_CREATE_FAIL', payload: message });
+        }
+    };
+
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+        if(comment && rating) {
+            dispatch(
+                createReview(product._id, {rating, comment, name: userInfo.name})
+            );
+        } else {
+            alert('Please enter comment and rating')
+        }
+    }
+
     return loading ? (
         <LoadingBox />
     ) : error ? (
@@ -131,6 +188,73 @@ function ProductScreen (){
                     </Card>
                 </Col>
             </Row>
+            <Row>
+                <h2 id="reviews">Reviews</h2>
+                {product.customerReviews.length === 0 && (
+                    <MessageBox>There is no review</MessageBox>
+                )}
+                <ul>
+                    {product.customerReviews.map((review) => (
+                        <li key={review._id}>
+                            <strong>{review.name}</strong>
+                            <Rating rating={review.rating} caption=" "></Rating>
+                            <p>{review.createdAt.substring(0, 10)}</p>
+                            <p>{review.comment}</p>
+                        </li>
+                    ))}
+                    <li>
+                        {userInfo ? (
+                            <form className="form" onSubmit={submitHandler}>
+                                <div>
+                                    <h2>Write a customer review</h2>
+                                </div>
+                                <div>
+                                    <label htmlFor="rating">Rating</label>
+                                    <select
+                                        id="rating"
+                                        value={rating}
+                                        onChange={(e) => setRating(e.target.value)}
+                                    >
+                                        <option value="">Select...</option>
+                                        <option value="1">1- Poor</option>
+                                        <option value="2">2- Fair</option>
+                                        <option value="3">3- Good</option>
+                                        <option value="4">4- Very good</option>
+                                        <option value="5">5- Excelent</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label htmlFor="comment">Comment</label>
+                                    <textarea
+                                        id="comment"
+                                        value={comment}
+                                        onChange={(e) => setComment(e.target.value)}
+                                    ></textarea>
+                                </div>
+                                <div>
+                                    <label />
+                                    <button className="primary" type="submit">
+                                        Submit
+                                    </button>
+                                </div>
+                                <div>
+                                    {loadingReviewCreate && <LoadingBox></LoadingBox>}
+                                    {errorReviewCreate && (
+                                        <MessageBox variant="danger">
+                                            {errorReviewCreate}
+                                        </MessageBox>
+                                    )}
+                                </div>
+                            </form>
+                        ) : (
+                            <MessageBox>
+                                Please <Link to="/login">Sign In</Link> to write a review
+                            </MessageBox>
+                        )}
+                    </li>
+                </ul>
+            </Row>
+
         </div>
     );
 }

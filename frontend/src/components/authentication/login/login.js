@@ -10,7 +10,7 @@ import Axios from 'axios'
 import {Store} from '../../../Store';
 import { getError } from "../../../utils";
 import auth from '../../../firebase';
-
+import './login.css'
 function Login() {
     const navigate = useNavigate();
     const {search} = useLocation()
