@@ -23,6 +23,8 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import SearchScreen from './components/searchscreen/SearchScreen';
 import ProtectedRoute from "./components/protectedroute/ProtectedRoute";
+import DashbroadScreen from "./components/dashbroad/DashbroadScreen";
+import AdminRoute from "./components/adminroute/AdminRoute";
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -67,6 +69,8 @@ function App() {
               <Route path="/placeorder" element={<PlaceOrderScreen />} />
               <Route path="/order/:id" element={<ProtectedRoute><OrderScreen /></ProtectedRoute>} />
               <Route path="/orderhistory" element={<ProtectedRoute><OrderHistoryScreen /></ProtectedRoute>} />
+              {/* Admin Routes */}
+              <Route path="/admin/dashbroad" element={<AdminRoute><DashbroadScreen /></AdminRoute>} />
             </Routes>
           </Container>
         </main>
