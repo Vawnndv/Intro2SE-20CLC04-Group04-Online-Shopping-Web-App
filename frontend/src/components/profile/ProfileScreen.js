@@ -63,10 +63,11 @@ let ProfileScreen = () => {
     const [name, setName] = useState(userInfo.name);
     const [email, setEmail] = useState(userInfo.email);
     const [password, setPassword] = useState('');
-    // const [reenterPassword, setReenterPassword] = useState('');
+    const [reenterPassword, setReenterPassword] = useState('');
     const [address, setAddress] = useState(userInfo.address);
     const [phone, setPhone] = useState(userInfo.phone);
     const [dob, setDOB] = useState(userInfo.dob);
+    const [newEmail, setNewEmail] = useState('');
 
     const [{ loadingUpdate }, dispatch] = useReducer(reducer, {
         loadingUpdate: false
@@ -75,37 +76,13 @@ let ProfileScreen = () => {
     const submitHandler = async (e) => {
         e.preventDefault();
        
-        if(window.confirm('Bạn sẽ tự động đăng xuất nếu quá trình thay đổi email diễn ra thành công! \nVui lòng xác nhận hành động này')){
-            auth.signInWithEmailAndPassword(email , password)
-            .then((userCredential)=>{
-                // auth.sendPasswordResetEmail(email)
-                // .then(() => {
-                //     alert("Link đổi mật khẩu đã được gửi đến hòm thư của bạn, vui lòng kiểm tra email để đổi mật khẩu")
-                // })
-                // .catch(alert);
-                userCredential.user.verifyBeforeUpdateEmail(email)
-                .then(() => {
-                    alert("Một email xác nhận đã được gửi đến địa chỉ mail mới, email hiện tại sẽ không thể sử dụng được nữa, khi bạn nhấn tiếp tục tài khoản sẽ tự động đăng xuất")
-                    auth.signOut();
-                    ctxDispatch({type: 'USER_LOGOUT'});
-                    localStorage.removeItem('userInfo');
-                    localStorage.removeItem('cartItems');
-                    localStorage.removeItem('shippingAddress');
-                    localStorage.removeItem('paymentInfo');
-                })
-                .catch(alert)
-            })
-            .catch(alert);
-        }
-        
-
         try {
             const { data } = await axios.put(
                 '/api/users/profile',
                 {
                     name,
-                    email,
-                    password
+                    phone,
+                    address,
                 },
                 {
                     headers: { Authorization: `Bearer ${userInfo.token}` }
@@ -119,6 +96,66 @@ let ProfileScreen = () => {
             dispatch({ type: 'UPDATE_FAIL' });
             toast.error(getError(err));
         }
+
+    }
+
+    const emailDataChange = async(e) => {
+        try {
+            const { data } = await axios.put(
+                '/api/users/profile',
+                {
+                    newEmail
+                },
+                {
+                    headers: { Authorization: `Bearer ${userInfo.token}` }
+                }
+            );
+
+            dispatch({ type: 'UPDATE_SUCCESS' });
+            ctxDispatch({ type: 'USER_SIGNIN', payload: data });
+            localStorage.setItem('userInfo', JSON.stringify(data));
+            toast.success('User updated successfully');
+        } catch (err) {
+            dispatch({ type: 'UPDATE_FAIL' });
+            toast.error(getError(err));
+        }
+    }
+    const emailChangeHandler = async (e) => {
+        e.preventDefault();
+        alert(email)
+        alert(reenterPassword)
+        alert(newEmail)
+        if(window.confirm('Bạn sẽ tự động đăng xuất nếu quá trình thay đổi email diễn ra thành công! \nVui lòng xác nhận hành động này')){
+            auth.signInWithEmailAndPassword(email , reenterPassword)
+            .then((userCredential)=>{
+                userCredential.user.verifyBeforeUpdateEmail(newEmail)
+                .then(() => {
+                    alert("Một email xác nhận đã được gửi đến địa chỉ mail mới, email hiện tại sẽ không thể sử dụng được nữa, khi bạn nhấn tiếp tục tài khoản sẽ tự động đăng xuất")
+                    emailDataChange(e);
+                    auth.signOut();
+                    ctxDispatch({type: 'USER_LOGOUT'});
+                    localStorage.removeItem('userInfo');
+                    localStorage.removeItem('cartItems');
+                    localStorage.removeItem('shippingAddress');
+                    localStorage.removeItem('paymentInfo');
+                })
+                .catch(alert)
+            })
+            .catch(alert);
+        }
+    }
+
+    const passwordChangeHandler = async (e) => {
+        e.preventDefault();
+        auth.signInWithEmailAndPassword(email , password)
+        .then(() =>{
+            auth.sendPasswordResetEmail(email)
+            .then(() => {
+                alert("Link đổi mật khẩu đã được gửi đến hòm thư của bạn, vui lòng kiểm tra email để đổi mật khẩu")
+            })
+            .catch(alert);
+        })
+        .catch(alert);
     }
 
     return (
@@ -128,115 +165,135 @@ let ProfileScreen = () => {
             </Helmet>
             <div className="d-flex flex-column">
                 <h1 className="my-3">Thông tin người dùng</h1>
-                <form onSubmit={submitHandler}>
+                
                     <Row className='info-row'>
                         <Col>
-                            <Card>
-                                <Card.Header>Đổi thông tin cá nhân</Card.Header>
-                                <Card.Body>
-                                    <Row>
-                                        <Col>
-                                            <Form.Group className="mb-3" controlId="name">
-                                                <Form.Label>Họ tên</Form.Label>
+                            <form onSubmit={submitHandler}>
+                                <Card>
+                                    <Card.Header as="h5">Đổi thông tin cá nhân</Card.Header>
+                                    <Card.Body>
+                                        <Row>
+                                            <Col>
+                                                <Form.Group className="mb-3" controlId="name">
+                                                    <Form.Label>Họ tên</Form.Label>
+                                                    <Form.Control
+                                                        value={name}
+                                                        onChange={(e) => setName(e.target.value)}
+                                                    />
+                                                </Form.Group>
+                                    
+                                                <Form.Group className="mb-3" controlId="dob">
+                                                <Form.Label>Ngày sinh</Form.Label>
                                                 <Form.Control
-                                                    value={name}
-                                                    onChange={(e) => setName(e.target.value)}
+                                                    type='date' value={dob} size="lg"
+                                                    onChange={(e) => setDOB(e.target.value)}
                                                 />
-                                            </Form.Group>
+                                                </Form.Group>
+                                            </Col>
                                 
-                                            <Form.Group className="mb-3" controlId="dob">
-                                            <Form.Label>Ngày sinh</Form.Label>
-                                            <Form.Control
-                                                value={dob}
-                                                onChange={(e) => setDOB(e.target.value)}
-                                            />
-                                            </Form.Group>
-                                        </Col>
-                            
-                                        <Col>
-                                            <Form.Group className="mb-3" controlId="phone">
-                                            <Form.Label>Số điện thoại</Form.Label>
-                                            <Form.Control
-                                                value={phone}
-                                                onChange={(e) => setPhone(e.target.value)}
-                                            />
-                                            </Form.Group>
-
-                                            <Form.Group className="mb-3" controlId="address">
-                                                <Form.Label>Địa chỉ</Form.Label>
+                                            <Col>
+                                                <Form.Group className="mb-3" controlId="phone">
+                                                <Form.Label>Số điện thoại</Form.Label>
                                                 <Form.Control
-                                                    value={address}
-                                                    onChange={(e) => setAddress(e.target.value)}
+                                                    value={phone}
+                                                    onChange={(e) => setPhone(e.target.value)}
                                                 />
-                                            </Form.Group>
-                                        </Col>
+                                                </Form.Group>
 
-                                        <div className="mb-3 changeInfo-form">
-                                            <Button type="submit" style={{width: "100px"}}>Cập nhật</Button>
-                                        </div>
-                                    </Row>
-                                </Card.Body>
-                            </Card>
+                                                <Form.Group className="mb-3" controlId="address">
+                                                    <Form.Label>Địa chỉ</Form.Label>
+                                                    <Form.Control
+                                                        value={address}
+                                                        onChange={(e) => setAddress(e.target.value)}
+                                                    />
+                                                </Form.Group>
+                                            </Col>
+
+                                            <div className="mb-3 changeInfo-form">
+                                                <Button type="submit" style={{width: "100px"}}>Cập nhật</Button>
+                                            </div>
+                                        </Row>
+                                    </Card.Body>
+                                </Card>
+                            </form>
                         </Col>
                     </Row>
 
                     <Row>
                         <Col>
-                            <Card>
-                                <Card.Header as="h5">Đổi mật khẩu</Card.Header>
-                                <Card.Body>
-                                    <Form.Group className="mb-3 password" controlId="password">
-                                        <div><Form.Label>Mật khẩu hiện tại</Form.Label></div>
-                                
-                                        <div className="password-section">
-                                            <Form.Control size="lg" className="input-password" 
-                                                type={passwordType} placeholder="Nhập mật khẩu hiện tại" 
-                                                onChange={(e) => {handlePasswordChange(e); setPassword(e.target.value)}} value={passwordInput}></Form.Control>
+                            <form onSubmit={passwordChangeHandler}>
+                                <Card>
+                                    <Card.Header as="h5">Đổi mật khẩu</Card.Header>
+                                    <Card.Body>
+                                        <Form.Group className="mb-3 password" controlId="password">
+                                            <div><Form.Label>Mật khẩu hiện tại</Form.Label></div>
+                                    
+                                            <div className="password-section">
+                                                <Form.Control size="lg" className="input-password" 
+                                                    type={passwordType} placeholder="Nhập mật khẩu hiện tại" 
+                                                    onChange={(e) => {handlePasswordChange(e); setPassword(e.target.value)}} value={passwordInput}></Form.Control>
 
-                                            <div>
-                                                <button type='button' className="btn-outline-primary" onClick={togglePassword}>
-                                                    { passwordType==="password"? <i className="fas fa-eye"></i> :<i className="fas fa-eye-slash"></i> }</button>
+                                                <div>
+                                                    <button type='button' className="btn-outline-primary" onClick={togglePassword}>
+                                                        { passwordType==="password"? <i className="fas fa-eye"></i> :<i className="fas fa-eye-slash"></i> }</button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </Form.Group>
+                                        </Form.Group>
 
-                                    <div className="mb-3 changePassword-form">
-                                        <Button type="submit" style={{width: "125px"}}>Đổi mật khẩu</Button>
-                                    </div>
-                                </Card.Body>
-                            </Card>
+                                        <div className="mb-3 changePassword-form">
+                                            <Button type="submit" style={{width: "125px"}}>Đổi mật khẩu</Button>
+                                        </div>
+                                    </Card.Body>
+                                </Card>
+                            </form>
                         </Col>
                         
                         <Col>
-                            <Card>
-                                <Card.Header as="h5">Đổi Email</Card.Header>
-                                <Card.Body>
-                                    <Form.Group className="mb-3" controlId="email">
-                                        <Form.Label>Email hiện tại</Form.Label>
-                                        <Form.Control
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                            disabled
-                                        />
-                                    </Form.Group>
+                            <form onSubmit={emailChangeHandler}>
+                                <Card>
+                                    <Card.Header as="h5">Đổi Email</Card.Header>
+                                    <Card.Body>
+                                        <Form.Group className="mb-3" controlId="email">
+                                            <Form.Label>Email hiện tại</Form.Label>
+                                            <Form.Control
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                disabled
+                                            />
+                                        </Form.Group>
 
-                                    <Form.Group className="mb-3" controlId="email">
-                                        <Form.Label>Email mới</Form.Label>
-                                        <Form.Control
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                            placeholder="Điền Email mới"
-                                        />
-                                    </Form.Group>
+                                        <Form.Group className="mb-3" controlId="email">
+                                            <Form.Label>Email mới</Form.Label>
+                                            <Form.Control
+                                                // value={email}
+                                                onChange={(e) => setNewEmail(e.target.value)}
+                                                placeholder="Điền Email mới"
+                                            />
+                                        </Form.Group>
 
-                                    <div className="mb-3 changeEmail-form">
-                                        <Button type="submit" style={{width: "100px"}}>Đổi email</Button>
-                                    </div>  
-                                </Card.Body>
-                            </Card>
+                                        <Form.Group className="mb-3 password" controlId="password">
+                                            <div><Form.Label>Mật khẩu</Form.Label></div>
+                                            <div className="password-section">
+                                                <Form.Control size="lg" className="input-password" 
+                                                    type={repasswordType} placeholder="Nhập mật khẩu" 
+                                                    onChange={(e) => {handlerePasswordChange(e); setReenterPassword(e.target.value)}} value={repasswordInput}>
+                                                </Form.Control>
+
+                                                <div>
+                                                    <button type='button' className="btn-outline-primary" onClick={togglerePassword}>
+                                                        { repasswordType==="password"? <i className="fas fa-eye"></i> :<i className="fas fa-eye-slash"></i> }</button>
+                                                </div>
+                                            </div>
+                                        </Form.Group>
+                                        <div className="mb-3 changeEmail-form">
+                                            <Button type="submit" style={{width: "100px"}}>Đổi email</Button>
+                                        </div>  
+                                    </Card.Body>
+                                </Card>
+                            </form>
                         </Col>
                     </Row>    
-                </form>
+                
             </div>
         </div>
     )

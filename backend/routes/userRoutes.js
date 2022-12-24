@@ -73,7 +73,7 @@ userRouter.put(
         if (user) {
 
             user.name = req.body.name || user.name;
-            user.email = req.body.email || user.email;
+            user.email = req.body.newEmail || user.email;
             user.address = req.body.address || user.address;
             user.phone = req.body.phone || user.phone;
             user.dob = req.body.dob || user.dob;
