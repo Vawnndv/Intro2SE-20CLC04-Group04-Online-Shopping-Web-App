@@ -8,6 +8,7 @@ import { useReducer } from 'react';
 import { toast } from 'react-toastify';
 import { getError } from './../../utils';
 import axios from 'axios';
+import auth from '../../firebase';
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -23,12 +24,44 @@ const reducer = (state, action) => {
 };
 
 let ProfileScreen = () => {
+    const [passwordType, setPasswordType] = useState("password");
+    const [passwordInput, setPasswordInput] = useState("");
+
+    const [repasswordType, setrePasswordType] = useState("password");
+    const [repasswordInput, setrePasswordInput] = useState("");
+
+    const handlePasswordChange =(evnt)=>{
+        setPasswordInput(evnt.target.value);
+    }
+
+    const togglePassword =()=>{
+      if(passwordType==="password")
+      {
+       setPasswordType("text")
+       return;
+      }
+      setPasswordType("password")
+    }
+
+    const handlerePasswordChange =(evnt)=>{
+        setrePasswordInput(evnt.target.value);
+    }
+
+    const togglerePassword =()=>{
+      if(repasswordType==="password")
+      {
+       setrePasswordType("text")
+       return;
+      }
+      setrePasswordType("password")
+    }
+
     const { state, dispatch: ctxDispatch } = useContext(Store);
     const { userInfo } = state;
     const [name, setName] = useState(userInfo.name);
     const [email, setEmail] = useState(userInfo.email);
     const [password, setPassword] = useState('');
-    const [confirmedPassword, setConfirmedPassword] = useState('');
+    // const [reenterPassword, setReenterPassword] = useState('');
     const [address, setAddress] = useState(userInfo.address);
     const [phone, setPhone] = useState(userInfo.phone);
     const [dob, setDOB] = useState(userInfo.dob);
@@ -39,6 +72,17 @@ let ProfileScreen = () => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
+       
+        auth.signInWithEmailAndPassword(email , password)
+        .then(()=>{
+            auth.sendPasswordResetEmail(email)
+            .then(() => {
+                alert("Link đổi mật khẩu đã được gửi đến hòm thư của bạn, vui lòng kiểm tra email để đổi mật khẩu")
+            })
+            .catch(alert);
+        })
+        .catch(alert);
+       
         try {
             const { data } = await axios.put(
                 '/api/users/profile',
@@ -64,13 +108,13 @@ let ProfileScreen = () => {
     return (
         <div className="container">
             <Helmet>
-                <title>User Profile</title>
+                <title>Thông tin người dùng</title>
             </Helmet>
             <div className="d-flex flex-column">
-                <h1 className="my-3">User Profile</h1>
+                <h1 className="my-3">Thông tin người dùng</h1>
                 <form onSubmit={submitHandler}>
                     <Form.Group className="mb-3" controlId="name">
-                        <Form.Label>Name</Form.Label>
+                        <Form.Label>Họ tên</Form.Label>
                         <Form.Control
                             value={name}
                             onChange={(e) => setName(e.target.value)}
@@ -78,29 +122,29 @@ let ProfileScreen = () => {
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="email">
-                        <Form.Label>Email</Form.Label>
+                        <Form.Label>Địa chỉ email</Form.Label>
                         <Form.Control
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
                         />
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="password">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control
-                            value={password}
-                            type="password"
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
+                 
+                    <Form.Group className="mb-3 password" controlId="password">
+                        <div><Form.Label>Mật khẩu hiện tại</Form.Label></div>
+                        
+                        <div className="password-section">
+                            <Form.Control size="lg" className="input-password" 
+                                type={passwordType} required placeholder="Nhập mật khẩu hiện tại" 
+                                onChange={(e) => {handlePasswordChange(e); setPassword(e.target.value)}} value={passwordInput}></Form.Control>
+
+                            <div>
+                                <button type='button' className="btn-outline-primary" onClick={togglePassword}>
+                                    { passwordType==="password"? <i className="fas fa-eye"></i> :<i className="fas fa-eye-slash"></i> }</button>
+                            </div>
+                        </div>
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="confirmedPassword">
-                        <Form.Label>Confirm Password</Form.Label>
-                        <Form.Control
-                            value={confirmedPassword}
-                            type="password"
-                            onChange={(e) => setConfirmedPassword(e.target.value)}
-                        />
-                    </Form.Group>
+
                     <Form.Group className="mb-3" controlId="address">
                         <Form.Label>Address</Form.Label>
                         <Form.Control
@@ -126,7 +170,7 @@ let ProfileScreen = () => {
                         />
                     </Form.Group>
                     <div className="mb-3">
-                        <Button type="submit">Update</Button>
+                        <Button type="submit">Cập nhật</Button>
                     </div>
                 </form>
             </div>

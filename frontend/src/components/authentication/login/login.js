@@ -110,19 +110,19 @@ function Login() {
                 <Form onSubmit={submitHandler}>
                     <Form.Group className="mb-3 email" controlId="email">
                         <div><Form.Label>Địa chỉ Email</Form.Label></div>
-                        <Form.Control size="sm" className="input-email" type="text" onChange={(e) => setEmail(e.target.value)} required placeholder="Nhập email"/>
+                        <Form.Control size="lg" className="input-email" type="text" onChange={(e) => setEmail(e.target.value)} required placeholder="Nhập email"/>
                     </Form.Group>
 
                     <Form.Group className="mb-3 password" controlId="password">
                         <div><Form.Label>Mật khẩu</Form.Label></div>
                         
                         <div className="password-section">
-                            <Form.Control size="sm" className="input-password" 
+                            <Form.Control size="lg" className="input-password" 
                                 type={passwordType} required placeholder="Nhập mật khẩu" 
                                 onChange={(e) => {handlePasswordChange(e); setPassword(e.target.value)}} value={passwordInput}></Form.Control>
 
                             <div>
-                                <button type="button" className="btn-outline-primary" onClick={togglePassword}>
+                                <button type="button" className="btn-outline-primary login-password-button" onClick={togglePassword}>
                                     { passwordType==="password"? <i className="fas fa-eye"></i> :<i className="fas fa-eye-slash"></i> }</button>
                             </div>
                         </div>

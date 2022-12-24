@@ -3,6 +3,17 @@
     justify-content: center;
 }
 
+.password-section{
+    display: flex;
+}
+.password-section  button{
+    height: 50%;
+    width: 40px;
+    margin-left: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .register-container {
     border: 1px solid black;

@@ -113,31 +113,31 @@ export default function Register () {
                 <Form onSubmit={submitHandler}>
                     <Form.Group className="mb-3 email" controlId="name">
                         <div><Form.Label>Họ tên</Form.Label></div>
-                        <Form.Control size="sm" className="input-name" 
+                        <Form.Control size="lg" className="input-name" 
                         type="text" required placeholder="Nhập email" onChange={(e) => setName(e.target.value)} style={{width: '300px'}}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3 dob" controlId="dob">
                         <div><Form.Label>Ngày sinh</Form.Label></div>
-                        <Form.Control size="sm" className="input-dob" 
+                        <Form.Control size="lg" className="input-dob" 
                         type="date" onChange={(e) => setDOB(e.target.value)} required placeholder="Nhập ngày sinh"/>
                     </Form.Group>
 
                     <Form.Group className="mb-3 address" controlId="address">
                         <div><Form.Label>Địa chỉ</Form.Label></div>
-                        <Form.Control size="sm" className="input-address" 
+                        <Form.Control size="lg" className="input-address" 
                         type="text" onChange={(e) => setAddress(e.target.value)} required placeholder="Nhập địa chỉ"/>
                     </Form.Group>
 
                     <Form.Group className="mb-3 email" controlId="phone">
                         <div><Form.Label>Số điện thoại</Form.Label></div>
-                        <Form.Control size="sm" className="input-phone" 
+                        <Form.Control size="lg" className="input-phone" 
                         type="text" onChange={(e) => setPhone(e.target.value)} required placeholder="Nhập số điện thoại" maxLength='10'/>
                     </Form.Group>
 
                     <Form.Group className="mb-3 email" controlId="email">
                         <div><Form.Label>Địa chỉ Email</Form.Label></div>
-                        <Form.Control size="sm" className="input-email" 
+                        <Form.Control size="lg" className="input-email" 
                         type="email" onChange={(e) => setEmail(e.target.value)} required placeholder="Nhập email"/>
                     </Form.Group>
 
@@ -145,7 +145,7 @@ export default function Register () {
                         <div><Form.Label>Mật khẩu</Form.Label></div>
                         
                         <div className="password-section">
-                            <Form.Control size="sm" className="input-password" 
+                            <Form.Control size="lg" className="input-password" 
                                 type={passwordType} required placeholder="Nhập mật khẩu" 
                                 onChange={(e) => {handlePasswordChange(e); setPassword(e.target.value)}} value={passwordInput}></Form.Control>
 
@@ -160,7 +160,7 @@ export default function Register () {
                         <div><Form.Label>Xác nhận mật khẩu</Form.Label></div>
                         
                         <div className="password-section">
-                            <Form.Control size="sm" className="input-password" 
+                            <Form.Control size="lg" className="input-password" 
                                 type={repasswordType} required placeholder="Nhập lại mật khẩu" 
                                 onChange={(e) => {handlerePasswordChange(e); setReenterPassword(e.target.value)}} value={repasswordInput}></Form.Control>
 

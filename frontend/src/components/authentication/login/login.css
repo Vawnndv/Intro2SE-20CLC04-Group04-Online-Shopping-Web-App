@@ -23,9 +23,13 @@
     display: flex;
 }
 
-.password-section button{
-    height: 30px;
+.password-section .login-password-button{
+    height: 50%;
+    width: 40px;
     margin-left: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .redirect-nav{
@@ -70,3 +74,9 @@
     display: flex;
     justify-content: center;
 }
+
+input::-ms-reveal,
+input::-ms-clear {
+    display: none;
+}
+

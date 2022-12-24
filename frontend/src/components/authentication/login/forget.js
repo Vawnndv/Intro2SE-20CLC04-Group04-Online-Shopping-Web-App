@@ -26,7 +26,7 @@ function Forget() {
    
     const submitHandler = async(e) => {
         e.preventDefault();
-       
+        
         auth.sendPasswordResetEmail(email)
         .then(() => {
             alert("Đã gửi email thay đổi mật khẩu đến hòm thư của bạn");
