@@ -22,28 +22,28 @@ orderRouter.post('/', isAuth, expressAsyncHandler(async (req, res) => {
     res.status(201).send({ message: 'Đơn hàng đã được tạo', order });
 }));
 
-orderRouter.get('/:id', isAuth, expressAsyncHandler(async (req, res) => {
-    const order = await Order.findById(req.params.id);
-    if(order) {
-        res.send(order);
-    } else {
-        res.status(404).send({message: 'Không tìm thấy đơn hàng'});
-    }
-}));
-
 orderRouter.get(
     '/mine',
     isAuth,
-    expressAsyncHandler(async (req,res) => {
+    expressAsyncHandler(async (req, res) => {
         const orders = await Order.find({ user: req.user._id });
         res.send(orders);
     })
 );
 
+orderRouter.get('/:id', isAuth, expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+        res.send(order);
+    } else {
+        res.status(404).send({ message: 'Không tìm thấy đơn hàng' });
+    }
+}));
+
 orderRouter.get(
     '/:id',
     isAuth,
-    expressAsyncHandler(async (req,res) => {
+    expressAsyncHandler(async (req, res) => {
         const order = await Order.findById({ user: req.params.id });
         if (order) {
             res.send(order);
@@ -56,7 +56,7 @@ orderRouter.get(
 orderRouter.put(
     '/:id/pay',
     isAuth,
-    expressAsyncHandler(async (req,res) => {
+    expressAsyncHandler(async (req, res) => {
         const order = await Order.findById({ user: req.params.id });
         if (order) {
             order.isPaid = true;
