@@ -1,0 +1,8 @@
+.changeEmail-form, .changePassword-form, .changeInfo-form {
+    display: flex;
+    justify-content: center;
+}
+
+.info-row{
+    margin-bottom: 30px;
+}
