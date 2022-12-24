@@ -27,6 +27,7 @@ import ProtectedRoute from "./components/protectedroute/ProtectedRoute";
 import DashbroadScreen from "./components/dashbroad/DashbroadScreen";
 import AdminRoute from "./components/adminroute/AdminRoute";
 import ProductListScreen from "./components/productlistscreen/ProductListScreen";
+import ProductEditScreen from "./components/producteditscreen/ProductEditScreen";
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -75,6 +76,7 @@ function App() {
               {/* Admin Routes */}
               <Route path="/admin/dashbroad" element={<AdminRoute><DashbroadScreen /></AdminRoute>} />
               <Route path="/admin/products" element={<AdminRoute><ProductListScreen /></AdminRoute>} />
+              <Route path="/admin/product/:id" element={<AdminRoute><ProductEditScreen /></AdminRoute>} />
             </Routes>
           </Container>
         </main>
