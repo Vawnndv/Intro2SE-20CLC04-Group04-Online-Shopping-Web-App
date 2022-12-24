@@ -65,6 +65,7 @@ function Login() {
         auth.signInWithEmailAndPassword(email , password)
         .then((userCredential)=>{
             const temp = auth.currentUser.emailVerified
+            console.log(auth.currentUser);
             isVerified = temp;
             
             if(isVerified)
