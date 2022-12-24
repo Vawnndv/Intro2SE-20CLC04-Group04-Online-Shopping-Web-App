@@ -26,6 +26,7 @@ import Forget from './components/authentication/login/forget';
 import ProtectedRoute from "./components/protectedroute/ProtectedRoute";
 import DashbroadScreen from "./components/dashbroad/DashbroadScreen";
 import AdminRoute from "./components/adminroute/AdminRoute";
+import ProductListScreen from "./components/productlistscreen/ProductListScreen";
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -73,6 +74,7 @@ function App() {
               <Route path="/orderhistory" element={<ProtectedRoute><OrderHistoryScreen /></ProtectedRoute>} />
               {/* Admin Routes */}
               <Route path="/admin/dashbroad" element={<AdminRoute><DashbroadScreen /></AdminRoute>} />
+              <Route path="/admin/products" element={<AdminRoute><ProductListScreen /></AdminRoute>} />
             </Routes>
           </Container>
         </main>

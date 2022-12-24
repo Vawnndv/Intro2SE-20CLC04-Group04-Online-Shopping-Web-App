@@ -5,6 +5,7 @@ import axios from "axios";
 import {Store} from "../../Store";
 import LoadingBox from "../loadingbox/LoadingBox";
 import MessageBox from "../messagebox/MessageBox";
+import {getError} from "../../utils";
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -36,21 +37,24 @@ export default function ProductListScreen() {
     const page = sp.get('page') || 1;
 
     const { state } = useContext(Store);
-    const { useInfo } = state;
-
+    const { userInfo } = state;
+    console.log("Toi day r 1");
     useEffect(() => {
         const fetchData = async () => {
+            dispatch({ type: 'FETCH_REQUEST' });
             try {
                 const { data } = await axios.get(`/api/products/admin?page=${page}`, {
-                    headers: { Authorization: `Bearer ${useInfo.token}` },
+                    headers: { Authorization: `Bearer ${userInfo.token}` },
                 });
-
+                console.log("Toi day r 2");
                 dispatch({ type: 'FETCH_SUCCESS', payload: data });
-            } catch (err) {}
+            } catch (err) {
+                dispatch({ type: 'FETCH_FAIL', payload: getError(error) });
+            }
         };
         fetchData();
-    }, [page, useInfo]);
-
+    }, [page, userInfo]);
+    console.log("Toi day r 3");
     return (
         <div>
             <h1>Sản Phẩm</h1>
@@ -87,7 +91,7 @@ export default function ProductListScreen() {
                             <Link
                                 className={x + 1 === Number(page) ? 'btn text-bold' : 'btn'}
                                 key={x + 1}
-                                to={`/productlist?page${x + 1}`}
+                                to={`/admin/products?page=${x + 1}`}
                             >
                                 {x + 1}
                             </Link>
