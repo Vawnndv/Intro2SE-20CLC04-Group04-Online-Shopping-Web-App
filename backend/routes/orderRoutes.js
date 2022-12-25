@@ -2,6 +2,8 @@ import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import Order from '../model/orderModel.js';
 import {isAdmin, isAuth} from '../utils.js';
+import Product from "../model/productModel.js";
+import productRouter from "./productRoutes.js";
 
 const orderRouter = express.Router();
 
@@ -90,6 +92,19 @@ orderRouter.put(
     })
 )
 
-orderRouter.get
+orderRouter.delete(
+    '/:id',
+    isAuth,
+    isAdmin,
+    expressAsyncHandler(async (req,res) => {
+        const order = await Order.findById(req.params.id);
+        if (order) {
+            await order.remove();
+            res.send({ message: 'Đã xóa đơn hàng'});
+        } else {
+            res.status(404).send({ message: 'Không tìm thấy đơn hàng'});
+        }
+    })
+);
 
 export default orderRouter;
