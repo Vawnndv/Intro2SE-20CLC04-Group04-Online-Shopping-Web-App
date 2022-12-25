@@ -6,6 +6,7 @@ import {Helmet} from "react-helmet-async";
 import LoadingBox from "../loadingbox/LoadingBox";
 import MessageBox from "../messagebox/MessageBox";
 import Button from "react-bootstrap/Button";
+import {useNavigate} from "react-router-dom";
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -28,6 +29,7 @@ export default function UserListScreen() {
 
     const {state} = useContext(Store);
     const {userInfo} = state;
+    const navigate = useNavigate();
 
     useEffect(() =>{
         const fetchData = async () => {
@@ -72,6 +74,9 @@ export default function UserListScreen() {
                         <td>{user.email}</td>
                         <td>{user.isAdmin ? 'Có' : 'Không'}</td>
                         <td>
+                            <Button type="button" variant="light" onClick={() => {
+                                navigate(`/admin/user/${user._id}`);
+                            }}>Chỉnh sửa</Button>
                         </td>
                     </tr>
                 ))}

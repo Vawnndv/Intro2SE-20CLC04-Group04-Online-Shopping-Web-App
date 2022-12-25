@@ -30,6 +30,7 @@ import ProductListScreen from "./components/productlistscreen/ProductListScreen"
 import ProductEditScreen from "./components/producteditscreen/ProductEditScreen";
 import OrderListScreen from "./components/orderlistscreen/OrderListScreen";
 import UserListScreen from "./components/userlistscreen/UserListScreen";
+import UserEditScreen from "./components/usereditscreen/UserEditScreen";
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -81,6 +82,7 @@ function App() {
               <Route path="/admin/product/:id" element={<AdminRoute><ProductEditScreen /></AdminRoute>} />
               <Route path="/admin/orders" element={<AdminRoute><OrderListScreen /></AdminRoute>} />
               <Route path="/admin/users" element={<AdminRoute><UserListScreen /></AdminRoute>} />
+              <Route path="/admin/user/:id" element={<AdminRoute><UserEditScreen /></AdminRoute>} />
             </Routes>
           </Container>
         </main>

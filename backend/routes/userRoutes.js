@@ -3,6 +3,8 @@ import expressAsyncHandler from 'express-async-handler';
 import bcrypt from "bcryptjs";
 import User from '../model/userModel.js';
 import {generateToken, isAdmin, isAuth} from "../utils.js";
+import Product from "../model/productModel.js";
+import productRouter from "./productRoutes.js";
 
 const userRouter = express.Router();
 
@@ -15,6 +17,39 @@ userRouter.get(
         res.send(users);
     })
 )
+
+userRouter.get(
+    '/:id',
+    isAuth,
+    isAdmin,
+    expressAsyncHandler(async (req, res) => {
+        const user = await User.findById(req.params.id);
+        if (user) {
+            res.send(user);
+        } else {
+            res.status(404).send({message: 'Không tìm thấy người dùng'});
+        }
+    })
+)
+
+userRouter.put(
+    '/:id',
+    isAuth,
+    isAdmin,
+    expressAsyncHandler(async (req, res) => {
+        const user = await User.findById(req.params.id);
+        if (user) {
+            user.name = req.body.name || user.name;
+            user.email = req.body.email || user.email;
+            user.isAdmin = Boolean(req.body.isAdmin);
+
+            const updateUser = await user.save();
+            res.send({message : 'Người dùng đã được cập nhật'});
+        } else {
+            res.status(404).send({message: 'Không tìm thấy người dùng'});
+        }
+    })
+);
 
 userRouter.post(
     '/login',
