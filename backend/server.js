@@ -3,9 +3,10 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import data from './data.js';
 import seedRouter from "./routes/seedRoutes.js";
-import ProductRoutes from "./routes/productRoutes.js";
-import UserRoutes from "./routes/userRoutes.js";
-import orderRoutes from './routes/orderRoutes.js';
+import ProductRouter from "./routes/productRoutes.js";
+import UserRouter from "./routes/userRoutes.js";
+import orderRouter from './routes/orderRoutes.js';
+import uploadRouter from "./routes/uploadRoutes.js";
 
 dotenv.config();
 
@@ -22,10 +23,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+app.use('/api/upload', uploadRouter);
 app.use('/api/seed', seedRouter);
-app.use('/api/products', ProductRoutes);
-app.use('/api/users', UserRoutes);
-app.use('/api/orders', orderRoutes);
+app.use('/api/products', ProductRouter);
+app.use('/api/users', UserRouter);
+app.use('/api/orders', orderRouter);
 
 app.use((err, req, res, next) => {
     res.status(500).send({ message: err.message });
