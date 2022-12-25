@@ -1,4 +1,4 @@
-.checkout-steps {
+/* .checkout-steps {
     font-size: 1.2rem;
     text-align: center;
 }
@@ -31,4 +31,58 @@
 .checkout-steps>div.active span {
     background-color: #3F72Af;
     color: #f6f6f6;
+} */
+
+.checkout-steps .MuiStepConnector-root {
+    top: 40px;
+}
+
+.checkout-steps .MuiStepConnector-lineHorizontal {
+    border-top-width: 3px;
+}
+
+.checkout-steps .MuiSvgIcon-root {
+    font-size: 2rem;
+}
+
+.checkout-steps .MuiTypography-root {
+    font-size: 1rem;
+}
+
+.checkout-steps .MuiStepIcon-active {
+    color: #3F72Af !important;
+}
+
+.checkout-steps .MuiStepIcon-completed {
+    color: #3F72Af !important;
+}
+
+.checkout-steps .MuiStepIcon-active .MuiStepIcon-text {
+    fill: #ffffff;
+}
+
+.checkout-steps .MuiStepConnector-active .MuiStepConnector-lineHorizontal {
+    border-top-color: #3F72Af;
+}
+
+.checkout-steps .MuiStepConnector-completed .MuiStepConnector-lineHorizontal {
+    border-top-color: #3F72Af;
+}
+
+.checkout-steps .MuiStepIcon-text {
+    fill: black;
+}
+
+@media only screen and (max-width: 767px) {
+    .checkout-steps .MuiTypography-root {
+        font-size: 0.6rem;
+    }
+
+    .checkout-steps .MuiSvgIcon-root {
+        font-size: 1.5rem;
+    }
+
+    .checkout-steps .MuiStepConnector-root {
+        top: 25px;
+    }
 }

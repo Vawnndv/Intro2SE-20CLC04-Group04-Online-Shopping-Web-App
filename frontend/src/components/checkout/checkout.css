@@ -1,6 +1,7 @@
 .cko-h1 {
     width: 100%;
     color: #112D4E;
+    font-size: 2rem;
 }
 
 .cko-label {
@@ -11,10 +12,13 @@
 .cko-form-container {
     width: 100%;
     max-width: 500px;
+    background-color: #DBE2EF;
+    padding: 0px 30px;
+    border-radius: 20px;
 }
 
 .cko-submit-btn {
-    font-size: 1.3rem !important;
+    font-size: 1.2rem !important;
 }
 
 .cko-select {
