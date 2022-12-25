@@ -26,36 +26,22 @@ export default function CheckoutSteps(props) {
         //     </Col>
         // </Row>
 
-        <Stepper alternativeLabel className="checkout-steps">
-            <Step key={1} sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-            }}
+        <Stepper alternativeLabel className="checkout-steps mt-3">
+            <Step key={1}
                 active={props.step1 ? true : false}
                 completed={props.step2 || props.step3 ? true : false}
             >
-                <Typography className="text-center">Thông tin khách hàng</Typography>
-                <StepLabel></StepLabel>
+                <StepLabel>Thông tin khách hàng</StepLabel>
             </Step>
-            <Step key={2} sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-            }}
+            <Step key={2}
                 active={props.step2 ? true : false}
                 completed={props.step3 ? true : false}
             >
-                <Typography className="text-center">Thông tin thanh toán</Typography>
-                <StepLabel></StepLabel>
+                <StepLabel>Thông tin thanh toán</StepLabel>
             </Step>
-            <Step key={3} sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-            }} active={props.step3 ? true : false}>
-                <Typography className="text-center">Xác nhận đơn hàng</Typography>
-                <StepLabel></StepLabel>
+            <Step key={3}
+                active={props.step3 ? true : false}>
+                <StepLabel>Xác nhận đơn hàng</StepLabel>
             </Step>
         </Stepper>
     );

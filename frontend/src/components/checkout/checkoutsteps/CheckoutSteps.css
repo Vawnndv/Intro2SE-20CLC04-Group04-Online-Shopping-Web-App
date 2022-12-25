@@ -34,7 +34,7 @@
 } */
 
 .checkout-steps .MuiStepConnector-root {
-    top: 40px;
+    top: 15px;
 }
 
 .checkout-steps .MuiStepConnector-lineHorizontal {
@@ -45,8 +45,23 @@
     font-size: 2rem;
 }
 
-.checkout-steps .MuiTypography-root {
+/* .checkout-steps .MuiTypography-root {
     font-size: 1rem;
+} */
+
+.checkout-steps .MuiStep-root {
+    position: relative;
+}
+
+.checkout-steps .MuiStepLabel-labelContainer {
+    position: absolute;
+    top: 0;
+    transform: translateY(-120%);
+}
+
+.checkout-steps .MuiTypography-body2 {
+    font-size: 1rem;
+    font-weight: bold !important;
 }
 
 .checkout-steps .MuiStepIcon-active {
@@ -74,7 +89,11 @@
 }
 
 @media only screen and (max-width: 767px) {
-    .checkout-steps .MuiTypography-root {
+    /* .checkout-steps .MuiTypography-root {
+        font-size: 0.6rem;
+    } */
+
+    .checkout-steps .MuiTypography-body2 {
         font-size: 0.6rem;
     }
 
@@ -83,6 +102,6 @@
     }
 
     .checkout-steps .MuiStepConnector-root {
-        top: 25px;
+        top: 10px;
     }
 }
