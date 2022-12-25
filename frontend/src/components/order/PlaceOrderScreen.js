@@ -1,11 +1,11 @@
-import { useContext, useEffect, useReducer} from 'react';
+import { useContext, useEffect, useReducer } from 'react';
 import CheckoutSteps from '../checkout/checkoutsteps/CheckoutSteps';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import { Store } from '../../Store';
 import { Row, Col, Card, ListGroup, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { formatPrice} from '../../utils';
+import { formatPrice } from '../../utils';
 // import { toast } from 'react-toastify';
 import './order.css';
 import Axios from 'axios';
@@ -91,11 +91,11 @@ export default function PlaceOrderScreen() {
             <Helmet>
                 <title>Payment Info</title>
             </Helmet>
-            <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
+            <CheckoutSteps step3></CheckoutSteps>
             <div className="container">
                 <h1 className="my-4 text-center ord_h1">Xác nhận đơn hàng</h1>
                 <Row>
-                    <Col sm={12} md={9} lg={8}>
+                    <Col sm={12} md={7} lg={8}>
                         <Card className="p-3 mb-3 border-dark ord-card--darker">
                             <Card.Body>
                                 <div className="d-flex justify-content-between align-items-center mb-2">
@@ -171,7 +171,7 @@ export default function PlaceOrderScreen() {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col sm={12} md={3} lg={4}>
+                    <Col sm={12} md={5} lg={4}>
                         <Card className="p-3 border-dark">
                             <Card.Body>
                                 <Card.Title className="ord-card-title">Tổng kết</Card.Title>

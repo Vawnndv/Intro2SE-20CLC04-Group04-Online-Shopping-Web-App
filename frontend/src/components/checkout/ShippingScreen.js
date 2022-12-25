@@ -55,11 +55,12 @@ export default function ShippingScreen() {
         <Helmet>
             <title>Shipping</title>
         </Helmet>
-        <CheckoutSteps step1 step2 ></CheckoutSteps>
+        <CheckoutSteps step1></CheckoutSteps>
         <div className="container d-flex flex-column align-items-center">
-            <h1 className="my-4 text-center cko-h1">Thông tin và địa chỉ liên lạc </h1>
+            
 
             <Form onSubmit={submitHandler} className="cko-form-container d-flex flex-column">
+            <h1 className="my-4 text-center cko-h1">Thông tin và địa chỉ liên lạc </h1>
                 <Form.Group className="mb-4" controlId="fullName">
                     <Form.Label className="cko-label">
                         <FontAwesomeIcon className='me-3' icon={faUserPen} />

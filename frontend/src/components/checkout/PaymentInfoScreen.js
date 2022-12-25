@@ -51,10 +51,10 @@ export default function PaymentInfoScreen() {
         <Helmet>
             <title>Payment Info</title>
         </Helmet>
-        <CheckoutSteps step1 step2 step3></CheckoutSteps>
+        <CheckoutSteps step2></CheckoutSteps>
         <div className="container d-flex flex-column align-items-center">
-            <h1 className="my-4 text-center cko-h1">Thông tin thanh toán </h1>
             <Form onSubmit={submitHandler} className="cko-form-container d-flex flex-column">
+                <h1 className="my-4 text-center cko-h1">Thông tin thanh toán </h1>
                 <Form.Group className="mb-4" controlId="paymentMethod">
                     <Form.Label className="cko-label">
                         <FontAwesomeIcon className='me-3' icon={faMoneyCheckDollar} />
