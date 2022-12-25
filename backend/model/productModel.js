@@ -1,4 +1,8 @@
 import mongoose from "mongoose";
+import slug from 'mongoose-slug-generator';
+
+mongoose.plugin(slug);
+
 const reviewSchema = new mongoose.Schema(
     {
         name: { type: String, required: true },
@@ -13,7 +17,6 @@ const reviewSchema = new mongoose.Schema(
 const productSchema = new mongoose.Schema(
     {
         name: {type: String, require: true, unique: true},
-        slug: {type: String, require: true, unique: true},
         category: {type: String, require: true},
         description: {type: [String], require: true},
         image: {type: String, require: true},
@@ -23,6 +26,7 @@ const productSchema = new mongoose.Schema(
         rating: {type: Number, require: true},
         reviews: {type: Number, require: true},
         customerReviews: [reviewSchema],
+        slug: {type: String, slug:["name", "brand"], slug_padding_size: 5}
     },
     {
         timestamps: true

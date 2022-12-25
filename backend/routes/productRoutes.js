@@ -1,7 +1,7 @@
 import express from "express";
 import Product from "../model/productModel.js";
 import expressAsyncHandler from 'express-async-handler';
-import {isAuth, isAdmin} from "../utils.js";
+import {isAuth, isAdmin, toRegex} from "../utils.js";
 
 const productRouter = express.Router();
 
@@ -107,11 +107,13 @@ productRouter.get(
         const order = query.order || '';
         const searchQuery = query.query || '';
 
+        const regex = toRegex(searchQuery);
+
         const queryFilter =
         searchQuery && searchQuery !== 'all'
             ? {
-                name: {
-                $regex: searchQuery,
+                slug: {
+                $regex: regex,
                 $options: 'i',
                 },
             }
