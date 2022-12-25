@@ -10,6 +10,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import {toast} from "react-toastify";
+import product from "../product/product";
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -31,13 +32,19 @@ const reducer = (state, action) => {
             return { ...state, loadingCreate: false};
         case 'CREATE_FAIL':
             return { ...state, loadingCreate: false};
+        case 'DELETE_REQUEST':
+            return { ...state, loadingDelete: true};
+        case 'DELETE_SUCCESS':
+            return { ...state, loadingDelete: false};
+        case 'DELETE_FAIL':
+            return { ...state, loadingDelete: false};
         default:
             return state;
     }
 };
 
 export default function ProductListScreen() {
-    const [{ loading, error, products, pages, loadingCreate }, dispatch] = useReducer(reducer, {
+    const [{ loading, error, products, pages, loadingCreate, loadingDelete }, dispatch] = useReducer(reducer, {
         loading: true,
         error: '',
     });
@@ -86,6 +93,21 @@ export default function ProductListScreen() {
         }
     };
 
+    const deleteHandler = async (product) => {
+        if (window.confirm('Bạn có chắc muốn xóa không?')) {
+            try {
+                await axios.delete(`/api/products/${product._id}`, {
+                   headers: { Authorization: `Bearer ${userInfo.token}`}
+                });
+                toast.success('Sản phẩm đã xóa thành công');
+                dispatch({type: 'DELETE_SUCCESS'});
+            } catch (err) {
+                toast.error(getError(error));
+                dispatch({type: 'DELETE_FAIL'});
+            }
+        }
+    };
+
     return (
         <div>
             <Row>
@@ -102,6 +124,7 @@ export default function ProductListScreen() {
             </Row>
 
             {loadingCreate && <LoadingBox></LoadingBox>}
+            {loadingDelete && <LoadingBox></LoadingBox>}
 
             {loading ? (
                 <LoadingBox></LoadingBox>
@@ -133,6 +156,10 @@ export default function ProductListScreen() {
                                             variant="light"
                                             onClick={() => navigate(`/admin/product/${product._id}`)}
                                     >Chỉnh sửa</Button>
+                                    <Button type="button"
+                                            variant="light"
+                                            onClick={() => deleteHandler(product)}
+                                    >Xóa</Button>
                                 </td>
                             </tr>
                         ))}
