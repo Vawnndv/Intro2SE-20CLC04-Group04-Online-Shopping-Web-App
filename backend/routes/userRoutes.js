@@ -51,6 +51,25 @@ userRouter.put(
     })
 );
 
+userRouter.delete(
+    '/:id',
+    isAuth,
+    isAdmin,
+    expressAsyncHandler(async (req,res) => {
+        const user = await User.findById(req.params.id);
+        if (user) {
+            if (user.email === 'admin@gmail.com') {
+                res.status(400).send({message: 'Không thể xóa tài khoản admin này'});
+                return;
+            }
+            await user.remove();
+            res.send({ message: 'Đã xóa người dùng'});
+        } else {
+            res.status(404).send({ message: 'Không tìm thấy người dùng'});
+        }
+    })
+);
+
 userRouter.post(
     '/login',
     expressAsyncHandler(async (req, res) => {
