@@ -21,7 +21,7 @@ const reducer = (state, action) => {
         case 'FETCH_SUCCESS':
             return {
                 ...state,
-                loaidng: false,
+                loading: false,
                 products: action.payload.products,
                 page: action.payload.page,
                 pages: action.payload.pages,
@@ -91,7 +91,7 @@ export default function SearchScreen(props) {
             // dispatch({ type: 'FETCH_REQUEST'});
             try {
                 const { data } = await axios.get(
-                    `/api/products/search?page=${page}&query=${query}&category=${category}&price=${price}&order=${order}`
+                    `/api/products/search/?page=${page}&query=${query}&category=${category}&price=${price}&order=${order}`
                 );
                 dispatch({type: 'FETCH_SUCCESS', payload: data});
             } catch (err) {
@@ -121,7 +121,7 @@ export default function SearchScreen(props) {
         const filterRating = filter.rating || rating;
         const filterPrice = filter.price || price;
         const sortOrder = filter.order || order;
-        return `/search?page=${filterPage}&category=${filterCategory}&query=${filterQuery}&price=${filterPrice}&rating=${filterRating}&sortOrder=${sortOrder}`;
+        return `/search/?page=${filterPage}&category=${filterCategory}&query=${filterQuery}&price=${filterPrice}&rating=${filterRating}&sortOrder=${sortOrder}`;
     }
 
     return (
@@ -136,8 +136,8 @@ export default function SearchScreen(props) {
                         <ul>
                         <li>
                             <Link
-                            className={'all' === category ? 'text-bold' : ''}
-                            to={getFilterUrl({ category: 'all' })}
+                                className={'all' === category ? 'text-bold' : ''}
+                                to={getFilterUrl({ category: 'all' })}
                             >
                             Any
                             </Link>
@@ -159,8 +159,8 @@ export default function SearchScreen(props) {
                         <ul>
                         <li>
                             <Link
-                            className={'all' === price ? 'text-bold' : ''}
-                            to={getFilterUrl({ price: 'all' })}
+                                className={'all' === price ? 'text-bold' : ''}
+                                to={getFilterUrl({ price: 'all' })}
                             >
                             Any
                             </Link>
@@ -192,8 +192,8 @@ export default function SearchScreen(props) {
                         ))}
                         <li>
                             <Link
-                            to={getFilterUrl({ rating: 'all' })}
-                            className={rating === 'all' ? 'text-bold' : ''}
+                                to={getFilterUrl({ rating: 'all' })}
+                                className={rating === 'all' ? 'text-bold' : ''}
                             >
                             <Rating caption={' & up'} rating={0}></Rating>
                             </Link>
