@@ -1,9 +1,8 @@
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import Order from '../model/orderModel.js';
-import {isAdmin, isAuth} from '../utils.js';
+import { isAdmin, isAuth } from '../utils.js';
 import Product from "../model/productModel.js";
-import productRouter from "./productRoutes.js";
 
 const orderRouter = express.Router();
 
@@ -18,6 +17,21 @@ orderRouter.get(
 );
 
 orderRouter.post('/', isAuth, expressAsyncHandler(async (req, res) => {
+    const failItems = [];
+    const orderedItems = req.body.orderItems;
+    for (let i = 0; i < orderedItems.length; i++) {
+        let product = await Product.findOne({ _id: orderedItems[i]._id });
+        product = product.toObject();
+        if (product.quantity - orderedItems[i].quantity < 0) {
+            product.orderedQuantity = orderedItems[i].quantity;
+            failItems.push(product);
+        }
+    }
+
+    if (failItems.length !== 0) {
+        res.status(400).send({ message: 'ITEM_QUANTITY_ERROR', failItems });
+    }
+
     const newOrder = new Order({
         orderItems: req.body.orderItems.map((item) => {
             return { ...item, product: item._id }
@@ -63,9 +77,9 @@ orderRouter.put(
             order.paidAt = Date.now();
             order.deliveredAt = Date.now();
             await order.save();
-            res.send({message: 'Đơn hàng đã hoàn thành'});
+            res.send({ message: 'Đơn hàng đã hoàn thành' });
         } else {
-            res.status(404).send({message: 'Không tìm thấy đơn hàng'});
+            res.status(404).send({ message: 'Không tìm thấy đơn hàng' });
         }
     })
 );
@@ -96,13 +110,13 @@ orderRouter.delete(
     '/:id',
     isAuth,
     isAdmin,
-    expressAsyncHandler(async (req,res) => {
+    expressAsyncHandler(async (req, res) => {
         const order = await Order.findById(req.params.id);
         if (order) {
             await order.remove();
-            res.send({ message: 'Đã xóa đơn hàng'});
+            res.send({ message: 'Đã xóa đơn hàng' });
         } else {
-            res.status(404).send({ message: 'Không tìm thấy đơn hàng'});
+            res.status(404).send({ message: 'Không tìm thấy đơn hàng' });
         }
     })
 );

@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { Store } from '../../Store';
 import { Row, Col, Card, ListGroup, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { formatPrice } from '../../utils';
-// import { toast } from 'react-toastify';
+import { formatPrice, getError } from '../../utils';
+import 'react-toastify/dist/ReactToastify.css';
 import './order.css';
 import Axios from 'axios';
 import LoadingBox from '../loadingbox/LoadingBox.js';
@@ -43,7 +43,7 @@ export default function PlaceOrderScreen() {
     cart.voucherSales = 0;
     cart.totalPrice = cart.itemsPrice - cart.voucherSales;
 
-    const placOrderHandler = async () => {
+    const placeOrderHandler = async () => {
         try {
             dispatch({ type: "CREATE_REQUEST" });
             const { data } = await Axios.post(
@@ -62,6 +62,20 @@ export default function PlaceOrderScreen() {
                     }
                 }
             );
+
+            cart.cartItems.forEach(async (item) => {
+                const product = await Axios.get(`/api/products/${item._id}`)
+                
+                await Axios.patch(
+                    `/api/products/${product.data._id}`,
+                    { quantity: product.data.quantity - item.quantity },
+                    {
+                        headers: {
+                            authorization: `Bearer ${userInfo.token}`,
+                        }
+                    });
+            });
+
             ctxDispatch({ type: "CART_CLEAR" });
             dispatch({ type: "CREATE_SUCCESS" });
 
@@ -69,8 +83,36 @@ export default function PlaceOrderScreen() {
             navigate(`/order/${data.order._id}`);
         } catch (error) {
             dispatch({ type: "CREATE_FAIL" });
-            // toast.error(getError(err));
-            alert(error);
+
+            if (getError(error) == "ITEM_QUANTITY_ERROR") {
+                const failItems = error.response.data.failItems;
+
+                ctxDispatch({
+                    type: "SAVE_FAIL_ITEMS",
+                    payload: failItems
+                });
+
+                for (let i = 0; i < failItems.length; i++) {
+                    if (failItems[i].quantity == 0) {
+                        ctxDispatch({
+                            type: 'CART_REMOVE_ITEM',
+                            payload: failItems[i]
+                        });
+                    }
+                    else {
+                        let failItem = { ...failItems[i] };
+                        delete failItem.orderedQuantity;
+                        ctxDispatch({
+                            type: 'CART_ADD_ITEM',
+                            payload: failItem
+                        });
+                    }
+                }
+
+                navigate('/checkoutfail');
+            }
+
+            // alert(getError(error));
         }
     };
 
@@ -89,7 +131,7 @@ export default function PlaceOrderScreen() {
     return (
         <div>
             <Helmet>
-                <title>Payment Info</title>
+                <title>Place order</title>
             </Helmet>
             <CheckoutSteps step3></CheckoutSteps>
             <div className="container">
@@ -211,7 +253,7 @@ export default function PlaceOrderScreen() {
                                             <Button
                                                 type="button"
                                                 variant="primary"
-                                                onClick={placOrderHandler}
+                                                onClick={placeOrderHandler}
                                                 disabled={cart.cartItems.length === 0}>
                                                 Đặt hàng
                                             </Button>

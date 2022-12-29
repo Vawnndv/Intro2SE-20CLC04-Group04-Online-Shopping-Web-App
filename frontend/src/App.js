@@ -31,6 +31,7 @@ import ProductEditScreen from "./components/producteditscreen/ProductEditScreen"
 import OrderListScreen from "./components/orderlistscreen/OrderListScreen";
 import UserListScreen from "./components/userlistscreen/UserListScreen";
 import UserEditScreen from "./components/usereditscreen/UserEditScreen";
+import CheckoutFail from './components/checkout/CheckoutFail';
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -74,6 +75,7 @@ function App() {
               <Route path="/shipping" element={<ShippingScreen />} />
               <Route path="/payment" element={<PaymentInfoScreen />} />
               <Route path="/placeorder" element={<PlaceOrderScreen />} />
+              <Route path="/checkoutfail" element={<CheckoutFail />} />
               <Route path="/order/:id" element={<ProtectedRoute><OrderScreen /></ProtectedRoute>} />
               <Route path="/orderhistory" element={<ProtectedRoute><OrderHistoryScreen /></ProtectedRoute>} />
               {/* Admin Routes */}

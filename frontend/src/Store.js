@@ -14,6 +14,7 @@ const initialState = {
         cartItems: localStorage.getItem('cartItems')
             ? JSON.parse(localStorage.getItem('cartItems'))
             : [],
+        failItems: [],
         paymentInfo: localStorage.getItem('paymentInfo')
             ? JSON.parse(localStorage.getItem('paymentInfo'))
             : {},
@@ -74,6 +75,15 @@ function reducer(state, action) {
                 cart: {
                     ...state.cart,
                     paymentInfo: action.payload
+                }
+            }
+        }
+        case 'SAVE_FAIL_ITEMS': {
+            return {
+                ...state,
+                cart: {
+                    ...state.cart,
+                    failItems: action.payload
                 }
             }
         }

@@ -26,7 +26,7 @@ const productSchema = new mongoose.Schema(
         rating: {type: Number, require: true},
         reviews: {type: Number, require: true},
         customerReviews: [reviewSchema],
-        slug: {type: String, slug:["name", "brand"], slug_padding_size: 5}
+        slug: {type: String, slug:["name", "brand"], unique: true}
     },
     {
         timestamps: true

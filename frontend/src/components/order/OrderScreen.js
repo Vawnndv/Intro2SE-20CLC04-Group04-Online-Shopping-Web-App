@@ -97,7 +97,7 @@ export default function OrderScreen() {
             <div className="container">
                 <h1 className="my-4 text-center ord_h1">Đơn hàng {orderId}</h1>
                 <Row>
-                    <Col sm={12} md={9} lg={8}>
+                    <Col sm={12} md={7} lg={8}>
                         <Card className="p-3 mb-3 border-dark">
                             <Card.Body>
                                 <div className="d-flex align-items-center mb-2">
@@ -184,7 +184,7 @@ export default function OrderScreen() {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col sm={12} md={3} lg={4}>
+                    <Col sm={12} md={5} lg={4}>
                         <Card className="p-3 border-dark">
                             <Card.Body>
                                 <Card.Title className="ord-card-title">Tổng kết</Card.Title>

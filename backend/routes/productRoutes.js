@@ -1,7 +1,7 @@
 import express from "express";
 import Product from "../model/productModel.js";
 import expressAsyncHandler from 'express-async-handler';
-import {isAuth, isAdmin, toRegex} from "../utils.js";
+import { isAuth, isAdmin, toRegex } from "../utils.js";
 
 const productRouter = express.Router();
 
@@ -28,12 +28,12 @@ productRouter.post(
             description: 'sample description',
         })
         const product = await newProduct.save();
-        res.send({ message: 'Product Created', product});
+        res.send({ message: 'Product Created', product });
     })
 );
 
 productRouter.put(
-  '/:id',
+    '/:id',
     isAuth,
     isAdmin,
     expressAsyncHandler(async (req, res) => {
@@ -49,24 +49,24 @@ productRouter.put(
             product.quantity = req.body.quantity;
             product.description = req.body.description;
             await product.save();
-            res.send({message : 'Sản phẩm đã được cập nhật'});
+            res.send({ message: 'Sản phẩm đã được cập nhật' });
         } else {
-            res.status(404).send({message: 'Không tìm thấy sản phẩm'});
+            res.status(404).send({ message: 'Không tìm thấy sản phẩm' });
         }
     })
 );
 
 productRouter.delete(
-  '/:id',
+    '/:id',
     isAuth,
     isAdmin,
-    expressAsyncHandler(async (req,res) => {
+    expressAsyncHandler(async (req, res) => {
         const product = await Product.findById(req.params.id);
         if (product) {
             await product.remove();
-            res.send({ message: 'Đã xóa sản phẩm'});
+            res.send({ message: 'Đã xóa sản phẩm' });
         } else {
-            res.status(404).send({ message: 'Không tìm thấy sản phẩm'});
+            res.status(404).send({ message: 'Không tìm thấy sản phẩm' });
         }
     })
 );
@@ -110,45 +110,45 @@ productRouter.get(
         const regex = toRegex(searchQuery);
 
         const queryFilter =
-        searchQuery && searchQuery !== 'all'
-            ? {
-                slug: {
-                $regex: regex,
-                $options: 'i',
-                },
-            }
-            : {};
+            searchQuery && searchQuery !== 'all'
+                ? {
+                    slug: {
+                        $regex: regex,
+                        $options: 'i',
+                    },
+                }
+                : {};
         const categoryFilter = category && category !== 'all' ? { category } : {};
         const ratingFilter =
-        rating && rating !== 'all'
-            ? {
-                rating: {
-                $gte: Number(rating),
-                },
-            }
-            : {};
+            rating && rating !== 'all'
+                ? {
+                    rating: {
+                        $gte: Number(rating),
+                    },
+                }
+                : {};
         const priceFilter =
-        price && price !== 'all'
-            ? {
-                // 1-50
-                price: {
-                $gte: Number(price.split('-')[0]),
-                $lte: Number(price.split('-')[1]),
-                },
-            }
-            : {};
+            price && price !== 'all'
+                ? {
+                    // 1-50
+                    price: {
+                        $gte: Number(price.split('-')[0]),
+                        $lte: Number(price.split('-')[1]),
+                    },
+                }
+                : {};
         const sortOrder =
-        order === 'featured'
-            ? { featured: -1 }
-            : order === 'lowest'
-            ? { price: 1 }
-            : order === 'highest'
-            ? { price: -1 }
-            : order === 'toprated'
-            ? { rating: -1 }
-            : order === 'newest'
-            ? { createdAt: -1 }
-            : { _id: -1 };
+            order === 'featured'
+                ? { featured: -1 }
+                : order === 'lowest'
+                    ? { price: 1 }
+                    : order === 'highest'
+                        ? { price: -1 }
+                        : order === 'toprated'
+                            ? { rating: -1 }
+                            : order === 'newest'
+                                ? { createdAt: -1 }
+                                : { _id: -1 };
 
         const products = await Product.find({
             ...queryFilter,
@@ -156,9 +156,9 @@ productRouter.get(
             ...priceFilter,
             ...ratingFilter,
         })
-        .sort(sortOrder)
-        .skip(pageSize * (page - 1))
-        .limit(pageSize);
+            .sort(sortOrder)
+            .skip(pageSize * (page - 1))
+            .limit(pageSize);
 
         const countProducts = await Product.countDocuments({
             ...queryFilter,
@@ -176,17 +176,17 @@ productRouter.get(
 );
 
 productRouter.get('/slug/:slug', async (req, res) => {
-    const product = await Product.findOne({slug: req.params.slug});
+    const product = await Product.findOne({ slug: req.params.slug });
     if (product) {
         res.send(product);
     } else {
-        res.status(404).send({message: 'Product Not Found'});
+        res.status(404).send({ message: 'Product Not Found' });
     }
 });
 
 productRouter.get(
     '/categories',
-    expressAsyncHandler(async (req,res) => {
+    expressAsyncHandler(async (req, res) => {
         const categories = await Product.find().distinct('category');
         res.send(categories);
     })
@@ -196,7 +196,7 @@ productRouter.get('/:id', async (req, res) => {
     if (product) {
         res.send(product);
     } else {
-        res.status(404).send({message: 'Product Not Found'});
+        res.status(404).send({ message: 'Product Not Found' });
     }
 });
 
@@ -233,4 +233,13 @@ productRouter.post(
         }
     })
 );
+
+productRouter.patch('/:id', isAuth, expressAsyncHandler(async (req, res) => {
+    const productId = req.params.id;
+    const count = await Product.updateOne({ _id: productId }, req.body);
+    if (count.modifiedCount) res.status(200).send({ message: 'Product quantity reduced' })
+    else if (!count.matchedCount) res.status(404).send({ message: 'Product Not Found' })
+    else res.status(400).send({ message: 'Uncaught error' });
+}));
+
 export default productRouter;

@@ -3,7 +3,7 @@ import React from "react";
 // import Col from "react-bootstrap/Col";
 import './CheckoutSteps.css';
 import '../checkout.css';
-import { Stepper, Step, StepLabel, Typography } from "@material-ui/core";
+import { Stepper, Step, StepLabel } from "@material-ui/core";
 
 export default function CheckoutSteps(props) {
     return (
@@ -29,19 +29,19 @@ export default function CheckoutSteps(props) {
         <Stepper alternativeLabel className="checkout-steps mt-3">
             <Step key={1}
                 active={props.step1 ? true : false}
-                completed={props.step2 || props.step3 ? true : false}
+                completed={props.step2 || props.step3 || props.step3_fail ? true : false}
             >
                 <StepLabel>Thông tin khách hàng</StepLabel>
             </Step>
             <Step key={2}
                 active={props.step2 ? true : false}
-                completed={props.step3 ? true : false}
+                completed={props.step3 || props.step3_fail ? true : false}
             >
                 <StepLabel>Thông tin thanh toán</StepLabel>
             </Step>
             <Step key={3}
                 active={props.step3 ? true : false}>
-                <StepLabel>Xác nhận đơn hàng</StepLabel>
+                <StepLabel error={props.step3_fail ? true : false}>Xác nhận đơn hàng</StepLabel>
             </Step>
         </Stepper>
     );
