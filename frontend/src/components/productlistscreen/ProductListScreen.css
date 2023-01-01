@@ -1,0 +1,11 @@
+tr .productHeader, tr .productListTD{
+    text-align: center;
+}
+
+.productListTD .deleteButton, .productListTD .editButton{
+    font-weight: bold;
+}
+
+.productTableRow .buttonGroup{
+    width: 150px;    
+}
