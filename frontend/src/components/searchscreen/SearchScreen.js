@@ -39,16 +39,20 @@ const reducer = (state, action) => {
 
 const prices = [
     {
-        name: '$1 to $50',
-        value: '1-50',
+        name: 'Dưới 1 triệu',
+        value: '0-1000000',
     },
     {
-        name: '$51 to $200',
-        value: '51-200',
+        name: '1 - 5 triệu',
+        value: '1000000-5000000',
     },
     {
-        name: '$201 to $1000',
-        value: '201-1000',
+        name: '5 - 20 triệu',
+        value: '5000000-20000000',
+    },
+    {
+        name: 'Trên 20 triệu',
+        value: '20000000-9990000000',
     },
 ];
 
@@ -94,7 +98,7 @@ export default function SearchScreen(props) {
             // dispatch({ type: 'FETCH_REQUEST'});
             try {
                 const { data } = await axios.get(
-                    `/api/products/search/?page=${page}&query=${query}&category=${category}&price=${price}&order=${order}`
+                    `/api/products/search/?page=${page}&query=${query}&category=${category}&price=${price}&rating=${rating}&order=${order}`
                 );
                 dispatch({type: 'FETCH_SUCCESS', payload: data});
             } catch (err) {
@@ -124,7 +128,7 @@ export default function SearchScreen(props) {
         const filterRating = filter.rating || rating;
         const filterPrice = filter.price || price;
         const sortOrder = filter.order || order;
-        return `/search/?page=${filterPage}&category=${filterCategory}&query=${filterQuery}&price=${filterPrice}&rating=${filterRating}&sortOrder=${sortOrder}`;
+        return `/search/?page=${filterPage}&query=${filterQuery}&category=${filterCategory}&price=${filterPrice}&rating=${filterRating}&order=${sortOrder}`;
     }
 
     return (
@@ -136,7 +140,7 @@ export default function SearchScreen(props) {
             <Row>
                 <Col md={2} className="filter-wrapper">
                     <div className="filter-bar">
-                        <div className="filter-criteria">
+                        <div className="filter-criteria filter-category">
                             <div className="filter-label">
                                 {/* <FontAwesomeIcon icon="faBars" /> */}
                                 <span>Danh mục</span>
@@ -162,7 +166,7 @@ export default function SearchScreen(props) {
                             ))}
                             </ul>
                         </div>
-                        <div className="filter-criteria">
+                        <div className="filter-criteria filter-price">
                             <div className="filter-label">
                                 <span>Giá bán</span>
                             </div>
@@ -172,7 +176,7 @@ export default function SearchScreen(props) {
                                     className={'all' === price ? 'text-bold' : ''}
                                     to={getFilterUrl({ price: 'all' })}
                                 >
-                                Any
+                                Tất cả
                                 </Link>
                             </li>
                             {prices.map((p) => (
@@ -187,7 +191,7 @@ export default function SearchScreen(props) {
                             ))}
                             </ul>
                         </div>
-                        <div className="filter-criteria">
+                        <div className="filter-criteria filter-rating">
                             <div className="filter-label">
                                 <span>Đánh giá</span>
                             </div>
@@ -227,10 +231,10 @@ export default function SearchScreen(props) {
                                 <span>Sắp xếp theo</span>
                             </div>
                             <div className="sort-select d-flex align-items-center">
-                                <select defaultValue="lowest" value={order} onChange={(e) => {
+                                <select value={order} onChange={(e) => {
                                     navigate(getFilterUrl({ order: e.target.value }));
                                 }}>
-                                    <option value="lowest" selected>Giá thấp đến cao</option>
+                                    <option value="lowest">Giá thấp đến cao</option>
                                     <option value="highest">Giá cao đến thấp</option>
                                     <option value="toprated">Được yêu thích nhất</option>
                                 </select>

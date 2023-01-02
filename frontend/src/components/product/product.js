@@ -11,7 +11,6 @@ function Product(props) {
             <div className="details">
                 <Link to={`/product/${product.slug}`} className="product-thumbnail" style={{ textDecoration: 'none' }}>
                     <img className="product-img" src={product.image} alt={product.name}/>
-                    {/* <div className="buffer">Xem chi tiết</div> */}
                 </Link>
                 <Link to={`/product/${product.slug}`} style={{ textDecoration: 'none' }}>
                     <div className="product-info">
@@ -26,6 +25,7 @@ function Product(props) {
                         </div>
                         <div className="product-rating">
                             <Rating rating={product.rating} numReviews={product.reviews}/>
+                            <span>đánh giá</span>
                         </div>
                     </div>
                 </Link>
