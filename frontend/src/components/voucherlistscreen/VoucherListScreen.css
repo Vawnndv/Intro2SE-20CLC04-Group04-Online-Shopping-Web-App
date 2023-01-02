@@ -1,0 +1,26 @@
+tr .voucherHeader, tr .voucherListTD{
+    text-align: center;
+}
+
+.voucherListTD .deleteButton, .voucherListTD .editButton{
+    font-weight: bold;
+}
+
+.voucherTableRow .buttonGroup{
+    width: 150px;    
+}
+
+div .createProductButton {
+    width: 200px;
+}
+
+.voucherPagination{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.voucherPagi{
+    display: flex;
+    justify-content: center;
+}
