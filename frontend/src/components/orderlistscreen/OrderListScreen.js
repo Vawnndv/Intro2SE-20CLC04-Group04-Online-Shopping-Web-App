@@ -10,6 +10,7 @@ import Button from "react-bootstrap/Button";
 import {toast} from "react-toastify";
 
 const reducer = (state, action) => {
+
   switch (action.type) {
     case "FETCH_REQUEST":
       return { ...state, loading: true };
