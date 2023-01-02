@@ -107,10 +107,10 @@ export default function UserListScreen() {
                             <Button type="button" variant="light" onClick={() => {
                                 navigate(`/admin/user/${user._id}`);
                             }}>Chỉnh sửa</Button>
-                            <Button type="button"
-                                    variant="light"
-                                    onClick={() => deleteHandler(user)}
-                            >Xóa</Button>
+                            {/*<Button type="button"*/}
+                            {/*        variant="light"*/}
+                            {/*        onClick={() => deleteHandler(user)}*/}
+                            {/*>Xóa</Button>*/}
                         </td>
                     </tr>
                 ))}

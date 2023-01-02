@@ -24,7 +24,6 @@ import axios from 'axios';
 import SearchScreen from './components/searchscreen/SearchScreen';
 import Forget from './components/authentication/login/forget';
 import ProtectedRoute from "./components/protectedroute/ProtectedRoute";
-import DashbroadScreen from "./components/dashbroad/DashbroadScreen";
 import AdminRoute from "./components/adminroute/AdminRoute";
 import ProductListScreen from "./components/productlistscreen/ProductListScreen";
 import ProductEditScreen from "./components/producteditscreen/ProductEditScreen";
@@ -79,7 +78,6 @@ function App() {
               <Route path="/order/:id" element={<ProtectedRoute><OrderScreen /></ProtectedRoute>} />
               <Route path="/orderhistory" element={<ProtectedRoute><OrderHistoryScreen /></ProtectedRoute>} />
               {/* Admin Routes */}
-              <Route path="/admin/dashbroad" element={<AdminRoute><DashbroadScreen /></AdminRoute>} />
               <Route path="/admin/products" element={<AdminRoute><ProductListScreen /></AdminRoute>} />
               <Route path="/admin/product/:id" element={<AdminRoute><ProductEditScreen /></AdminRoute>} />
               <Route path="/admin/orders" element={<AdminRoute><OrderListScreen /></AdminRoute>} />

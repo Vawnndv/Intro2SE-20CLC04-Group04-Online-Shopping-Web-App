@@ -44,9 +44,6 @@ export default function Header() {
                             )}
                             {userInfo && userInfo.isAdmin && (
                                 <NavDropdown title="Admin" id="admin-nav-dropdown">
-                                    <LinkContainer to="/admin/dashbroad">
-                                        <NavDropdown.Item>Dashbroad</NavDropdown.Item>
-                                    </LinkContainer>
                                     <LinkContainer to="/admin/products">
                                         <NavDropdown.Item>Products</NavDropdown.Item>
                                     </LinkContainer>
