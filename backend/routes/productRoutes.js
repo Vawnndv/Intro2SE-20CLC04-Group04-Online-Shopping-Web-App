@@ -71,6 +71,7 @@ productRouter.delete(
   })
 );
 
+const USER_PAGE_SIZE = 10;
 const PAGE_SIZE = 4;
 
 productRouter.get(
@@ -99,7 +100,7 @@ productRouter.get(
   "/search",
   expressAsyncHandler(async (req, res) => {
     const { query } = req;
-    const pageSize = query.pageSize || PAGE_SIZE;
+    const pageSize = query.pageSize || USER_PAGE_SIZE;
     const page = query.page || 1;
     const category = query.category || "";
     const price = query.price || "";
@@ -156,9 +157,9 @@ productRouter.get(
       ...priceFilter,
       ...ratingFilter,
     })
-      .sort(sortOrder)
-      .skip(pageSize * (page - 1))
-      .limit(pageSize);
+    .sort(sortOrder)
+    .skip(pageSize * (page - 1))
+    .limit(pageSize);
 
     const countProducts = await Product.countDocuments({
       ...queryFilter,

@@ -87,7 +87,14 @@
 .product-rating {
     height: 30px;
     line-height: 30px;
+    display: flex;
+    flex-direction: row;
     font-size: 0.7rem;
+}
+
+.product-rating span {
+    margin-left: 5px;
+    color: var(--color-1);
 }
 
 .product-rating div {

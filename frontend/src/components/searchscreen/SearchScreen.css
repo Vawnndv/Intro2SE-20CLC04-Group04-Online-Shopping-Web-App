@@ -14,6 +14,11 @@
     color: black;
 }
 
+.filter-rating .rating {
+    display: flex;
+    justify-content: flex-start;
+}
+
 .filter-label {
     padding-left: 20px;
     height: 60px;
