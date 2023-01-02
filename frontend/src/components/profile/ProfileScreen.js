@@ -91,7 +91,7 @@ let ProfileScreen = () => {
             dispatch({ type: 'UPDATE_SUCCESS' });
             ctxDispatch({ type: 'USER_SIGNIN', payload: data });
             localStorage.setItem('userInfo', JSON.stringify(data));
-            toast.success('User updated successfully');
+            alert('Cập nhật thông tin cá nhân thành công');
         } catch (err) {
             dispatch({ type: 'UPDATE_FAIL' });
             toast.error(getError(err));
@@ -114,17 +114,15 @@ let ProfileScreen = () => {
             dispatch({ type: 'UPDATE_SUCCESS' });
             ctxDispatch({ type: 'USER_SIGNIN', payload: data });
             localStorage.setItem('userInfo', JSON.stringify(data));
-            toast.success('User updated successfully');
+            alert("Cập nhật Email thành công")
         } catch (err) {
             dispatch({ type: 'UPDATE_FAIL' });
-            toast.error(getError(err));
+            alert(getError(err));
         }
     }
     const emailChangeHandler = async (e) => {
         e.preventDefault();
-        alert(email)
-        alert(reenterPassword)
-        alert(newEmail)
+       
         if(window.confirm('Bạn sẽ tự động đăng xuất nếu quá trình thay đổi email diễn ra thành công! \nVui lòng xác nhận hành động này')){
             auth.signInWithEmailAndPassword(email , reenterPassword)
             .then((userCredential)=>{
