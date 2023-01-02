@@ -9,3 +9,18 @@ tr .productHeader, tr .productListTD{
 .productTableRow .buttonGroup{
     width: 150px;    
 }
+
+div .createProductButton {
+    width: 200px;
+}
+
+.productPagination{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.productPagi{
+    display: flex;
+    justify-content: center;
+}

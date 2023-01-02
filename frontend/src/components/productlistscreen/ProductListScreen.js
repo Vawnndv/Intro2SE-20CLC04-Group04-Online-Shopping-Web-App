@@ -11,7 +11,11 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { toast } from "react-toastify";
 import product from "../product/product";
-import { faTrashCan, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrashCan,
+  faPenToSquare,
+  faPlusSquare,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   MDBBadge,
@@ -141,14 +145,7 @@ export default function ProductListScreen() {
     <div>
       <Row>
         <Col>
-          <h1>Sản Phẩm</h1>
-        </Col>
-        <Col className="col text-end">
-          <div>
-            <Button type="button" onClick={createHandler}>
-              Tạo sản phẩm
-            </Button>
-          </div>
+          <h1>Danh sách sản phẩm</h1>
         </Col>
       </Row>
 
@@ -241,10 +238,27 @@ export default function ProductListScreen() {
               ))}
             </MDBTableBody>
           </MDBTable>
-          <div>
+
+          <Row>
+            <Col className="col text-end createProductCol justify-content-center d-flex">
+              <div>
+                <Button
+                  type="button"
+                  className="createProductButton"
+                  onClick={createHandler}
+                >
+                  <FontAwesomeIcon icon={faPlusSquare} /> Thêm sản phẩm
+                </Button>
+              </div>
+            </Col>
+          </Row>
+
+          <div className="productPagination">
             {[...Array(pages).keys()].map((x) => (
               <Link
-                className={x + 1 === Number(page) ? "btn text-bold" : "btn"}
+                className={
+                  x + 1 === Number(page) ? "btn btn-primary" : "btn btn-light"
+                }
                 key={x + 1}
                 to={`/admin/products?page=${x + 1}`}
               >
