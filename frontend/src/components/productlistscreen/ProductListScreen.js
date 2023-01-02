@@ -255,15 +255,17 @@ export default function ProductListScreen() {
 
           <div className="productPagination">
             {[...Array(pages).keys()].map((x) => (
-              <Link
-                className={
-                  x + 1 === Number(page) ? "btn btn-primary" : "btn btn-light"
-                }
-                key={x + 1}
-                to={`/admin/products?page=${x + 1}`}
-              >
-                {x + 1}
-              </Link>
+              Number(page) - 1 === x + 1 || Number(page) === x + 1 || Number(page) + 1 === x + 1   ? (
+                <Link
+                  className={
+                    x + 1 === Number(page) ? "btn btn-primary" : "btn btn-light"
+                  }
+                  key={x + 1}
+                  to={`/admin/products?page=${x + 1}`}
+                >
+                  {x + 1}
+                </Link>
+              ): (<></>)
             ))}
           </div>
         </>
