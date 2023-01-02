@@ -5,14 +5,29 @@ import { isAdmin, isAuth } from '../utils.js';
 import Product from "../model/productModel.js";
 
 const orderRouter = express.Router();
-
+const PAGE_SIZE = 5;
 orderRouter.get(
     '/',
     isAuth,
     isAdmin,
     expressAsyncHandler(async (req, res) => {
-        const orders = await Order.find().populate('user', 'name');
-        res.send(orders);
+        // const orders = await Order.find().populate('user', 'name');
+        // res.send(orders);
+
+        const {query} = req;
+        const page = query.page || 1;
+        const pageSize = query.pageSize || PAGE_SIZE;
+
+        const orders = await Order.find().populate('user', 'name')
+            .skip(pageSize * (page - 1))
+            .limit(pageSize);
+        const countOrders = await Order.countDocuments();
+        res.send({
+            orders,
+            countOrders,
+            page,
+            pages: Math.ceil(countOrders / pageSize),
+        });
     })
 );
 

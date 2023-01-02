@@ -1,0 +1,17 @@
+tr .orderHeader{
+    text-align: center;
+
+}
+
+.orderTableRow .buttonGroup {
+    width: 150px;
+}
+
+.orderListTD .deleteButton,
+.orderListTD .editButton {
+    font-weight: bold;
+}
+
+.orderTableRow .orderListTD{
+    text-align: center;
+}

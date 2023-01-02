@@ -7,14 +7,28 @@ import Product from "../model/productModel.js";
 import productRouter from "./productRoutes.js";
 
 const userRouter = express.Router();
-
+const PAGE_SIZE = 5;
 userRouter.get(
     '/',
     isAuth,
     isAdmin,
     expressAsyncHandler(async (req, res) => {
-        const users = await User.find({});
-        res.send(users);
+        // const users = await User.find({});
+        // res.send(users);
+        const { query } = req;
+        const page = query.page || 1;
+        const pageSize = query.pageSize || PAGE_SIZE;
+
+        const users = await User.find({})
+            .skip(pageSize * (page - 1))
+            .limit(pageSize);
+        const countUsers = await User.countDocuments();
+        res.send({
+            users,
+            countUsers,
+            page,
+            pages: Math.ceil(countUsers / pageSize),
+        });
     })
 )
 

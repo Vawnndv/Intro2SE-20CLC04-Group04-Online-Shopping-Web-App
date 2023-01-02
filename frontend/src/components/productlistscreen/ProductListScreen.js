@@ -26,6 +26,7 @@ import {
 } from "mdb-react-ui-kit";
 import "./ProductListScreen.css";
 import { formatPrice } from "../../utils";
+import { Helmet } from "react-helmet-async";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -143,6 +144,10 @@ export default function ProductListScreen() {
 
   return (
     <div>
+      <Helmet>
+        <title>Danh sách sản phẩm</title>
+      </Helmet>
+
       <Row>
         <Col>
           <h1>Danh sách sản phẩm</h1>
@@ -205,15 +210,21 @@ export default function ProductListScreen() {
                     {product.name}
                   </td>
                   <td className="productListTD">
-                    <MDBBadge color="primary">
-                      {formatPrice(product.price)}
-                    </MDBBadge>
+                    <h5>
+                      <MDBBadge color="primary">
+                        {formatPrice(product.price)}
+                      </MDBBadge>
+                    </h5>
                   </td>
                   <td className="productListTD">
-                    <MDBBadge color="success">{product.category}</MDBBadge>
+                    <h5>
+                      <MDBBadge color="success">{product.category}</MDBBadge>
+                    </h5>
                   </td>
                   <td className="productListTD">
-                    <MDBBadge color="secondary">{product.brand}</MDBBadge>
+                    <h5>
+                      <MDBBadge color="secondary">{product.brand}</MDBBadge>
+                    </h5>
                   </td>
                   <td className="productListTD buttonGroup">
                     <Button
@@ -255,15 +266,17 @@ export default function ProductListScreen() {
 
           <div className="productPagination">
             {[...Array(pages).keys()].map((x) => (
-              <Link
-                className={
-                  x + 1 === Number(page) ? "btn btn-primary" : "btn btn-light"
-                }
-                key={x + 1}
-                to={`/admin/products?page=${x + 1}`}
-              >
-                {x + 1}
-              </Link>
+              Number(page) - 1 === x + 1 || Number(page) === x + 1 || Number(page) + 1 === x + 1   ? (
+                <Link
+                  className={
+                    x + 1 === Number(page) ? "btn btn-primary" : "btn btn-light"
+                  }
+                  key={x + 1}
+                  to={`/admin/products?page=${x + 1}`}
+                >
+                  {x + 1}
+                </Link>
+              ): (<></>)
             ))}
           </div>
         </>
