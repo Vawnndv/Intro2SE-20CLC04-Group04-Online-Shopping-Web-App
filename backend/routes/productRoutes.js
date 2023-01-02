@@ -71,7 +71,7 @@ productRouter.delete(
     })
 );
 
-const PAGE_SIZE = 3;
+const PAGE_SIZE = 5;
 
 productRouter.get(
     '/admin',

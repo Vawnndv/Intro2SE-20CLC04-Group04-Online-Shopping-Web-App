@@ -1,0 +1,66 @@
+.filter-bar {
+    background: white;
+    border: none;
+    border-radius: 4px;
+}
+
+.filter-criteria {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.filter-criteria a {
+    text-decoration: none;
+    color: black;
+}
+
+.filter-label {
+    padding-left: 20px;
+    height: 60px;
+    line-height: 60px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.sort-bar {
+    margin-bottom: 8px;
+    height: 60px;
+    display: grid;
+    grid-template-columns: 3fr 4fr 13fr;
+    grid-column-gap: 8px;
+    background: white;
+    border: none;
+    border-radius: 4px;
+}
+
+.sort-label {
+    padding-left: 20px;
+    line-height: 60px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.sort-select {
+    color: black;
+}
+
+.sort-result {
+    padding-right: 20px;
+    line-height: 60px;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.sort-clear {
+    width: 70px;
+}
+
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-column-gap: 8px;
+}
+
+.product-card {
+    height: 340px;
+}
