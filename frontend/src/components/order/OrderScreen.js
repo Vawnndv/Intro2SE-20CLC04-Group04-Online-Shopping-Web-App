@@ -138,7 +138,7 @@ export default function OrderScreen() {
                                     </Row>
                                     <Row className="my-2">
                                         <Col xs={2}>Voucher:</Col>
-                                        <Col xs={10}>{order.paymentInfo.voucher}</Col>
+                                        <Col xs={10}>{order.paymentInfo.voucher.code} - {order.paymentInfo.voucher.name}</Col>
                                     </Row>
                                 </Card.Text>
                                 {order.isPaid ? (

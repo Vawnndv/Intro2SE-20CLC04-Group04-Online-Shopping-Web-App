@@ -23,7 +23,16 @@ const orderSchema = new mongoose.Schema(
         },
         paymentInfo: {
             paymentMethod: { type: String, required: true },
-            voucher: { type: String, required: true }
+            voucher: {
+                name: { type: String, require: true},
+                code: { type: String, require: true},
+                discount: { type: Number, require: true },
+                _id: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'Voucher',
+                    required: true
+                }
+            }
         },
         paymentResult: {
             id: String,

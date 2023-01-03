@@ -40,7 +40,7 @@ export default function PlaceOrderScreen() {
     cart.itemsPrice = cart.cartItems.reduce((accum, item) => {
         return accum + item.quantity * item.price;
     }, 0);
-    cart.voucherSales = 0;
+    cart.voucherSales = cart.itemsPrice * cart.paymentInfo.voucher.discount / 100;
     cart.totalPrice = cart.itemsPrice - cart.voucherSales;
 
     const placeOrderHandler = async () => {
@@ -65,7 +65,7 @@ export default function PlaceOrderScreen() {
 
             cart.cartItems.forEach(async (item) => {
                 const product = await Axios.get(`/api/products/${item._id}`)
-                
+
                 await Axios.patch(
                     `/api/products/${product.data._id}`,
                     { quantity: product.data.quantity - item.quantity },
@@ -74,6 +74,14 @@ export default function PlaceOrderScreen() {
                             authorization: `Bearer ${userInfo.token}`,
                         }
                     });
+            });
+
+            await Axios.patch(`/api/vouchers/${cart.paymentInfo.voucher._id}`,
+            { quantity: cart.paymentInfo.voucher.quantity - 1 },
+            {
+                headers: {
+                    authorization: `Bearer ${userInfo.token}`,
+                }
             });
 
             ctxDispatch({ type: "CART_CLEAR" });
@@ -86,6 +94,10 @@ export default function PlaceOrderScreen() {
 
             if (getError(error) == "ITEM_QUANTITY_ERROR") {
                 const failItems = error.response.data.failItems;
+                ctxDispatch({
+                    type: "SAVE_FAIL_TYPE",
+                    payload: getError(error)
+                });
 
                 ctxDispatch({
                     type: "SAVE_FAIL_ITEMS",
@@ -108,6 +120,21 @@ export default function PlaceOrderScreen() {
                         });
                     }
                 }
+
+                navigate('/checkoutfail');
+            }
+
+            if (getError(error) == "VOUCHER_QUANTITY_ERROR") {
+                const failVoucher = error.response.data.voucher;
+                ctxDispatch({
+                    type: "SAVE_FAIL_TYPE",
+                    payload: getError(error)
+                });
+
+                ctxDispatch({
+                    type: "SAVE_FAIL_VOUCHER",
+                    payload: failVoucher
+                });
 
                 navigate('/checkoutfail');
             }
@@ -173,7 +200,7 @@ export default function PlaceOrderScreen() {
                                     </Row>
                                     <Row className="my-2">
                                         <Col xs={2}>Voucher:</Col>
-                                        <Col xs={10}>{cart.paymentInfo.voucher}</Col>
+                                        <Col xs={10}>{cart.paymentInfo.voucher.code} - {cart.paymentInfo.voucher.name}</Col>
                                     </Row>
                                 </Card.Text>
                             </Card.Body>

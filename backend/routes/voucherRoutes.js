@@ -82,6 +82,11 @@ voucherRouter.get(
   })
 );
 
+voucherRouter.get("/all", async (req, res) => {
+ const vouchers = await Voucher.find({quantity: {$gt: 0}});
+ res.send(vouchers);
+});
+
 voucherRouter.get("/:id", async (req, res) => {
   const voucher = await Voucher.findById(req.params.id);
   if (voucher) {

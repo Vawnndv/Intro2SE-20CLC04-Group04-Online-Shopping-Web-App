@@ -14,7 +14,9 @@ const initialState = {
         cartItems: localStorage.getItem('cartItems')
             ? JSON.parse(localStorage.getItem('cartItems'))
             : [],
+        failType: "",
         failItems: [],
+        failVoucher: {},
         paymentInfo: localStorage.getItem('paymentInfo')
             ? JSON.parse(localStorage.getItem('paymentInfo'))
             : {},
@@ -78,12 +80,30 @@ function reducer(state, action) {
                 }
             }
         }
+        case 'SAVE_FAIL_TYPE': {
+            return {
+                ...state,
+                cart: {
+                    ...state.cart,
+                    failType: action.payload
+                }
+            }
+        }
         case 'SAVE_FAIL_ITEMS': {
             return {
                 ...state,
                 cart: {
                     ...state.cart,
                     failItems: action.payload
+                }
+            }
+        }
+        case 'SAVE_FAIL_VOUCHER': {
+            return {
+                ...state,
+                cart: {
+                    ...state.cart,
+                    failVoucher: action.payload
                 }
             }
         }
