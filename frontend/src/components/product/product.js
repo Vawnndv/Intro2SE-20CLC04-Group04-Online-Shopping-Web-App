@@ -8,7 +8,7 @@ function Product(props) {
     return (
         <div className="product" >
             <div className="hover-text">Xem chi tiết</div>
-            <div className="details">
+            <div className="details w-100">
                 <Link to={`/product/${product.slug}`} className="product-thumbnail" style={{ textDecoration: 'none' }}>
                     <img className="product-img" src={product.image} alt={product.name}/>
                 </Link>

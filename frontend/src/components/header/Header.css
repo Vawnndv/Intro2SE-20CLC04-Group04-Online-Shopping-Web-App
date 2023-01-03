@@ -38,6 +38,7 @@ header {
 .logo {
     color: var(--color--primary);
     font-weight: bold;
+    cursor: pointer;
 }
 
 #cart-icon {
