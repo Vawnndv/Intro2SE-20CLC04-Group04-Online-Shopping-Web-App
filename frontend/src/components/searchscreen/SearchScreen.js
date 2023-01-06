@@ -265,7 +265,7 @@ export default function SearchScreen(props) {
                         )}
                         <div className="product-list">
                             {products.map((product) => (
-                                <Col className="product-card mb-3" key={product._id}>
+                                <Col className="product-card" key={product._id}>
                                     <Product product={product}></Product>
                                 </Col>
                             ))}

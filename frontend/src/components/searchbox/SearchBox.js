@@ -23,6 +23,7 @@ export default function SearchBox() {
                     placeholder="Tìm kiếm sản phẩm"
                     aria-label="Tìm kiếm sản phẩm"
                     aria-describedby="button-search"
+                    required
                     >
                 </FormControl>
                 <Button className="btn btn-primary" type="submit" id="button-search">

@@ -107,8 +107,17 @@ productRouter.get(
     const rating = query.rating || "";
     const order = query.order || "";
     const searchQuery = query.query || "";
-
-    const regex = toRegex(searchQuery);
+    
+    let regex = "";
+    let words = searchQuery.split(" ");
+    for (let word of words)
+    {
+      let words_ = word.match(/[a-z]+|[^a-z]+/gi);
+      for (let word_ of words_) {
+        regex += word_ + ".*";
+      }
+    }
+    regex = regex.slice(0,-2);
 
     const queryFilter =
       searchQuery && searchQuery !== "all"

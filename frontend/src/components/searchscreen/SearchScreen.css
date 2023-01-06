@@ -1,6 +1,6 @@
 .filter-bar {
     background: white;
-    border: none;
+    border: 1px solid #ddd;
     border-radius: 4px;
 }
 
@@ -28,13 +28,13 @@
 }
 
 .sort-bar {
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     height: 60px;
     display: grid;
     grid-template-columns: 3fr 4fr 13fr;
     grid-column-gap: 8px;
     background: white;
-    border: none;
+    border: 1px solid #ddd;
     border-radius: 4px;
 }
 
@@ -57,15 +57,18 @@
 }
 
 .sort-clear {
+    margin-left: 20px;
     width: 70px;
 }
 
 .product-list {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-column-gap: 8px;
+    grid-column-gap: 12px;
 }
 
-.product-card {
+.product {
+    margin-bottom: 12px;
     height: 340px;
+    border: 1px solid #ddd;
 }

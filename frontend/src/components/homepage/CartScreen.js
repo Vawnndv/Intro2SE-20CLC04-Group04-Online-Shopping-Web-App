@@ -41,7 +41,7 @@ export default  function CartScreen() {
         <div className="wrapper">
             <Helmet>
                 <title>Giỏ hàng</title>
-                <style>{'body { background-color: #f5f5f5; }'}</style>
+                <style>{'body { background-color: #f8f8fc; }'}</style>
             </Helmet>
             <h3 className="cart-title">Giỏ hàng</h3>
 
