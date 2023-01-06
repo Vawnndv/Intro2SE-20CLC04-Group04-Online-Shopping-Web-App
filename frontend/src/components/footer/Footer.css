@@ -1,0 +1,34 @@
+ .uLogo{
+    width: 120px;
+    height: 120px;
+}
+
+.FooterContainer{
+    padding: 0 !important;
+    border-top: 5px solid var(--color--secondary);
+    margin-top: 150px;
+}
+
+.uLogoContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.footerRow{
+    padding-top: 20px;
+}
+
+.primaryFooterTitle{
+    color: var(--color--primary);
+    font-weight: 900;
+}
+
+.secondaryFooterTitle{
+    color: var(--color--primary);
+    font-weight: bold;
+}
+
+.normalFooterFont{
+    color: var(--color--primary);
+    font-weight: 400;
+}
