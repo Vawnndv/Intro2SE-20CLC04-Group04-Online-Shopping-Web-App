@@ -40,7 +40,8 @@ export default function PlaceOrderScreen() {
     cart.itemsPrice = cart.cartItems.reduce((accum, item) => {
         return accum + item.quantity * item.price;
     }, 0);
-    cart.voucherSales = cart.itemsPrice * cart.paymentInfo.voucher.discount / 100;
+    
+    cart.voucherSales = (Object.keys(cart.paymentInfo.voucher).length !== 0) ? (cart.itemsPrice * cart.paymentInfo.voucher.discount / 100) : 0;
     cart.totalPrice = cart.itemsPrice - cart.voucherSales;
 
     const placeOrderHandler = async () => {
@@ -76,13 +77,13 @@ export default function PlaceOrderScreen() {
                     });
             });
 
-            await Axios.patch(`/api/vouchers/${cart.paymentInfo.voucher._id}`,
-            { quantity: cart.paymentInfo.voucher.quantity - 1 },
-            {
-                headers: {
-                    authorization: `Bearer ${userInfo.token}`,
-                }
-            });
+            if(cart.paymentInfo.voucher._id) await Axios.patch(`/api/vouchers/${cart.paymentInfo.voucher._id}`,
+                { quantity: cart.paymentInfo.voucher.quantity - 1 },
+                {
+                    headers: {
+                        authorization: `Bearer ${userInfo.token}`,
+                    }
+                });
 
             ctxDispatch({ type: "CART_CLEAR" });
             dispatch({ type: "CREATE_SUCCESS" });
@@ -200,7 +201,7 @@ export default function PlaceOrderScreen() {
                                     </Row>
                                     <Row className="my-2">
                                         <Col xs={2}>Voucher:</Col>
-                                        <Col xs={10}>{cart.paymentInfo.voucher.code} - {cart.paymentInfo.voucher.name}</Col>
+                                        <Col xs={10}>{cart.paymentInfo.voucher.code || ""} - {cart.paymentInfo.voucher.name || ""}</Col>
                                     </Row>
                                 </Card.Text>
                             </Card.Body>

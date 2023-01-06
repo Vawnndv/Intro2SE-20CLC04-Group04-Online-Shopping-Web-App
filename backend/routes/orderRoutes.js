@@ -43,21 +43,37 @@ orderRouter.post('/', isAuth, expressAsyncHandler(async (req, res) => {
             failItems.push(product);
         }
     }
-    let voucher = await Voucher.findById(req.body.paymentInfo.voucher._id);
+    let voucher;
+    if(req.body.paymentInfo.voucher._id) voucher = await Voucher.findById(req.body.paymentInfo.voucher._id)
+    else req.body.paymentInfo.voucher = null;
 
     if (failItems.length !== 0) {
         res.status(400).send({ message: 'ITEM_QUANTITY_ERROR', failItems });
     }
-    else if (voucher.quantity < 1) {
+    else if (voucher && voucher.quantity < 1) {
         res.status(400).send({ message: 'VOUCHER_QUANTITY_ERROR', voucher })
     }
     else {
-        const newOrder = new Order({
+        let newOrder;
+        if (voucher){newOrder = new Order({
             orderItems: req.body.orderItems.map((item) => {
                 return { ...item, product: item._id }
             }),
             shippingAddress: req.body.shippingAddress,
-            paymentInfo: { ...req.body.paymentInfo },
+            paymentInfo: req.body.paymentInfo,
+            itemsPrice: req.body.itemsPrice,
+            voucherSales: req.body.voucherSales,
+            totalPrice: req.body.totalPrice,
+            user: req.user._id
+        });}
+        else newOrder = new Order({
+            orderItems: req.body.orderItems.map((item) => {
+                return { ...item, product: item._id }
+            }),
+            shippingAddress: req.body.shippingAddress,
+            paymentInfo: {
+                paymentMethod: req.body.paymentInfo.paymentMethod
+            },
             itemsPrice: req.body.itemsPrice,
             voucherSales: req.body.voucherSales,
             totalPrice: req.body.totalPrice,

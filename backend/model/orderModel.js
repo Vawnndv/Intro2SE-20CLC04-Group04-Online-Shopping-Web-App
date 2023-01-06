@@ -1,5 +1,19 @@
 import mongoose from "mongoose";
 
+const orderVoucherSchema = new mongoose.Schema(
+    {
+        name: { type: String, require: true},
+        code: { type: String, require: true},
+        discount: { type: Number, require: true},
+        _id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Voucher',
+            required: false,
+            require: true
+        }
+    }
+);
+
 const orderSchema = new mongoose.Schema(
     {
         orderItems: [
@@ -24,14 +38,7 @@ const orderSchema = new mongoose.Schema(
         paymentInfo: {
             paymentMethod: { type: String, required: true },
             voucher: {
-                name: { type: String, require: true},
-                code: { type: String, require: true},
-                discount: { type: Number, require: true },
-                _id: {
-                    type: mongoose.Schema.Types.ObjectId,
-                    ref: 'Voucher',
-                    required: true
-                }
+                type: orderVoucherSchema, required: false, default: null
             }
         },
         paymentResult: {
