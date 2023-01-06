@@ -33,6 +33,7 @@ import UserEditScreen from "./components/usereditscreen/UserEditScreen";
 import CheckoutFail from './components/checkout/CheckoutFail';
 import VoucherListScreen from "./components/voucherlistscreen/VoucherListScreen";
 import VoucherEditScreen from "./components/vouchereditscreen/VoucherEditScreen";
+import Footer from './components/footer/Footer';
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -91,6 +92,7 @@ function App() {
           </Container>
         </main>
       </div>
+      <Footer/>
     </BrowserRouter>
   );
 }

@@ -26,7 +26,7 @@ export default function Header() {
                 <div className="container">
                     <nav className="navbar navbar-expand p-0">
                         <div className="navbar-nav ms-auto d-flex align-items-center">
-                            <a href="/" className="nav-item nav-link ms-5">About us</a>
+                            <a href="/#footer" className="nav-item nav-link ms-5">About us</a>
                             
                             {/* user exist ? */}
                             {(userInfo) ? (
