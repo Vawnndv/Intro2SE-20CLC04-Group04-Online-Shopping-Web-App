@@ -100,3 +100,7 @@ button.small {
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
+.productName{
+    word-break: break-all;
+}
