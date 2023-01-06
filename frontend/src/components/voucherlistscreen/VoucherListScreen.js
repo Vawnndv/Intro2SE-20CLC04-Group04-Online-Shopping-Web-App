@@ -178,6 +178,9 @@ export default function VoucherListScreen() {
                   Giảm giá
                 </th>
                 <th scope="col" className="voucherHeader">
+                  Số lượng
+                </th>
+                <th scope="col" className="voucherHeader">
                   Hành động
                 </th>
               </tr>
@@ -194,16 +197,24 @@ export default function VoucherListScreen() {
                   </td>
                   <td className="voucherListTD">
                     <h5>
-                      <MDBBadge color="primary">
-                        {voucher.code}
-                      </MDBBadge>
+                      <MDBBadge color="primary">{voucher.code}</MDBBadge>
                     </h5>
                   </td>
                   <td className="voucherListTD">
                     <h5>
-                      <MDBBadge color="success">{voucher.discount}</MDBBadge>
+                      <MDBBadge color="success">{voucher.discount}%</MDBBadge>
                     </h5>
                   </td>
+                  <td className="voucherListTD">
+                    <h5>
+                      <MDBBadge
+                        color={voucher.quantity ? "secondary" : "danger"}
+                      >
+                        {voucher.quantity}
+                      </MDBBadge>
+                    </h5>
+                  </td>
+
                   <td className="voucherListTD buttonGroup">
                     <Button
                       type="button"
@@ -243,8 +254,10 @@ export default function VoucherListScreen() {
           </Row>
 
           <div className="voucherPagination">
-            {[...Array(pages).keys()].map((x) => (
-              Number(page) - 1 === x + 1 || Number(page) === x + 1 || Number(page) + 1 === x + 1   ? (
+            {[...Array(pages).keys()].map((x) =>
+              Number(page) - 1 === x + 1 ||
+              Number(page) === x + 1 ||
+              Number(page) + 1 === x + 1 ? (
                 <Link
                   className={
                     x + 1 === Number(page) ? "btn btn-primary" : "btn btn-light"
@@ -254,8 +267,10 @@ export default function VoucherListScreen() {
                 >
                   {x + 1}
                 </Link>
-              ): (<></>)
-            ))}
+              ) : (
+                <></>
+              )
+            )}
           </div>
         </>
       )}
