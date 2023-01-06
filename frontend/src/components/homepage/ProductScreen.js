@@ -126,141 +126,151 @@ function ProductScreen (){
     }
 
     return loading ? (
-        <LoadingBox />
+      <LoadingBox />
     ) : error ? (
-        <MessageBox variant="danger">{error}</MessageBox>
+      <MessageBox variant="danger">{error}</MessageBox>
     ) : (
-        <div>
-            <Row>
-                <Col md={6}><img className="img-large" src={product.image} alt={product.name}></img></Col>
-                <Col md={3}>
-                    <ListGroup variant="flush">
-                        <ListGroup.Item>
-                            <Helmet>
-                                <title>{product.name}</title>
-                            </Helmet>
-                            <h1>{product.name}</h1>
-                        </ListGroup.Item>
-                        <ListGroup.Item>
-                            <Rating rating={product.rating} numReviews={product.reviews}></Rating>
-                        </ListGroup.Item>
-                        <ListGroup.Item>
-                            Price : ${product.price}
-                        </ListGroup.Item>
-                        <ListGroup.Item>
-                            Decription:
-                            <p>{product.description}</p>
-                        </ListGroup.Item>
-                    </ListGroup>
-                </Col>
-                <Col md={3}>
-                    <Card>
-                        <Card>
-                            <ListGroup variant="flush">
-                                <ListGroup.Item>
-                                    <Row>
-                                        <Col>Price:</Col>
-                                        <Col>{formatPrice(product.price)}</Col>
-                                    </Row>
-                                </ListGroup.Item>
-                                <ListGroup.Item>
-                                    <Row>
-                                        <Col>Status:</Col>
-                                        <Col>
-                                            {product.quantity > 0 ? (
-                                                <Badge bg="success">In Stock</Badge>
-                                            ) : (
-                                                <Badge bg="danger">Unvailable</Badge>
-                                            )}
-                                        </Col>
-                                    </Row>
-                                </ListGroup.Item>
-
-                                {product.quantity > 0 && (
-                                    <ListGroup.Item>
-                                        <div className="d-grid">
-                                            <Button onClick={addToCartHandler} variant="primary">Add to Cart</Button>
-                                        </div>
-                                    </ListGroup.Item>
-                                )}
-                            </ListGroup>
-                        </Card>
-                    </Card>
-                </Col>
-            </Row>
-            <Row>
-                <div  id="reviews" className="d-flex align-items-center">
-                    <h2>
-                        Đánh giá sản phẩm
-                    </h2>
-                    <Rating rating={product.rating} numReviews={product.reviews}></Rating> đánh giá
-                </div>
-                {product.customerReviews.length === 0 && (
-                    <MessageBox>There is no review</MessageBox>
-                )}
-                <ul>
-                    {product.customerReviews.map((review) => (
-                        <li key={review._id} className="review_section">
-                            <strong>{review.name}</strong>
-                            <Rating rating={review.rating} caption=" "></Rating>
-                            <p>{review.createdAt.substring(0, 10)}</p>
-                            <p>{review.comment}</p>
-                        </li>
-                    ))}
-                    <li>
-                        {userInfo ? (
-                            <form className="form" onSubmit={submitHandler}>
-                                <div>
-                                    <h2>Write a customer review</h2>
-                                </div>
-                                <div>
-                                    <label htmlFor="rating">Rating</label>
-                                    <select
-                                        id="rating"
-                                        value={rating}
-                                        onChange={(e) => setRating(e.target.value)}
-                                    >
-                                        <option value="">Select...</option>
-                                        <option value="1">1- Poor</option>
-                                        <option value="2">2- Fair</option>
-                                        <option value="3">3- Good</option>
-                                        <option value="4">4- Very good</option>
-                                        <option value="5">5- Excelent</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label htmlFor="comment">Comment</label>
-                                    <textarea
-                                        id="comment"
-                                        value={comment}
-                                        onChange={(e) => setComment(e.target.value)}
-                                    ></textarea>
-                                </div>
-                                <div>
-                                    <label />
-                                    <button className="primary" type="submit">
-                                        Submit
-                                    </button>
-                                </div>
-                                <div>
-                                    {loadingReviewCreate && <LoadingBox></LoadingBox>}
-                                    {errorReviewCreate && (
-                                        <MessageBox variant="danger">
-                                            {errorReviewCreate}
-                                        </MessageBox>
-                                    )}
-                                </div>
-                            </form>
+      <div>
+        <Row>
+          <Col md={6}>
+            <img
+              className="img-large"
+              src={product.image}
+              alt={product.name}
+            ></img>
+          </Col>
+          <Col md={3}>
+            <ListGroup variant="flush">
+              <ListGroup.Item>
+                <Helmet>
+                  <title>{product.name}</title>
+                </Helmet>
+                <h1 className="productName">{product.name}</h1>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Rating
+                  rating={product.rating}
+                  numReviews={product.reviews}
+                ></Rating>
+              </ListGroup.Item>
+              <ListGroup.Item>Price : ${product.price}</ListGroup.Item>
+              <ListGroup.Item>
+                Decription:
+                <p>{product.description}</p>
+              </ListGroup.Item>
+            </ListGroup>
+          </Col>
+          <Col md={3}>
+            <Card>
+              <Card>
+                <ListGroup variant="flush">
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Price:</Col>
+                      <Col>{formatPrice(product.price)}</Col>
+                    </Row>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Status:</Col>
+                      <Col>
+                        {product.quantity > 0 ? (
+                          <Badge bg="success">In Stock</Badge>
                         ) : (
-                            <MessageBox>
-                                Please <Link to="/login">Sign In</Link> to write a review
-                            </MessageBox>
+                          <Badge bg="danger">Unvailable</Badge>
                         )}
-                    </li>
-                </ul>
-            </Row>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
 
-        </div>
+                  {product.quantity > 0 && (
+                    <ListGroup.Item>
+                      <div className="d-grid">
+                        <Button onClick={addToCartHandler} variant="primary">
+                          Add to Cart
+                        </Button>
+                      </div>
+                    </ListGroup.Item>
+                  )}
+                </ListGroup>
+              </Card>
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <div id="reviews" className="d-flex align-items-center">
+            <h2>Đánh giá sản phẩm</h2>
+            <Rating
+              rating={product.rating}
+              numReviews={product.reviews}
+            ></Rating>{" "}
+            đánh giá
+          </div>
+          {product.customerReviews.length === 0 && (
+            <MessageBox>There is no review</MessageBox>
+          )}
+          <ul>
+            {product.customerReviews.map((review) => (
+              <li key={review._id} className="review_section">
+                <strong>{review.name}</strong>
+                <Rating rating={review.rating} caption=" "></Rating>
+                <p>{review.createdAt.substring(0, 10)}</p>
+                <p>{review.comment}</p>
+              </li>
+            ))}
+            <li>
+              {userInfo ? (
+                <form className="form" onSubmit={submitHandler}>
+                  <div>
+                    <h2>Write a customer review</h2>
+                  </div>
+                  <div>
+                    <label htmlFor="rating">Rating</label>
+                    <select
+                      id="rating"
+                      value={rating}
+                      onChange={(e) => setRating(e.target.value)}
+                    >
+                      <option value="">Select...</option>
+                      <option value="1">1- Poor</option>
+                      <option value="2">2- Fair</option>
+                      <option value="3">3- Good</option>
+                      <option value="4">4- Very good</option>
+                      <option value="5">5- Excelent</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label htmlFor="comment">Comment</label>
+                    <textarea
+                      id="comment"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                    ></textarea>
+                  </div>
+                  <div>
+                    <label />
+                    <button className="primary" type="submit">
+                      Submit
+                    </button>
+                  </div>
+                  <div>
+                    {loadingReviewCreate && <LoadingBox></LoadingBox>}
+                    {errorReviewCreate && (
+                      <MessageBox variant="danger">
+                        {errorReviewCreate}
+                      </MessageBox>
+                    )}
+                  </div>
+                </form>
+              ) : (
+                <MessageBox>
+                  Please <Link to="/login">Sign In</Link> to write a review
+                </MessageBox>
+              )}
+            </li>
+          </ul>
+        </Row>
+      </div>
     );
 }
 export default ProductScreen;
