@@ -151,15 +151,6 @@ function ProductScreen() {
       );
     } else {
       alert("Please enter comment and rating");
-    const submitHandler = (e) => {
-        e.preventDefault();
-        if(comment && rating) {
-            dispatch(
-                createReview(product._id, {comment, rating, name: userInfo.name})
-            );
-        } else {
-            alert('Please enter comment and rating')
-        }
     }
   };
 
@@ -241,13 +232,18 @@ function ProductScreen() {
         </Col>
       </Row>
       <Row>
-        <h2 id="reviews">Reviews</h2>
+          <div  id="reviews" className="d-flex align-items-center">
+              <h2>
+                  Đánh giá sản phẩm
+              </h2>
+              <Rating rating={product.rating} numReviews={product.reviews}></Rating> đánh giá
+          </div>
         {product.customerReviews.length === 0 && (
           <MessageBox>There is no review</MessageBox>
         )}
         <ul>
           {product.customerReviews.map((review) => (
-            <li key={review._id}>
+            <li key={review._id} className="review_section">
               <strong>{review.name}</strong>
               <Rating rating={review.rating} caption=" "></Rating>
               <p>{review.createdAt.substring(0, 10)}</p>
