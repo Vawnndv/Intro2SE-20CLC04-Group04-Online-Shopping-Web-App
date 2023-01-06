@@ -35,29 +35,47 @@ export default function Header() {
                                     
                                     <div className="dropdown-menu dropdown-menu-end">
                                         <Link to="/profile" className="dropdown-item">Tài khoản</Link>
-                                        <Link to="/orderhistory" className="dropdown-item">Đơn hàng</Link>
+                                        {!userInfo.isAdmin && (
+                                            <Link to="/orderhistory" className="dropdown-item">Đơn hàng</Link>
+                                        )}
+                                        {userInfo.isAdmin && (
+                                            <>
+                                                <LinkContainer to="/admin/products">
+                                                    <NavDropdown.Item>Products</NavDropdown.Item>
+                                                </LinkContainer>
+                                                <LinkContainer to="/admin/orders">
+                                                    <NavDropdown.Item>Orders</NavDropdown.Item>
+                                                </LinkContainer>
+                                                <LinkContainer to="/admin/users">
+                                                    <NavDropdown.Item>Users</NavDropdown.Item>
+                                                </LinkContainer>
+                                                <LinkContainer to="/admin/vouchers">
+                                                    <NavDropdown.Item>Vouchers</NavDropdown.Item>
+                                                </LinkContainer>
+                                            </>
+                                        )}
                                         <Link to="#signout" onClick={logoutHandler} className="dropdown-item">Đăng xuất</Link>
                                     </div>
                                 </div>
                             ) : (
                                 <Link to="/login" className="nav-login" style={{textDecoration: 'none'}}>Đăng nhập</Link>
                             )}
-                            {userInfo && userInfo.isAdmin && (
-                                <NavDropdown title="Admin" id="admin-nav-dropdown">
-                                    <LinkContainer to="/admin/products">
-                                        <NavDropdown.Item>Products</NavDropdown.Item>
-                                    </LinkContainer>
-                                    <LinkContainer to="/admin/orders">
-                                        <NavDropdown.Item>Orders</NavDropdown.Item>
-                                    </LinkContainer>
-                                    <LinkContainer to="/admin/users">
-                                        <NavDropdown.Item>Users</NavDropdown.Item>
-                                    </LinkContainer>
-                                    <LinkContainer to="/admin/vouchers">
-                                        <NavDropdown.Item>Vouchers</NavDropdown.Item>
-                                    </LinkContainer>
-                                </NavDropdown>
-                            )}
+                            {/*{userInfo && userInfo.isAdmin && (*/}
+                            {/*    <NavDropdown title="Admin" id="admin-nav-dropdown">*/}
+                            {/*        <LinkContainer to="/admin/products">*/}
+                            {/*            <NavDropdown.Item>Products</NavDropdown.Item>*/}
+                            {/*        </LinkContainer>*/}
+                            {/*        <LinkContainer to="/admin/orders">*/}
+                            {/*            <NavDropdown.Item>Orders</NavDropdown.Item>*/}
+                            {/*        </LinkContainer>*/}
+                            {/*        <LinkContainer to="/admin/users">*/}
+                            {/*            <NavDropdown.Item>Users</NavDropdown.Item>*/}
+                            {/*        </LinkContainer>*/}
+                            {/*        <LinkContainer to="/admin/vouchers">*/}
+                            {/*            <NavDropdown.Item>Vouchers</NavDropdown.Item>*/}
+                            {/*        </LinkContainer>*/}
+                            {/*    </NavDropdown>*/}
+                            {/*)}*/}
                             
                         </div>
                     </nav>
@@ -77,29 +95,55 @@ export default function Header() {
                             </Route> */}
                             <SearchBox />
                         </div>
-                        <div className="col-2 d-flex justify-content-end align-items-center">
-                            <Nav className="">
-                                <Link to="/cart" className="nav-link">
-                                    <FontAwesomeIcon icon="fa-solid fa-cart-shopping" id="cart-icon"/>
-                                </Link>
-                                <div className="d-flex flex-column align-items-start" id="cart-info">
-                                    <span>Your shopping cart</span>
-                                    <span>
-                                        {cart.cartItems.length === 0 && (
-                                            <Badge pill>
-                                                0
-                                            </Badge>
-                                        )}
-                                        {cart.cartItems.length > 0 && (
-                                            <Badge pill>
-                                                {cart.cartItems.reduce((a,c) => a + c.quantity, 0)}
-                                            </Badge>
-                                        )}
-                                        &nbsp; products
-                                    </span>
-                                </div>
-                            </Nav>
-                        </div>
+                        {(!userInfo) ? (
+                            <div className="col-2 d-flex justify-content-end align-items-center">
+                                <Nav className="">
+                                    <Link to="/cart" className="nav-link">
+                                        <FontAwesomeIcon icon="fa-solid fa-cart-shopping" id="cart-icon"/>
+                                    </Link>
+                                    <div className="d-flex flex-column align-items-start" id="cart-info">
+                                        <span>Your shopping cart</span>
+                                        <span>
+                                            {cart.cartItems.length === 0 && (
+                                                <Badge pill>
+                                                    0
+                                                </Badge>
+                                            )}
+                                            {cart.cartItems.length > 0 && (
+                                                <Badge pill>
+                                                    {cart.cartItems.reduce((a,c) => a + c.quantity, 0)}
+                                                </Badge>
+                                            )}
+                                            &nbsp; products
+                                        </span>
+                                    </div>
+                                </Nav>
+                            </div>
+                        ) : !userInfo.isAdmin ? (
+                            <div className="col-2 d-flex justify-content-end align-items-center">
+                                <Nav className="">
+                                    <Link to="/cart" className="nav-link">
+                                        <FontAwesomeIcon icon="fa-solid fa-cart-shopping" id="cart-icon"/>
+                                    </Link>
+                                    <div className="d-flex flex-column align-items-start" id="cart-info">
+                                        <span>Your shopping cart</span>
+                                        <span>
+                                            {cart.cartItems.length === 0 && (
+                                                <Badge pill>
+                                                    0
+                                                </Badge>
+                                            )}
+                                            {cart.cartItems.length > 0 && (
+                                                <Badge pill>
+                                                    {cart.cartItems.reduce((a,c) => a + c.quantity, 0)}
+                                                </Badge>
+                                            )}
+                                            &nbsp; products
+                                        </span>
+                                    </div>
+                                </Nav>
+                            </div>
+                        ) : (<></>)}
                     </div>
                 </div>
             </div>

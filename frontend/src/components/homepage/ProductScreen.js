@@ -10,12 +10,13 @@ import Button from 'react-bootstrap/Button';
 // import Rating from '../rating/rating.css';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Rating from "../rating/rating";
-import {Card} from "react-bootstrap";
+import {Card, Nav} from "react-bootstrap";
 import {Helmet} from "react-helmet-async";
 import LoadingBox from "../loadingbox/LoadingBox";
 import MessageBox from "../messagebox/MessageBox";
 import {formatPrice, getError} from "../../utils";
 import {Store} from "../../Store";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -40,6 +41,7 @@ function ProductScreen (){
     const navigate = useNavigate();
     const params = useParams();
     const  {slug} = params;
+
 
     const [{loading, error, product, loadingReviewCreate, errorReviewCreate, successReviewCreate, review}, dispatch] = useReducer(reducer, {
         loading: true,
@@ -175,13 +177,18 @@ function ProductScreen (){
                                         </Col>
                                     </Row>
                                 </ListGroup.Item>
-
                                 {product.quantity > 0 && (
-                                    <ListGroup.Item>
-                                        <div className="d-grid">
-                                            <Button onClick={addToCartHandler} variant="primary">Add to Cart</Button>
-                                        </div>
-                                    </ListGroup.Item>
+                                    <>
+                                        {(userInfo && userInfo.isAdmin) ? (
+                                            <></>
+                                        ) : (
+                                            <ListGroup.Item>
+                                                <div className="d-grid">
+                                                    <Button onClick={addToCartHandler} variant="primary">Add to Cart</Button>
+                                                </div>
+                                            </ListGroup.Item>
+                                        )}
+                                    </>
                                 )}
                             </ListGroup>
                         </Card>
@@ -215,7 +222,7 @@ function ProductScreen (){
                                         value={rating}
                                         onChange={(e) => setRating(e.target.value)}
                                     >
-                                        <option value="">Select...</option>
+                                        <option value="0">Select...</option>
                                         <option value="1">1- Poor</option>
                                         <option value="2">2- Fair</option>
                                         <option value="3">3- Good</option>
