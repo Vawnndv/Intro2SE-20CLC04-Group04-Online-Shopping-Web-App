@@ -49,9 +49,7 @@ export default  function CartScreen() {
             {/* New Cart start */}
             <Container>
                 <Row className="control-bar topbar">
-                    <Col md={1} className="cb">
-                        <input type="checkbox" />
-                    </Col>
+                    <Col md={1} className="cb"></Col>
                     <Col md={4}>
                         <span>Sản phẩm</span>
                     </Col>
@@ -79,9 +77,7 @@ export default  function CartScreen() {
                         <div>
                             {cartItems.map((item) => (
                                 <Row key={item._id} className="item align-items-center">
-                                    <Col md={1} className="cb">
-                                        <input type="checkbox" />
-                                    </Col>
+                                    <Col md={1} className="cb"></Col>
                                     <Col md={4} className="item-info d-flex flex-row">
                                         <img
                                             src={item.image}
@@ -128,7 +124,7 @@ export default  function CartScreen() {
                     )
                 }
             </Container>
-            <Container>
+            {/* <Container>
                 <Row className="control-bar voucher-bar"> 
                     <Col md={10} className="d-flex justify-content-end">
                         <span className="voucher-title">HKVTV Voucher</span>
@@ -137,20 +133,11 @@ export default  function CartScreen() {
                         <span className="voucher-action">Chọn phiếu giảm giá</span>
                     </Col>
                 </Row>
-            </Container>
+            </Container> */}
             <Container>
                 <Row className="control-bar bottombar">
-                    <Col md={1} className="cb">
-                        <input type="checkbox" />
-                    </Col>
-                    <Col md={2}>
-                        <span>Chọn tất cả ({cartItems.reduce((a, c) => a + c.quantity, 0)})</span>
-                    </Col>
-                    <Col md={3} className="d-flex justify-content-start">
-                        <span className="item-action">Xóa</span>
-                    </Col>
-                    
-                    <Col md={4} className="d-flex justify-content-end">
+                    <Col md={1}></Col>
+                    <Col md={9} className="d-flex justify-content-start">
                         <span>Tổng thanh toán ({cartItems.reduce((a, c) => a + c.quantity, 0)} Sản Phẩm):</span>
                         <span className="total-bill">{formatPrice(cartItems.reduce((a, c) => a + c.price * c.quantity, 0))}</span>
                     </Col>
