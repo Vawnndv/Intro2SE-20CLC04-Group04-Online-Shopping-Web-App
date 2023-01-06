@@ -56,7 +56,7 @@ let OrderHistoryScreen = () => {
                 <title>Order History</title>
             </Helmet>
 
-            <h1>Order History</h1>
+            <h1>Đơn hàng của bạn</h1>
             {loading ? (
                 <LoadingBox></LoadingBox>
             ) : error ? (
@@ -66,10 +66,10 @@ let OrderHistoryScreen = () => {
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th className='text-center'>DATE</th>
-                            <th className='text-center'>TOTAL</th>
-                            <th className='text-center'>PAID</th>
-                            <th className='text-center'>DELIVERED</th>
+                            <th className='text-center'>Ngày đặt</th>
+                            <th className='text-center'>Tổng hóa đơn</th>
+                            <th className='text-center'>Thanh toán</th>
+                            <th className='text-center'>Giao hàng</th>
                             <th className='text-center'></th>
                         </tr>
                     </thead>
@@ -79,11 +79,11 @@ let OrderHistoryScreen = () => {
                                 <td>{order._id}</td>
                                 <td className='text-center'>{order.createdAt.substring(0, 10)}</td>
                                 <td className='text-center'>{order.totalPrice.toFixed(2)}</td>
-                                <td className='text-center'>{order.isPaid ? order.paidAt.substring(0, 10) : 'No'}</td>
+                                <td className='text-center'>{order.isPaid ? order.paidAt.substring(0, 10) : 'Chưa thanh toán'}</td>
                                 <td className='text-center'>
                                     {order.isDelievered
                                     ? order.deliveredAt.substring(0,10)
-                                    : 'No'}
+                                    : 'Chưa giao hàng'}
                                 </td>
                                 <td>
                                     <Button type="button" variant="light" 

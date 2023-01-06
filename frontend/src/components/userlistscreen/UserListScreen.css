@@ -1,0 +1,16 @@
+tr .userHeader {
+    text-align: center;
+    font-weight: bold;
+}
+
+.userTableRow .buttonGroup {
+    width: 150px;
+}
+
+.userListTD .editButton {
+    font-weight: bold;
+}
+
+.userTableRow .userListTD {
+    text-align: center;
+}

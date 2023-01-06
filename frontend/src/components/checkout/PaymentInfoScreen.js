@@ -39,7 +39,7 @@ export default function PaymentInfoScreen() {
     } = state;
 
     const [paymentMethod, setPaymentMethod] = useState(paymentInfo.paymentMethod || 'cash');
-    const [voucher, setVoucher] = useState(paymentInfo.voucher || 'none');
+    const [voucher, setVoucher] = useState(paymentInfo.voucher || {code: 'none'});
 
     useEffect(() => {
         if (!shippingAddress.address) {
@@ -64,7 +64,7 @@ export default function PaymentInfoScreen() {
 
     const submitHandler = (e) => {
         e.preventDefault();
-
+        
         ctxDispatch({
             type: 'SAVE_PAYMENT_INFO',
             payload: {
@@ -114,9 +114,9 @@ export default function PaymentInfoScreen() {
                     ) : (
                         <Form.Select
                             className="cko-select"
-                            defaultValue={voucher.code}
+                            defaultValue={voucher.code || 'none'}
                             onChange={(e) => setVoucher(
-                                { ...vouchersList.find(v => v.code == e.target.value) }
+                                {...vouchersList.find(v => v.code == e.target.value)}
                             )}>
                             {vouchersList.map((v) => (
                                 <option key={v.code} value={v.code}>{v.code} - {v.name}</option>

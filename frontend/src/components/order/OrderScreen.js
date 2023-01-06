@@ -9,7 +9,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Row, Col, Card, ListGroup } from 'react-bootstrap';
 import Button from "react-bootstrap/Button";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 function reducer(state, action) {
     switch (action.type) {
@@ -21,13 +21,13 @@ function reducer(state, action) {
             return { ...state, loading: false, error: action.payload };
 
         case 'DELIVER_REQUEST':
-            return {...state, loadingDeliver: true};
+            return { ...state, loadingDeliver: true };
         case 'DELIVER_SUCCESS':
-            return {...state, loadingDeliver: false, successDeliver: true};
+            return { ...state, loadingDeliver: false, successDeliver: true };
         case 'DELIVER_FAIL':
-            return {...state, loadingDeliver: false};
+            return { ...state, loadingDeliver: false };
         case 'DELIVER_RESET':
-            return {...state, loadingDeliver: false, successDeliver: false};
+            return { ...state, loadingDeliver: false, successDeliver: false };
         default:
             return state;
     }
@@ -66,22 +66,22 @@ export default function OrderScreen() {
         if (!order._id || successDeliver || (order.id && order.id !== orderId)) {
             fetchOrder();
             if (successDeliver) {
-                dispatch({type: 'DELIVER_RESET'});
+                dispatch({ type: 'DELIVER_RESET' });
             }
         }
     }, [order, userInfo, orderId, navigate, successDeliver]);
 
-    async function deliverOrderHandler () {
+    async function deliverOrderHandler() {
         try {
-            dispatch({type: 'DELIVER_REQUEST'})
-            const {data} = await axios.put(`/api/orders/${order._id}/deliver`, {}, {
-                headers: { authorization: `bearer ${userInfo.token}`}
+            dispatch({ type: 'DELIVER_REQUEST' })
+            const { data } = await axios.put(`/api/orders/${order._id}/deliver`, {}, {
+                headers: { authorization: `bearer ${userInfo.token}` }
             });
-            dispatch({type: 'DELIVER_SUCCESS', payload: data});
+            dispatch({ type: 'DELIVER_SUCCESS', payload: data });
             toast.success('Đơn hàng đã giao');
         } catch (err) {
             toast.error(getError(err));
-            dispatch({type: 'DELIVER_FAIL'});
+            dispatch({ type: 'DELIVER_FAIL' });
         }
     }
 
@@ -138,7 +138,7 @@ export default function OrderScreen() {
                                     </Row>
                                     <Row className="my-2">
                                         <Col xs={2}>Voucher:</Col>
-                                        <Col xs={10}>{order.paymentInfo.voucher.code} - {order.paymentInfo.voucher.name}</Col>
+                                        <Col xs={10}>{(order.paymentInfo.voucher) ? order.paymentInfo.voucher.code : ""} - {(order.paymentInfo.voucher) ? order.paymentInfo.voucher.name : ""}</Col>
                                     </Row>
                                 </Card.Text>
                                 {order.isPaid ? (
