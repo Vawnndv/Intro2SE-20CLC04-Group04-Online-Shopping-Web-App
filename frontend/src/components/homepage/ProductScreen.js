@@ -16,6 +16,8 @@ import LoadingBox from "../loadingbox/LoadingBox";
 import MessageBox from "../messagebox/MessageBox";
 import {formatPrice, getError} from "../../utils";
 import {Store} from "../../Store";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -139,64 +141,68 @@ function ProductScreen (){
               alt={product.name}
             ></img>
           </Col>
-          <Col md={3}>
-            <ListGroup variant="flush">
-              <ListGroup.Item>
-                <Helmet>
-                  <title>{product.name}</title>
-                </Helmet>
-                <h1 className="productName">{product.name}</h1>
-              </ListGroup.Item>
-              <ListGroup.Item>
+          <Col md={6}>
+            <Row>
+              <Helmet>
+                <title>{product.name}</title>
+              </Helmet>
+
+              <Col>
+                <h1>{product.name}</h1>
+              </Col>
+            </Row>
+            <Row>
+              <Col className="reviewContainer">
                 <Rating
                   rating={product.rating}
                   numReviews={product.reviews}
                 ></Rating>
-              </ListGroup.Item>
-              <ListGroup.Item>Price : ${product.price}</ListGroup.Item>
-              <ListGroup.Item>
-                Decription:
-                <p>{product.description}</p>
-              </ListGroup.Item>
-            </ListGroup>
-          </Col>
-          <Col md={3}>
-            <Card>
-              <Card>
-                <ListGroup variant="flush">
-                  <ListGroup.Item>
-                    <Row>
-                      <Col>Price:</Col>
-                      <Col>{formatPrice(product.price)}</Col>
-                    </Row>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <Row>
-                      <Col>Status:</Col>
-                      <Col>
-                        {product.quantity > 0 ? (
-                          <Badge bg="success">In Stock</Badge>
-                        ) : (
-                          <Badge bg="danger">Unvailable</Badge>
-                        )}
-                      </Col>
-                    </Row>
-                  </ListGroup.Item>
+              </Col>
+            </Row>
+            <Row className="statusContainer">
+              <Col xs={1}>
+                {product.quantity > 0 ? (
+                  <Badge bg="success">Còn {product.quantity} sản phẩm</Badge>
+                ) : (
+                  <Badge bg="danger">Còn 0 sản phẩm</Badge>
+                )}
+              </Col>
+            </Row>
+            <Row className="priceContainer">
+              <Col className="productDetailsPrice">
+                {formatPrice(product.price)}
+              </Col>
+            </Row>
 
-                  {product.quantity > 0 && (
-                    <ListGroup.Item>
-                      <div className="d-grid">
-                        <Button onClick={addToCartHandler} variant="primary">
-                          Add to Cart
-                        </Button>
-                      </div>
-                    </ListGroup.Item>
-                  )}
-                </ListGroup>
-              </Card>
-            </Card>
+            <Row className='addToCartButton'>
+              <ListGroup variant="flush" >
+                {product.quantity > 0 && (
+                  <ListGroup.Item>
+                    <div className="d-grid">
+                      <Button onClick={addToCartHandler} variant="primary">
+                        <FontAwesomeIcon icon={faCartPlus} /> Thêm vào giỏ hàng
+                      </Button>
+                    </div>
+                  </ListGroup.Item>
+                )}
+              </ListGroup>
+            </Row>
           </Col>
+
+          <Row>
+            <Col>
+              <Card>
+                <Card.Header as="h5">Mô tả sản phẩm</Card.Header>
+                <Card.Body>
+                  <Card.Text>
+                    <p>{product.description}</p>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
         </Row>
+
         <Row>
           <div id="reviews" className="d-flex align-items-center">
             <h2>Đánh giá sản phẩm</h2>
